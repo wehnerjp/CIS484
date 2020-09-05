@@ -33,5 +33,19 @@ namespace CIS484Solution1
             multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
 
         }
+        protected void VolunteerMenu_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            Menu VolunteerMenu = sender as Menu;
+            MultiView multiTabs = this.FindControl("VolunteerMultiView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(VolunteerMenu.SelectedValue);
+
+        }
+        protected void CoordinatorMenu_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            Menu CoordinatorMenu = sender as Menu;
+            MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
+
+        }
     }
 }
