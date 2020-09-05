@@ -68,7 +68,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="global.js" />
+    <Content Include="jquery.js" />
     <Content Include="main.css" />
+    <Content Include="select2.css" />
+    <Content Include="select2.js" />
     <Content Include="Web.config" />
     <Content Include="LoginPage.aspx" />
   </ItemGroup>

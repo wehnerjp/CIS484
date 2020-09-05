@@ -12,7 +12,26 @@ namespace CIS484Solution1
         protected void Page_Load(object sender, EventArgs e)
         {
         }
+        protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            Menu menuTabsCurrent = sender as Menu;
+            MultiView multiTabs = this.FindControl("multiviewEmployee") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(menuTabsCurrent.SelectedValue);
 
+        }
+        protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            Menu MasterMenu = sender as Menu;
+            MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
 
+        }
+        protected void TeacherMenu_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            Menu TeacherMenu = sender as Menu;
+            MultiView multiTabs = this.FindControl("TeacherView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
+
+        }
     }
 }
