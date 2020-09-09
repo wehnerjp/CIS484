@@ -15,9 +15,6 @@
 
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
-
-
-
     <!-- Main CSS-->
     <link href="main.css" rel="stylesheet" media="all"/>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -26,46 +23,7 @@
     <script src="global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
-
-
-    <style>  
-        .navb {
-            display: flex !important;
-            width: 100% !important;
-            text-align: center !important;
-            align-content: center !important;
-            align-items: center !important;
-            align-self:center;
-            float: none !important;
-        }
-        .menuItems {
-            display: flex !important;
-            float: none !important;
-            padding-right: 30px !important;
-            grid-auto-columns:max-content;
-            color: #57b846;
-
-        }
-        .menuItemsg {
-            display: flex !important;
-            float: none !important;
-            padding-right: 30px !important;
-            grid-auto-columns:max-content;
-            color: #57b846;
-            font-style: oblique;
-
-        }
-        .navc {
-            display: flex !important;
-            width: 100% !important;
-            font-size: larger;
-            text-align: center !important;
-            align-content: center !important;
-            align-items: center !important;
-            align-self:center;
-            float: none !important;
-        }
-    </style>  
+ 
 </head>
 
 <body>
@@ -161,11 +119,8 @@
                         <div class="row row-space">
                              <div class="col-2">
                                 <div class="input-group">
-                                    <asp:Label ID="Label23" CssClass="label" runat="server" Text="Event"></asp:Label>
-                                    <asp:ListBox ID="ListBox1" runat="server">
-                                        <asp:ListItem Text="Jeremy Thacker" />
-                                        <asp:ListItem Text="John Wehner" />
-
+                                    <asp:Label ID="Label23" CssClass="label" runat="server" Text="Students Attending Event"></asp:Label>
+                                    <asp:ListBox ID="ListBox1" CssClass="custom-select" runat="server">
                                     </asp:ListBox>
                                     </div>
                                 </div>
@@ -209,7 +164,7 @@
                                         <div class="input-group">
                                             <asp:Label ID="Age" CssClass="label" runat="server" Text="Age"></asp:Label>
                                             <asp:DropDownList 
-                                                ID="subject" 
+                                                ID="StudentAgeList" 
                                                 runat="server"
                                                 CssClass="js-example-basic-single"
                                                 Width="50%">
@@ -272,7 +227,8 @@
                                     </div>
                                     </div>
                                 </div>
-
+                                <div class="row row-space">
+                                <div class="col-2">
                                 <div class="input-group">
                                     <asp:Label ID="TshirtColor" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
                                         <asp:DropDownList 
@@ -285,10 +241,18 @@
                                             <asp:ListItem Value="Red" />
                                         </asp:DropDownList>
                                 </div>
+                                <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="NotesLable" CssClass="label" runat="server" Text="Notes"></asp:Label>
+                                            <asp:TextBox CssClass="input--style-4" ID="NotesTextBox" runat="server" />
+                                        </div>
+                            </div>
+                            </div>
                             </div>
                                 <div class="p-t-15">
-                                    <asp:Button ID="Button1" runat="server" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                                    <asp:Button ID="Button1" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
+                              </div>
                         </asp:View>  
                         <asp:View runat="server"> 
                             <script type="text/javascript">

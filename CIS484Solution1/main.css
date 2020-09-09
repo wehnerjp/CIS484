@@ -9,6 +9,44 @@
     font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
 
+.navb {
+    display: flex !important;
+    width: 100% !important;
+    text-align: center !important;
+    align-content: center !important;
+    align-items: center !important;
+    align-self: center;
+    float: none !important;
+}
+
+.menuItems {
+    display: flex !important;
+    float: none !important;
+    padding-right: 30px !important;
+    grid-auto-columns: max-content;
+    color: #57b846;
+}
+
+.menuItemsg {
+    display: flex !important;
+    float: none !important;
+    padding-right: 30px !important;
+    grid-auto-columns: max-content;
+    color: #57b846;
+    font-style: oblique;
+}
+
+.navc {
+    display: flex !important;
+    width: 100% !important;
+    font-size: larger;
+    text-align: center !important;
+    align-content: center !important;
+    align-items: center !important;
+    align-self: center;
+    float: none !important;
+}
+
 /* ==========================================================================
    #GRID
    ========================================================================== */

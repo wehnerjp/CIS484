@@ -166,13 +166,13 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Label Age;
         
         /// <summary>
-        /// subject control.
+        /// StudentAgeList control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList subject;
+        protected global::System.Web.UI.WebControls.DropDownList StudentAgeList;
         
         /// <summary>
         /// SchoolLabel control.
@@ -254,6 +254,24 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TshirtColorList;
+        
+        /// <summary>
+        /// NotesLable control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NotesLable;
+        
+        /// <summary>
+        /// NotesTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NotesTextBox;
         
         /// <summary>
         /// Button1 control.
