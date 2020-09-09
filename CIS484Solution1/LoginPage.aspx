@@ -25,6 +25,8 @@
     <script src="jquery.js"></script>
     <script src="global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
+
 
     <style>  
         .navb {
@@ -42,6 +44,15 @@
             padding-right: 30px !important;
             grid-auto-columns:max-content;
             color: #57b846;
+
+        }
+        .menuItemsg {
+            display: flex !important;
+            float: none !important;
+            padding-right: 30px !important;
+            grid-auto-columns:max-content;
+            color: #57b846;
+            font-style: oblique;
 
         }
         .navc {
@@ -78,13 +89,89 @@
                 runat="server"  
                 OnMenuItemClick="MasterMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
                 <Items >  
-                    <asp:MenuItem  Text="Student" Value="0"  Selected="true" />  
-                    <asp:MenuItem Text="Teacher" Value="1" />  
-                    <asp:MenuItem Text="Volunteer" Value="2" /> 
-                    <asp:MenuItem Text="Coordinator" Value="3" />  
+                    <asp:MenuItem Text="Home" Value="0" Selected="true"/>  
+                    <asp:MenuItem  Text="Student" Value="1" />  
+                    <asp:MenuItem Text="Teacher" Value="2" />  
+                    <asp:MenuItem Text="Volunteer" Value="3" /> 
+                    <asp:MenuItem Text="Coordinator" Value="4" />  
+
                 </Items>  
             </asp:Menu>
             <asp:MultiView ID="MasterMultiView" runat="server" ActiveViewIndex="0">  
+               <asp:View runat="server">  
+                   <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
+                       <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="Label20" CssClass="label" runat="server" Text="Event"></asp:Label>
+                                            <asp:SqlDataSource runat="server" 
+                                               ID="dtasrcEventList"
+                                               DataSourceMode="DataReader"
+                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                               SelectCommand="SELECT EventID, EventName FROM Event" />
+                                            <asp:DropDownList 
+                                                ID="EventList"
+                                                DataSourceID="dtasrcEventList" 
+                                                DataTextField="EventName" 
+                                                DataValueField="EventID" 
+                                                AutoPostBack="true" 
+                                                OnSelectedIndexChanged="EventList_SelectedIndexChanged"
+                                                runat="server"
+                                                CssClass="js-example-basic-single"
+                                                Width="50%" />
+                                            </div>
+                                        </div>
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="Label22" CssClass="label" runat="server" Text="Event Details"></asp:Label>
+                                            <asp:FormView CssClass="container" ID="FormView1" EmptyDataText=" " runat="server">  
+                <ItemTemplate>  
+                    <table class="table table-bordered table-striped">  
+                        <tr>  
+                            <td>Event Name: </td>  
+                            <td><%#Eval("EventName") %></td>  
+                        </tr>
+                        <tr>  
+                            <td>Date: </td>  
+                            <td><%#Eval("Date") %></td>  
+                        </tr>  
+                        <tr>  
+                            <td>Time: </td>  
+                            <td><%#Eval("Time") %></td>  
+                        </tr>  
+                        <tr>  
+                            <td>Room Number: </td>  
+                            <td><%#Eval("RoomNbr") %></td>  
+                        </tr>  
+                    </table>  
+                </ItemTemplate>  
+                <emptydatatemplate>
+                  <table>
+                    <tr>
+                      <td>
+                        No records available.
+                      </td>
+                    </tr>
+                  </table>
+                </emptydatatemplate>
+            </asp:FormView>  
+                                            </div>
+                                        </div>
+                           </div>
+                        <div class="row row-space">
+                             <div class="col-2">
+                                <div class="input-group">
+                                    <asp:Label ID="Label23" CssClass="label" runat="server" Text="Event"></asp:Label>
+                                    <asp:ListBox ID="ListBox1" runat="server">
+                                        <asp:ListItem Text="Jeremy Thacker" />
+                                        <asp:ListItem Text="John Wehner" />
+
+                                    </asp:ListBox>
+                                    </div>
+                                </div>
+                        </div>
+                       </div>
+                   </asp:View>
                <asp:View runat="server">  
                    <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
                     <asp:Menu  
@@ -94,7 +181,7 @@
                         Width="100%"  
                         Text-Align="center"
                         runat="server"  
-                        OnMenuItemClick="menuTabsCurrent_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                        OnMenuItemClick="menuTabsCurrent_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItemsg" ClientIDMode="Static">
                         <Items >  
                             <asp:MenuItem  Text="New" Value="0"  Selected="true" />  
                             <asp:MenuItem Text="Existing" Value="1" />  
@@ -121,11 +208,6 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="Age" CssClass="label" runat="server" Text="Age"></asp:Label>
-                                            <script type="text/javascript">
-                                            $(document).ready(function() {
-                                              $(".js-example-basic-single").select2();
-                                            });
-                                            </script>
                                             <asp:DropDownList 
                                                 ID="subject" 
                                                 runat="server"
@@ -134,21 +216,30 @@
                                                 <asp:ListItem Value="6" />
                                                 <asp:ListItem Value="7" />
                                                 <asp:ListItem Value="8" />
+                                                <asp:ListItem Value="9" />
+                                                <asp:ListItem Value="10" />
+                                                <asp:ListItem Value="11" />
                                             </asp:DropDownList>
                                             </div>
                                         </div>
                                     <div class="col-2">
                                         <div class="input-group">
                                          <asp:Label ID="SchoolLabel" CssClass="label" runat="server" Text="School"></asp:Label>
+                                            <asp:SqlDataSource runat="server" 
+                                               ID="StudentSchoolDataSource"
+                                               DataSourceMode="DataReader"
+                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                               SelectCommand="SELECT SchoolID, SchoolName FROM School" />
                                             <asp:DropDownList 
-                                                ID="DropDownList2" 
+                                                ID="StudentSchoolDropDownList" 
+                                                DataSourceID="StudentSchoolDataSource" 
+                                                DataTextField="SchoolName" 
+                                                DataValueField="SchoolID" 
+                                                AutoPostBack="true" 
+                                                OnSelectedIndexChanged="StudentSchool_SelectedIndexChanged"
                                                 CssClass="js-example-basic-single"
                                                 Width="50%"
-                                                runat="server">
-                                                <asp:ListItem Value="School1" />
-                                                <asp:ListItem Value="School2" />
-                                                <asp:ListItem Value="School3" />
-                                            </asp:DropDownList>
+                                                runat="server"/>
                                         </div>
                                     </div>
                                 </div>
@@ -156,15 +247,13 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                          <asp:Label ID="TeacherLabel" CssClass="label" runat="server" Text="Teacher"></asp:Label>
+
                                             <asp:DropDownList 
-                                                ID="DropDownList1" 
-                                                runat="server"
+                                                ID="StudentTeacherDropDownList" 
+                                                AutoPostBack="true" 
                                                 CssClass="js-example-basic-single"
-                                                Width="50%">
-                                                <asp:ListItem Value="Teacher1" />
-                                                <asp:ListItem Value="Teacher2" />
-                                                <asp:ListItem Value="Teacher3" />
-                                            </asp:DropDownList>
+                                                Width="50%"
+                                                runat="server"/>
                                     </div>
                                     </div>
                                     
@@ -210,14 +299,42 @@
                             <div style="margin-top: 40px;">  
                                 <div class="input-group">
                                     <asp:Label ID="StudentNameLabel" CssClass="label" runat="server" Text="Student Name"></asp:Label>
-                                        <asp:DropDownList ID="StudentName"
+                                    <asp:SqlDataSource runat="server" 
+                                               ID="StudentNameDataSource"
+                                               DataSourceMode="DataReader"
+                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                               SelectCommand="SELECT StudentID, FirstName +' ' + LastName as StudentName FROM Student" />
+                                        <asp:DropDownList ID="StudentNameDDL"
+                                            DataSourceID="StudentNameDataSource" 
+                                            DataTextField="StudentName" 
+                                            DataValueField="StudentID" 
+                                            AutoPostBack="true" 
+                                            OnSelectedIndexChanged="StudentNameDDL_SelectedIndexChanged"
                                             runat="server"
                                             Width="50%" 
-                                            CssClass="js-example-basic-single">
-                                            <asp:ListItem Value="Name1" />
-                                            <asp:ListItem Value="Name2" />
-                                            <asp:ListItem Value="Name3" />
-                                        </asp:DropDownList>
+                                            CssClass="js-example-basic-single" />
+                                </div>
+                                <div class="input-group">
+                                    <asp:FormView ID="StudentFormView" runat="server">
+                                         <ItemTemplate>  
+                                            <table class="table table-bordered table-striped">  
+                                                <tr>  
+                                                    <td>Student Name:    </td>  
+                                                    <td><%#Eval("StudentName") %></td>  
+                                                </tr>
+                                                <tr>  
+                                                    <td>Age: </td>  
+                                                    <td><%#Eval("Age") %></td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>School: </td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Teacher: </td>  
+                                                </tr>  
+                                            </table>  
+                                        </ItemTemplate>  
+                                    </asp:FormView>
                                 </div>
                             </div>  
                         </asp:View>  
@@ -528,12 +645,8 @@
                                         <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
                                 </div>
                                 <div class="input-group">
-                                    <h2>Activities Creator</h2>
-                                    <asp:Label ID="Label20" runat="server" CssClass="label" Text="Event Name"></asp:Label>
-                                    <asp:TextBox ID="TextBox5" CssClass="input--style-4" runat="server"></asp:TextBox>
                                     <div class="p-t-10">
                                     <asp:Label ID="Label21" runat="server" CssClass="label" Text="Event Time"></asp:Label>
-
                                     <asp:RadioButtonList ID="EventTime" CssClass="radio-container"  runat="server">
                                         <asp:ListItem Text="9am" />
                                         <asp:ListItem Text="10am" />

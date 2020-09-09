@@ -15,22 +15,8 @@ namespace CIS484Solution1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Get connection string from web.config file  
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            //create new sqlconnection and connection to database by using connection string from web.config file  
-            SqlConnection con = new SqlConnection(strcon);
-            con.Open();
-            //string connectionString;
-            //SqlConnection cnn;
-
-            //connectionString = "Server=WSAMZN-9F2R1MPD;Database=Lab1;Trusted_Connection=Yes;";
-
-            //cnn = new SqlConnection(connectionString);
-
-            //cnn.Open();
-
-            //            Response.Write("Connection Made");
-            //cnn.Close();
+           
+            
         }
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
         {
@@ -67,5 +53,62 @@ namespace CIS484Solution1
             multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
 
         }
+
+        protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date, RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            FormView1.DataSource = ds;
+            FormView1.DataBind();
+            con.Close();
+
+        }
+        protected void StudentSchool_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sqlQuery = "Select TeacherID, FirstName +' ' + LastName as TeacherName from Teacher where SchoolID = " + StudentSchoolDropDownList.SelectedItem.Value;
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            DataTable dt = new DataTable();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            sqlAdapter.Fill(dt);
+
+            if (dt.Rows.Count > 0)
+            {
+
+                StudentTeacherDropDownList.DataSource = dt;
+                StudentTeacherDropDownList.DataTextField = "TeacherName";
+                StudentTeacherDropDownList.DataValueField = "TeacherID";
+                StudentTeacherDropDownList.DataBind();
+            }
+            con.Close();
+
+        }
+        protected void StudentNameDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sqlQuery = "Select StudentID, FirstName +' ' + LastName as StudentName, Age from Student where StudentID = " + StudentNameDDL.SelectedItem.Value;
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            StudentFormView.DataSource = ds;
+            StudentFormView.DataBind();
+            con.Close();
+
+        }
+
     }
 }
