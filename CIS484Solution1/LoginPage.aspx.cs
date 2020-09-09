@@ -15,8 +15,7 @@ namespace CIS484Solution1
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-           
-            
+
         }
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
         {
@@ -56,11 +55,15 @@ namespace CIS484Solution1
 
         protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date, RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
+            String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date, (select EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as CoordinatorName from EventPresenters " +
+                "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Coordinator' and EventPresenters.EventID = " + EventList.SelectedItem.Value + ") as CoordinatorName, RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
             String sqlQuery1 = "SELECT Student.FirstName +' ' + Student.LastName as StudentName, Student.TeacherID from Student " +
                 "inner join Teacher on Student.TeacherID = Teacher.TeacherID " +
                 "inner join EventAttendanceList on EventAttendanceList.TeacherID = Teacher.TeacherID " +
                 "where EventAttendanceList.EventID = " + EventList.SelectedItem.Value;
+            String sqlQuery2 = "select EventPersonnel.FirstName +' ' + EventPersonnel.LastName as VolunteerName, EventPersonnel.PersonnelType from EventPresenters " +
+                "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Volunteer' and EventPresenters.EventID = " + EventList.SelectedItem.Value;
+
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
@@ -68,6 +71,25 @@ namespace CIS484Solution1
             con.Open();
             SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
             SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+            SqlDataAdapter sqlAdapter2 = new SqlDataAdapter(sqlQuery2, con);
+
+            var items = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(sqlQuery2, con))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        items.Add(reader.GetString(0));
+                    }
+                }
+            }
+            rep1.DataSource = items;
+            rep1.DataBind();
+
+
+
 
 
             DataTable dt = new DataTable();
@@ -81,7 +103,10 @@ namespace CIS484Solution1
             }
 
                 DataSet ds = new DataSet();
+            
+            
             sqlAdapter.Fill(ds);
+
             FormView1.DataSource = ds;
             FormView1.DataBind();
             con.Close();
@@ -112,7 +137,14 @@ namespace CIS484Solution1
         }
         protected void StudentNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            String sqlQuery = "Select StudentID, FirstName +' ' + LastName as StudentName, Age from Student where StudentID = " + StudentNameDDL.SelectedItem.Value;
+            String sqlQuery = "Select Student.StudentID, Student.FirstName + ' ' + Student.LastName as StudentName, Student.Age, Student.Notes, Teacher.FirstName + ' ' + Teacher.LastName as TeacherName, Tshirt.Size, Tshirt.Color, School.SchoolName from Student " +
+                 "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID " +
+                "inner join Teacher on Student.TeacherID = Teacher.TeacherID " +
+                "inner join School on School.SchoolID = Student.SchoolID " +
+                "where Student.StudentID = " + StudentNameDDL.SelectedItem.Value + " and Student.SchoolID = (select SchoolID from student where StudentID= " + StudentNameDDL.SelectedItem.Value + ") " +
+                " and Student.TeacherID = (select TeacherID from student where StudentID = " + StudentNameDDL.SelectedItem.Value + ") " +
+               " and Tshirt.TshirtID = (select TshirtID from Student where StudentID = " + StudentNameDDL.SelectedItem.Value + ")"; 
+
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
@@ -148,6 +180,78 @@ namespace CIS484Solution1
                 }
                 con.Close();
             }
+
+        }
+        protected void AddTeacher_Click(object sender, EventArgs e)
+        {
+            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email) values('" + TeacherFirstName.Text + "', '" + TeacherLastName.Text + "', '" + StudentAgeList.SelectedItem.Value + "', '" + TeacherNoteTextBox.Text + "', " +
+                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "'); ";
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            using (SqlCommand command = new SqlCommand(sqlQuery, con))
+            {
+                con.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    Console.Write("insert successful");
+                }
+                catch (SqlException ex)
+                {
+                    Console.Write(ex.Message);
+                }
+                con.Close();
+            }
+
+        }
+        protected void TeacherNameDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String sqlQuery = "Select Teacher.TeacherID, Teacher.FirstName + ' ' + Teacher.LastName as TeacherName, Teacher.Email, Teacher.Notes, School.SchoolName, Tshirt.Size, Tshirt.Color from Teacher " +
+                "inner join School on School.SchoolID = Teacher.SchoolID " +
+                "inner join Tshirt on Tshirt.TshirtID = Teacher.TshirtID " +
+                "where Teacher.TeacherID = " + TeacherNameDDL.SelectedItem.Value + " " +
+                "and School.SchoolID = (select SchoolID from Teacher where TeacherID= " + TeacherNameDDL.SelectedItem.Value + ") " +
+               " and Tshirt.TshirtID = (select TshirtID from Teacher where TeacherID = " + TeacherNameDDL.SelectedItem.Value + ")";
+
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            TeacherFormView.DataSource = ds;
+            TeacherFormView.DataBind();
+            con.Close();
+
+        }
+        protected void EventDateDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(EventDateDDL.SelectedValue);
+            String sqlQuery = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event where Date  = '" + EventDateDDL.SelectedValue + "'";
+
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            DataTable dtx = new DataTable();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            sqlAdapter.Fill(dtx);
+
+            if (dtx.Rows.Count > 0)
+            {
+
+                CheckBoxList1.DataSource = dtx;
+                CheckBoxList1.DataTextField = "EventNameTime";
+                CheckBoxList1.DataValueField = "EventID";
+                CheckBoxList1.DataBind();
+            }
+            con.Close();
+
 
         }
 

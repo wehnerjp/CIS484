@@ -27,6 +27,11 @@
     color: #57b846;
 }
 
+td {
+    margin-right: 5px;
+}
+
+
 .menuItemsg {
     display: flex !important;
     float: none !important;
@@ -351,7 +356,11 @@ input {
     font-size: 14px;
     font-family: inherit;
 }
-
+#CheckBoxList1 {
+    input {
+              width: unset;
+          }
+}
 .input--style-4 {
     line-height: 50px;
     background: #fafafa;
@@ -458,7 +467,7 @@ input {
     }
 
 .checkmark {
-    position: absolute;
+    position: relative;
     top: 50%;
     -webkit-transform: translateY(-50%);
     -moz-transform: translateY(-50%);
@@ -475,12 +484,13 @@ input {
     -webkit-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
     -moz-box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
     box-shadow: inset 0px 1px 3px 0px rgba(0, 0, 0, 0.08);
+    display: ruby;
 }
 
     .checkmark:after {
         content: "";
-        position: absolute;
-        display: none;
+        position: relative;
+        display: ruby;
     }
 
 .input-group {

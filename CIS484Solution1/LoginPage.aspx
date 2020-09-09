@@ -36,7 +36,7 @@
    <div class="wrapper wrapper--w680">
     <div class="card card-4">
       <div class="card-body">
-       <h2 class="title" >Registration Form</h2>
+       <h2 class="title" >Field Trip Program Adventure </h2>
          <form id="form2" runat="server">
              <asp:Menu  
                 ID="MasterMenu"  
@@ -101,19 +101,25 @@
                             <td>Room Number: </td>  
                             <td><%#Eval("RoomNbr") %></td>  
                         </tr>  
+                        <tr>  
+                            <td>Coordinator: </td>  
+                            <td><%#Eval("CoordinatorName") %></td>  
+                        </tr> 
                     </table>  
                 </ItemTemplate>  
-                <emptydatatemplate>
-                  <table>
-                    <tr>
-                      <td>
-                        No records available.
-                      </td>
-                    </tr>
-                  </table>
-                </emptydatatemplate>
             </asp:FormView>  
-                                            </div>
+            <asp:Repeater ID="rep1" runat="server">
+                <ItemTemplate>
+                    <table>
+                        <tr>  
+                            <td>Volunteer: </td>  
+                            <td><%# Container.DataItem %></td>  
+                        </tr>
+                    </table>
+                </ItemTemplate>
+            </asp:Repeater>                                
+
+                                        </div>
                                         </div>
                            </div>
                         <div class="row row-space">
@@ -247,6 +253,7 @@
                                             <asp:TextBox CssClass="input--style-4" ID="NotesTextBox" runat="server" />
                                         </div>
                             </div>
+                                    </div>
                             </div>
                             </div>
                                 <div class="p-t-15">
@@ -281,7 +288,7 @@
                                 <div class="input-group">
                                     <asp:FormView ID="StudentFormView" runat="server">
                                          <ItemTemplate>  
-                                            <table class="table table-bordered table-striped">  
+                                            <table >  
                                                 <tr>  
                                                     <td>Student Name:    </td>  
                                                     <td><%#Eval("StudentName") %></td>  
@@ -291,11 +298,30 @@
                                                     <td><%#Eval("Age") %></td>  
                                                 </tr>  
                                                 <tr>  
-                                                    <td>School: </td>  
+                                                    <td>Notes: </td>
+                                                    <td><%#Eval("Notes") %></td>  
+
                                                 </tr>  
                                                 <tr>  
-                                                    <td>Teacher: </td>  
+                                                    <td>School: </td>  
+                                                    <td><%#Eval("SchoolName") %></td>  
+
                                                 </tr>  
+                                                <tr>  
+                                                    <td>Teacher: </td>
+                                                    <td><%#Eval("TeacherName") %></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Tshirt Color: </td>  
+                                                    <td><%#Eval("Color") %></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Tshirt Size: </td>
+                                                    <td><%#Eval("Size") %></td>  
+
+                                                </tr> 
                                             </table>  
                                         </ItemTemplate>  
                                     </asp:FormView>
@@ -342,22 +368,23 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                          <asp:Label ID="TeacherSchoolLabel" CssClass="label" runat="server" Text="School"></asp:Label>
+
                                             <asp:DropDownList 
                                                 ID="TeacherSchoolList" 
+                                                 DataSourceID="StudentSchoolDataSource" 
+                                                DataTextField="SchoolName" 
+                                                DataValueField="SchoolID" 
+                                                AutoPostBack="true" 
                                                 runat="server"
                                                 CssClass="js-example-basic-single"
-                                                Width="50%">
-                                                <asp:ListItem Value="School1" />
-                                                <asp:ListItem Value="School2" />
-                                                <asp:ListItem Value="School3" />
-                                            </asp:DropDownList>
+                                                Width="50%" />
                                           </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
                                              <asp:Label ID="Label6" CssClass="label" runat="server" Text="T-shirt Size"></asp:Label>
                                         <asp:DropDownList 
-                                            ID="DropDownList6" 
+                                            ID="TeacherTshirtSize" 
                                             runat="server"
                                             CssClass="js-example-basic-single"
                                             Width="50%">
@@ -368,10 +395,12 @@
                                     </div>
                                     </div>
                                 </div>
+                                <div class="row row-space">
+                                    <div class="col-2">
                                 <div class="input-group">
                                     <asp:Label ID="Label7" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
                                         <asp:DropDownList 
-                                            ID="DropDownList7" 
+                                            ID="TeacherTshirtColor" 
                                             runat="server"
                                             CssClass="js-example-basic-single"
                                             Width="50%">
@@ -379,41 +408,113 @@
                                             <asp:ListItem Value="Blue" />
                                             <asp:ListItem Value="Red" />
                                         </asp:DropDownList>
-                                         </div>
+                                </div>
+                                </div>
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="TeacherNoteLabel" CssClass="label" runat="server" Text="Notes"></asp:Label>
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherNoteTextBox" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="Label24" CssClass="label" runat="server" Text="Email"></asp:Label>
+                                            <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                                 <div class="p-t-15">
-                                    <asp:Button ID="Button2" runat="server" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                                    <asp:Button ID="Button2" runat="server" OnClick="AddTeacher_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
                         </asp:View>  
                         <asp:View runat="server">  
                             <div style="margin-top: 40px;"> 
+                                                            <div style="margin-top: 40px;">  
                                 <div class="input-group">
-                                    <asp:Label ID="Label1" CssClass="label" runat="server" Text="Name"></asp:Label>
-                                    <asp:Label ID="Label2" CssClass="label" runat="server" Text="School"></asp:Label>
-                                    <asp:Label ID="Label3" CssClass="label" runat="server" Text="Students"></asp:Label>
-                                    <asp:Label ID="Label4" CssClass="label" runat="server" Text="Coordinator"></asp:Label>
+                                    <asp:Label ID="Label1" CssClass="label" runat="server" Text="Teacher Name"></asp:Label>
+                                    <asp:SqlDataSource runat="server" 
+                                               ID="SqlTeacherDataSource"
+                                               DataSourceMode="DataReader"
+                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                               SelectCommand="SELECT TeacherID, FirstName +' ' + LastName as TeacherName FROM Teacher" />
+                                        <asp:DropDownList ID="TeacherNameDDL"
+                                            DataSourceID="SqlTeacherDataSource" 
+                                            DataTextField="TeacherName" 
+                                            DataValueField="TeacherID" 
+                                            AutoPostBack="true" 
+                                            OnSelectedIndexChanged="TeacherNameDDL_SelectedIndexChanged"
+                                            runat="server"
+                                            Width="50%" 
+                                            CssClass="js-example-basic-single" />
                                 </div>
+                                <div class="input-group">
+                                    <asp:FormView ID="TeacherFormView" runat="server">
+                                         <ItemTemplate>  
+                                            <table >  
+                                                <tr>  
+                                                    <td>Teacher Name:    </td>  
+                                                    <td><%#Eval("TeacherName") %></td>  
+                                                </tr>
+                                                <tr>  
+                                                    <td>Email: </td>  
+                                                    <td><%#Eval("Email") %></td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Notes: </td>
+                                                    <td><%#Eval("Notes") %></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>School: </td>  
+                                                    <td><%#Eval("SchoolName") %></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Tshirt Color: </td>
+                                                    <td><%#Eval("Color") %></td>  
+                                                </tr> 
+                                                <tr>  
+                                                    <td>Tshirt Size: </td>
+                                                    <td><%#Eval("Size") %></td>  
+                                                </tr>  
+                                            </table>  
+                                        </ItemTemplate>  
+                                    </asp:FormView>
+                                </div>
+                            </div> 
                                 <div class="input-group">
 
                                     <h2>Event List</h2>
-                                        <asp:DropDownList ID="DropDownList8"
+                                        <asp:SqlDataSource runat="server" 
+                                               ID="EventDateDataSource"
+                                               DataSourceMode="DataReader"
+                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                               SelectCommand="SELECT FORMAT(Date,'yyyy-MM-dd') as Date FROM Event group by Date" />
+                                        <asp:DropDownList ID="EventDateDDL"
+                                            DataSourceID="EventDateDataSource" 
+                                            DataTextField="Date" 
+                                            DataValueField="Date" 
+                                            OnSelectedIndexChanged="EventDateDDL_SelectedIndexChanged"
+                                            AutoPostBack="true" 
                                             runat="server"
                                             Width="50%"
-                                            CssClass="js-example-basic-single">
-                                            <asp:ListItem Value="September 30th" />
-                                            <asp:ListItem Value="October 1st" />
-                                            <asp:ListItem Value="October 3rd" />
+                                            CssClass="js-example-basic-single"
+                                            AppendDataBoundItems="true"
+                                             >
+                                            <asp:ListItem Text="select "></asp:ListItem>
                                         </asp:DropDownList>
                                 </div>
                                 <div class="input-group">
+                                <fieldset>
                                     <h2>Activities List</h2>
-                                      <asp:CheckBoxList ID="CheckBoxList1" runat="server">
-                                          <asp:ListItem Value="Movie 8 am" />
-                                          <asp:ListItem Value="Athletics 9am" />
-                                          <asp:ListItem Value="Lunch noon" />
-                                          <asp:ListItem Value="Rock Climbing 2 pm" />
-                                      </asp:CheckBoxList>
-                                </div>
+	                                    <div class="checkbox checkboxlist">
+                                            <asp:CheckBoxList ID="CheckBoxList1" CssClass="radio-container" RepeatDirection="Vertical" RepeatLayout="Flow" runat="server" />
+                                        </div>
+                                 </fieldset>
+                                 </div>
                             </div>  
                         </asp:View>  
                     </asp:MultiView>  

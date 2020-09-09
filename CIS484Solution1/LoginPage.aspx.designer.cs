@@ -85,6 +85,15 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.FormView FormView1;
         
         /// <summary>
+        /// rep1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater rep1;
+        
+        /// <summary>
         /// Label23 control.
         /// </summary>
         /// <remarks>
@@ -400,13 +409,13 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Label Label6;
         
         /// <summary>
-        /// DropDownList6 control.
+        /// TeacherTshirtSize control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList6;
+        protected global::System.Web.UI.WebControls.DropDownList TeacherTshirtSize;
         
         /// <summary>
         /// Label7 control.
@@ -418,13 +427,49 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Label Label7;
         
         /// <summary>
-        /// DropDownList7 control.
+        /// TeacherTshirtColor control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList7;
+        protected global::System.Web.UI.WebControls.DropDownList TeacherTshirtColor;
+        
+        /// <summary>
+        /// TeacherNoteLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label TeacherNoteLabel;
+        
+        /// <summary>
+        /// TeacherNoteTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TeacherNoteTextBox;
+        
+        /// <summary>
+        /// Label24 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label24;
+        
+        /// <summary>
+        /// EmailTextBox control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox EmailTextBox;
         
         /// <summary>
         /// Button2 control.
@@ -445,40 +490,49 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Label Label1;
         
         /// <summary>
-        /// Label2 control.
+        /// SqlTeacherDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label2;
+        protected global::System.Web.UI.WebControls.SqlDataSource SqlTeacherDataSource;
         
         /// <summary>
-        /// Label3 control.
+        /// TeacherNameDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label3;
+        protected global::System.Web.UI.WebControls.DropDownList TeacherNameDDL;
         
         /// <summary>
-        /// Label4 control.
+        /// TeacherFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label4;
+        protected global::System.Web.UI.WebControls.FormView TeacherFormView;
         
         /// <summary>
-        /// DropDownList8 control.
+        /// EventDateDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList DropDownList8;
+        protected global::System.Web.UI.WebControls.SqlDataSource EventDateDataSource;
+        
+        /// <summary>
+        /// EventDateDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList EventDateDDL;
         
         /// <summary>
         /// CheckBoxList1 control.
