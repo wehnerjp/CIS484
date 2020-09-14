@@ -340,6 +340,13 @@ h6 {
     .btn--blue:hover {
         background: #3868cd;
     }
+.btn--red {
+    background: #de1738;
+}
+
+    .btn--red:hover {
+        background: #8e1600;
+    }
 
 
 /* ==========================================================================

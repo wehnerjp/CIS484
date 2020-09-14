@@ -259,6 +259,9 @@
                                 <div class="p-t-15">
                                     <asp:Button ID="Button1" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
+                            <div class="p-t-15">
+                                    <asp:Button ID="Button5" runat="server" OnClientClick="this.form.reset();return false;" Text="Reset" CssClass="btn btn--radius-2 btn--red"/>
+                                </div> 
                               </div>
                         </asp:View>  
                         <asp:View runat="server"> 
@@ -511,7 +514,7 @@
                                 <fieldset>
                                     <h2>Activities List</h2>
 	                                    <div class="checkbox checkboxlist">
-                                            <asp:CheckBoxList ID="CheckBoxList1" CssClass="radio-container" RepeatDirection="Vertical" RepeatLayout="Flow" runat="server" />
+                                            <asp:CheckBoxList ID="CheckBoxList1" CssClass="radio-container" OnSelectedIndexChanged="CheckBoxList1_SelectedIndexChanged" AutoPostBack="true" RepeatDirection="Vertical" RepeatLayout="Flow" runat="server" />
                                         </div>
                                  </fieldset>
                                  </div>

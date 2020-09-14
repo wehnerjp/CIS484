@@ -225,6 +225,7 @@ namespace CIS484Solution1
             sqlAdapter.Fill(ds);
             TeacherFormView.DataSource = ds;
             TeacherFormView.DataBind();
+            CheckBoxListSelect();
             con.Close();
 
         }
@@ -232,12 +233,13 @@ namespace CIS484Solution1
         {
             Console.WriteLine(EventDateDDL.SelectedValue);
             String sqlQuery = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event where Date  = '" + EventDateDDL.SelectedValue + "'";
-
+            
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
             con.Open();
+           
             DataTable dtx = new DataTable();
             SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
             sqlAdapter.Fill(dtx);
@@ -250,9 +252,86 @@ namespace CIS484Solution1
                 CheckBoxList1.DataValueField = "EventID";
                 CheckBoxList1.DataBind();
             }
-            con.Close();
+            CheckBoxListSelect();
+    con.Close();
 
 
+        }
+        protected void CheckBoxListSelect()
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            if (EventDateDDL.SelectedValue != "select" && TeacherNameDDL.SelectedItem.Value != null)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Select EAL.EventID from EventAttendanceList EAL where EAL.TeacherID = '" + TeacherNameDDL.SelectedValue + "'", con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    for (int i = 0; i < CheckBoxList1.Items.Count; i++)
+                        CheckBoxList1.Items[i].Selected = false;
+
+                    while (reader.Read())
+                    {
+                        ListItem li = CheckBoxList1.Items.FindByValue(reader["EventID"].ToString());
+                        if (li != null)
+                        {
+                            li.Selected = true;
+                        }
+                        else
+                        {
+                            li.Selected = false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    Response.Redirect("user.aspx", false);
+                }
+            }
+
+        }
+
+        protected void CheckBoxList1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+            string sqlStatement = string.Empty;
+            try
+            {
+                // open the Sql connection
+                connection.Open();
+                foreach (ListItem item in CheckBoxList1.Items)
+                {
+                    if (item.Selected)
+                    {
+                        sqlStatement = "Insert into EventAttendanceList (TeacherID, EventID) values('" + TeacherNameDDL.SelectedValue + "','" + item.Value + "') ";
+                        cmd = new SqlCommand(sqlStatement, connection);
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                    else
+                    {
+                        sqlStatement = "DELETE FROM EventAttendanceList WHERE TeacherID ='" + TeacherNameDDL.SelectedValue + "' and EventID ='" + item.Value + "' ";
+                        cmd = new SqlCommand(sqlStatement, connection);
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert/Update Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                // close the Sql Connection
+                connection.Close();
+            }
         }
 
     }
