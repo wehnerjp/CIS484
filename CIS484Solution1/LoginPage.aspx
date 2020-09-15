@@ -11,7 +11,7 @@
     <meta name="author" content="Wehner"/>
     <meta name="keywords" content="Wehner"/>
 
-    <title >Event Registration Page</title>
+    <title >Event Registration Page: John Paul Wehner</title>
 
     <!-- Font special for pages-->
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
@@ -36,7 +36,7 @@
    <div class="wrapper wrapper--w680">
     <div class="card card-4">
       <div class="card-body">
-       <h2 class="title" >Field Trip Program Adventure </h2>
+       <h2 class="title" >Field Trip Program Adventure: John Paul Wehner </h2>
          <form id="form2" runat="server">
              <asp:Menu  
                 ID="MasterMenu"  
@@ -155,13 +155,13 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="FirstName" CssClass="label" runat="server" Text="First Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="FirstNameTextBox" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ValidationGroup="StudentInput" ID="FirstNameTextBox" runat="server" required="true" />
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="LastName" CssClass="label" runat="server" Text="Last Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="LastNameTextBox" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ValidationGroup="StudentInput" ID="LastNameTextBox" runat="server" required="true" ValidateRequestMode="Inherit" />
                                         </div>
                                     </div>
                                 </div>
@@ -234,35 +234,38 @@
                                     </div>
                                 </div>
                                 <div class="row row-space">
-                                <div class="col-2">
-                                <div class="input-group">
-                                    <asp:Label ID="TshirtColor" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
-                                        <asp:DropDownList 
-                                            ID="TshirtColorList" 
-                                            runat="server"
-                                            CssClass="js-example-basic-single"
-                                            Width="25%">
-                                            <asp:ListItem Value="Green" />
-                                            <asp:ListItem Value="Blue" />
-                                            <asp:ListItem Value="Red" />
-                                        </asp:DropDownList>
-                                </div>
-                                <div class="col-2">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <asp:Label ID="TshirtColor" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
+                                                <asp:DropDownList 
+                                                    ID="TshirtColorList" 
+                                                    runat="server"
+                                                    CssClass="js-example-basic-single"
+                                                    Width="50%">
+                                                    <asp:ListItem Value="Green" />
+                                                    <asp:ListItem Value="Blue" />
+                                                    <asp:ListItem Value="Red" />
+                                                </asp:DropDownList>
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="NotesLable" CssClass="label" runat="server" Text="Notes"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="NotesTextBox" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="NotesTextBox" runat="server" required="true" ValidationGroup="StudentInput" />
                                         </div>
-                            </div>
                                     </div>
+                                </div>
+                                
                             </div>
-                            </div>
-                                <div class="p-t-15">
-                                    <asp:Button ID="Button1" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                            <div class="p-t-15">
+                                    <asp:Button ID="SubmitButton" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
                             <div class="p-t-15">
-                                    <asp:Button ID="Button5" runat="server" OnClientClick="this.form.reset();return false;" Text="Reset" CssClass="btn btn--radius-2 btn--red"/>
+                                    <asp:Button ID="PopulateButton" runat="server" OnClick="PopulateText_Click" ValidationGroup="StudentInput" CausesValidation="False" Text="Populate" CssClass="btn btn--radius-2 btn--green" ValidateRequestMode="Inherit" UseSubmitBehavior="False" />
                                 </div> 
-                              </div>
+                            <div class="p-t-15">
+                                    <asp:Button ID="ResetButton" runat="server" OnClick="ResetButton_Click"  ValidationGroup="StudentInput" CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn--radius-2 btn--red"/>
+                                </div> 
                         </asp:View>  
                         <asp:View runat="server"> 
                             <script type="text/javascript">
@@ -332,7 +335,7 @@
                             </div>  
                         </asp:View>  
                     </asp:MultiView>  
-                    </div>  
+                   </div>  
                </asp:View>
                <asp:View runat="server">
                    <div style="width: 100%; margin-left: 20px; margin-top: 50px; margin-right: 20px;"> 
@@ -356,13 +359,13 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="TeacherFirstName" CssClass="label" runat="server" Text="First Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherFirstNameText" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherFirstNameText" required="true" runat="server" />
                                         </div>
                                     </div>
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="TeacherLastName" CssClass="label" runat="server" Text="Last Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherLastNameInput" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherLastNameInput" required="true" runat="server" />
                                         </div>
                                     </div>
                                 </div>
@@ -416,7 +419,7 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="TeacherNoteLabel" CssClass="label" runat="server" Text="Notes"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherNoteTextBox" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherNoteTextBox" required="true" runat="server" />
                                         </div>
                                     </div>
                                 </div>
@@ -424,13 +427,19 @@
                                     <div class="col-2">
                                         <div class="input-group">
                                             <asp:Label ID="Label24" CssClass="label" runat="server" Text="Email"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" required="true" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                                 <div class="p-t-15">
-                                    <asp:Button ID="Button2" runat="server" OnClick="AddTeacher_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                                    <asp:Button ID="SubmitTeacher" runat="server" OnClick="AddTeacher_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                                </div> 
+                            <div class="p-t-15">
+                                    <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click"  CausesValidation="False" Text="Populate" CssClass="btn btn--radius-2 btn--green"  UseSubmitBehavior="False" />
+                                </div> 
+                            <div class="p-t-15">
+                                    <asp:Button ID="ResetTeacher" runat="server" OnClick="ResetTeacherButton_Click"   CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn--radius-2 btn--red"/>
                                 </div> 
                         </asp:View>  
                         <asp:View runat="server">  
@@ -507,7 +516,7 @@
                                             CssClass="js-example-basic-single"
                                             AppendDataBoundItems="true"
                                              >
-                                            <asp:ListItem Text="select "></asp:ListItem>
+                                            <asp:ListItem Text="select " Value=""></asp:ListItem>
                                         </asp:DropDownList>
                                 </div>
                                 <div class="input-group">
@@ -735,9 +744,9 @@
             </asp:MultiView>
           </form>
          </div>
-     </div>
     </div>
    </div>
+  </div>
 
 
 

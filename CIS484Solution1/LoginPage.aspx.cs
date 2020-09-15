@@ -8,6 +8,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Configuration;
+using System.Windows.Forms;
 
 namespace CIS484Solution1
 {
@@ -19,35 +20,35 @@ namespace CIS484Solution1
         }
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
         {
-            Menu menuTabsCurrent = sender as Menu;
+            System.Web.UI.WebControls.Menu menuTabsCurrent = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("multiviewEmployee") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(menuTabsCurrent.SelectedValue);
 
         }
         protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
-            Menu MasterMenu = sender as Menu;
+            System.Web.UI.WebControls.Menu MasterMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
 
         }
         protected void TeacherMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
-            Menu TeacherMenu = sender as Menu;
+            System.Web.UI.WebControls.Menu TeacherMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("TeacherView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
 
         }
         protected void VolunteerMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
-            Menu VolunteerMenu = sender as Menu;
+            System.Web.UI.WebControls.Menu VolunteerMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("VolunteerMultiView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(VolunteerMenu.SelectedValue);
 
         }
         protected void CoordinatorMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
-            Menu CoordinatorMenu = sender as Menu;
+            System.Web.UI.WebControls.Menu CoordinatorMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
 
@@ -160,32 +161,43 @@ namespace CIS484Solution1
         }
         protected void AddStudent_Click(object sender, EventArgs e)
         {
-            String sqlQuery = "  Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + FirstNameTextBox.Text + "', '" + LastNameTextBox.Text + "', '" + StudentAgeList.SelectedItem.Value + "', '" + NotesTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedItem.Value + "' and Color = '" + TshirtColorList.SelectedItem.Value + "'), '" + StudentSchoolDropDownList.SelectedItem.Value + "', '" + StudentTeacherDropDownList.SelectedItem.Value + "'); ";
-            //Get connection string from web.config file  
+                        //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
-            using (SqlCommand command = new SqlCommand(sqlQuery, con))
+            if (FirstNameTextBox.Text != "" && LastNameTextBox.Text != "" && StudentAgeList.SelectedIndex > -1 && NotesTextBox.Text != "" && TshirtList.SelectedIndex > -1 && TshirtColorList.SelectedIndex > -1 && StudentSchoolDropDownList.SelectedIndex > -1 && StudentTeacherDropDownList.SelectedIndex > -1)
             {
-                con.Open();
-                try
+                String sqlQuery = "  Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + FirstNameTextBox.Text + "', '" + LastNameTextBox.Text + "', '" + StudentAgeList.SelectedItem.Value + "', '" + NotesTextBox.Text + "', " +
+                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedItem.Value + "' and Color = '" + TshirtColorList.SelectedItem.Value + "'), '" + StudentSchoolDropDownList.SelectedItem.Value + "', '" + StudentTeacherDropDownList.SelectedItem.Value + "'); ";
+                using (SqlCommand command = new SqlCommand(sqlQuery, con))
                 {
-                    command.ExecuteNonQuery();
-                    Console.Write("insert successful");
+                    con.Open();
+                    try
+                    {
+
+                        command.ExecuteNonQuery();
+                        ResetButton_Click(sender, e);
+
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.Write(ex.Message);
+                    }
+                    con.Close();
                 }
-                catch (SqlException ex)
-                {
-                    Console.Write(ex.Message);
-                }
-                con.Close();
+            }
+            else
+            {
+                MessageBox.Show("Oops", "All fields must be filled");
             }
 
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
-            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email) values('" + TeacherFirstName.Text + "', '" + TeacherLastName.Text + "', '" + StudentAgeList.SelectedItem.Value + "', '" + TeacherNoteTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "'); ";
+            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email) values " +
+                "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
+                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "'); ";
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
@@ -225,7 +237,10 @@ namespace CIS484Solution1
             sqlAdapter.Fill(ds);
             TeacherFormView.DataSource = ds;
             TeacherFormView.DataBind();
-            CheckBoxListSelect();
+            if (CheckBoxList1.Items.Count > 1 && TeacherNameDDL.SelectedItem.Value != null)
+            {
+                CheckBoxListSelect();
+            }
             con.Close();
 
         }
@@ -252,6 +267,7 @@ namespace CIS484Solution1
                 CheckBoxList1.DataValueField = "EventID";
                 CheckBoxList1.DataBind();
             }
+            
             CheckBoxListSelect();
     con.Close();
 
@@ -263,7 +279,7 @@ namespace CIS484Solution1
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
             con.Open();
-            if (EventDateDDL.SelectedValue != "select" && TeacherNameDDL.SelectedItem.Value != null)
+            if (EventDateDDL.SelectedItem.Value != null && TeacherNameDDL.SelectedItem.Value != null)
             {
                 try
                 {
@@ -299,39 +315,95 @@ namespace CIS484Solution1
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd;
             string sqlStatement = string.Empty;
-            try
+            if (EventDateDDL.SelectedItem.Value != null && TeacherNameDDL.SelectedItem.Value != null)
             {
-                // open the Sql connection
-                connection.Open();
-                foreach (ListItem item in CheckBoxList1.Items)
+                try
                 {
-                    if (item.Selected)
+                    // open the Sql connection
+                    connection.Open();
+                    foreach (ListItem item in CheckBoxList1.Items)
                     {
-                        sqlStatement = "Insert into EventAttendanceList (TeacherID, EventID) values('" + TeacherNameDDL.SelectedValue + "','" + item.Value + "') ";
-                        cmd = new SqlCommand(sqlStatement, connection);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
-                    }
-                    else
-                    {
-                        sqlStatement = "DELETE FROM EventAttendanceList WHERE TeacherID ='" + TeacherNameDDL.SelectedValue + "' and EventID ='" + item.Value + "' ";
-                        cmd = new SqlCommand(sqlStatement, connection);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
+                        if (item.Selected)
+                        {
+                            sqlStatement = "Insert into EventAttendanceList (TeacherID, EventID) values('" + TeacherNameDDL.SelectedValue + "','" + item.Value + "') ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            sqlStatement = "DELETE FROM EventAttendanceList WHERE TeacherID ='" + TeacherNameDDL.SelectedValue + "' and EventID ='" + item.Value + "' ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
                     }
                 }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
+                }
             }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                string msg = "Insert/Update Error:";
-                msg += ex.Message;
-                throw new Exception(msg);
-            }
-            finally
-            {
-                // close the Sql Connection
-                connection.Close();
-            }
+        }
+        protected void PopulateText_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            FirstNameTextBox.Text = Faker.Name.First();
+            LastNameTextBox.Text = Faker.Name.Last();
+            StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count-1);
+            StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
+            StudentSchool_SelectedIndexChanged(sender, e);
+            StudentTeacherDropDownList.SelectedIndex = rnd.Next(0, StudentTeacherDropDownList.Items.Count - 1);
+            TshirtList.SelectedIndex = rnd.Next(0, TshirtList.Items.Count - 1);
+            TshirtColorList.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
+            NotesTextBox.Text = Faker.Lorem.Sentence();
+
+
+        }
+        protected void ResetButton_Click(object sender, EventArgs e)
+        {
+            FirstNameTextBox.Text = string.Empty;
+            LastNameTextBox.Text = string.Empty;
+            StudentAgeList.SelectedIndex = 0;
+            StudentSchoolDropDownList.SelectedIndex = 0;
+            StudentTeacherDropDownList.SelectedIndex = 0;
+            TshirtList.SelectedIndex = 0;
+            TshirtColorList.SelectedIndex = 0;
+            NotesTextBox.Text = string.Empty;
+
+
+        }
+        protected void PopulateTextTeacher_Click(object sender, EventArgs e)
+        {
+            Random rnd = new Random();
+            TeacherFirstNameText.Text = Faker.Name.First();
+            TeacherLastNameInput.Text = Faker.Name.Last();
+            TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
+            TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
+            TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
+            TeacherNoteTextBox.Text = Faker.Lorem.Sentence();
+            EmailTextBox.Text = TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1) + "@gmail.com";
+
+
+        }
+        protected void ResetTeacherButton_Click(object sender, EventArgs e)
+        {
+            TeacherFirstNameText.Text = string.Empty;
+            TeacherLastNameInput.Text = string.Empty;
+            TeacherSchoolList.SelectedIndex = 0;
+            TeacherTshirtSize.SelectedIndex = 0;
+            TeacherTshirtColor.SelectedIndex = 0;
+            TeacherNoteTextBox.Text = string.Empty;
+            EmailTextBox.Text = string.Empty;
+
+
         }
 
     }
