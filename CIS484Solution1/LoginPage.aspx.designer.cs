@@ -13,13 +13,22 @@ namespace CIS484Solution1 {
     public partial class WebForm1 {
         
         /// <summary>
-        /// form2 control.
+        /// LabForm control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm form2;
+        protected global::System.Web.UI.HtmlControls.HtmlForm LabForm;
+        
+        /// <summary>
+        /// ScriptManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.ScriptManager ScriptManager1;
         
         /// <summary>
         /// MasterMenu control.
@@ -121,13 +130,13 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Menu menuTabsCurrent;
         
         /// <summary>
-        /// multiviewEmployee control.
+        /// multiviewStudent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView multiviewEmployee;
+        protected global::System.Web.UI.WebControls.MultiView multiviewStudent;
         
         /// <summary>
         /// FirstName control.
@@ -290,6 +299,15 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SubmitButton;
+        
+        /// <summary>
+        /// CommitButton control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button CommitButton;
         
         /// <summary>
         /// PopulateButton control.

@@ -14,14 +14,33 @@ namespace CIS484Solution1
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
+        Student[] StudentArray = null;
+        public static Student[] StudentPurgatory = new Student[100];
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            string sql = "SELECT  Student.FirstName, Student.LastName, Student.Age, Student.Notes, Tshirt.Color, Tshirt.Size, Student.SchoolID, Student.TeacherID FROM Student " +
+                "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID";
+            using (var command = new SqlCommand(sql, con))
+            {
+                con.Open();
+                using (var reader = command.ExecuteReader())
+                {
+                    var list = new List<Student>();
+                    while (reader.Read())
+                        list.Add(new Student(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(5), reader.GetString(4), reader.GetInt32(6), reader.GetInt32(7)));
+                    StudentArray = list.ToArray();
+                }
+            }
         }
+
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
         {
             System.Web.UI.WebControls.Menu menuTabsCurrent = sender as System.Web.UI.WebControls.Menu;
-            MultiView multiTabs = this.FindControl("multiviewEmployee") as MultiView;
+            MultiView multiTabs = this.FindControl("multiviewStudent") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(menuTabsCurrent.SelectedValue);
 
         }
@@ -52,6 +71,51 @@ namespace CIS484Solution1
             MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
 
+        }
+        protected void MultiView_ActiveViewChanged(object sender, EventArgs e)
+        {
+            string example = "";
+            for (int i = 0; i < StudentPurgatory.Length; i++)
+            {
+                if (StudentPurgatory[i] != null)
+                {
+                    example += (StudentPurgatory[i].LastName);
+                }
+
+            }
+            MessageBox.Show("Right Now: " + example, "StudentPurgArray");
+
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+                try
+                {
+                    // open the Sql connection
+                    connection.Open();
+                    foreach (Student item in StudentPurgatory)
+                    {
+                        if (item != null) {
+                        MessageBox.Show("Currently: " + item.FirstName, "StudentPurgArray");
+
+                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, 30) + "', " +
+                                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + item.TshirtSize + "' and Color = '" + item.TshirtColor + "'), '" + item.SchoolID + "', '" + item.TeacherID + "'); ";
+                                cmd = new SqlCommand(sqlStatement, connection);
+                                cmd.CommandType = CommandType.Text;
+                                cmd.ExecuteNonQuery();
+                         }
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
+                }
         }
 
         protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
@@ -159,38 +223,46 @@ namespace CIS484Solution1
             con.Close();
 
         }
+
         protected void AddStudent_Click(object sender, EventArgs e)
         {
-                        //Get connection string from web.config file  
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            //create new sqlconnection and connection to database by using connection string from web.config file  
-            SqlConnection con = new SqlConnection(strcon);
+
             if (FirstNameTextBox.Text != "" && LastNameTextBox.Text != "" && StudentAgeList.SelectedIndex > -1 && NotesTextBox.Text != "" && TshirtList.SelectedIndex > -1 && TshirtColorList.SelectedIndex > -1 && StudentSchoolDropDownList.SelectedIndex > -1 && StudentTeacherDropDownList.SelectedIndex > -1)
             {
-                String sqlQuery = "  Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + FirstNameTextBox.Text + "', '" + LastNameTextBox.Text + "', '" + StudentAgeList.SelectedItem.Value + "', '" + NotesTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedItem.Value + "' and Color = '" + TshirtColorList.SelectedItem.Value + "'), '" + StudentSchoolDropDownList.SelectedItem.Value + "', '" + StudentTeacherDropDownList.SelectedItem.Value + "'); ";
-                using (SqlCommand command = new SqlCommand(sqlQuery, con))
+                for (int i = 0; i < StudentPurgatory.Length; i++)
                 {
-                    con.Open();
-                    try
+                    if (StudentPurgatory[i] == null)
                     {
-
-                        command.ExecuteNonQuery();
+                        StudentPurgatory[i] = new Student(FirstNameTextBox.Text, LastNameTextBox.Text, Int32.Parse(StudentAgeList.SelectedValue.ToString()), NotesTextBox.Text, TshirtList.SelectedItem.Value, TshirtColorList.SelectedItem.Value, Int32.Parse(StudentSchoolDropDownList.SelectedValue.ToString()), Int32.Parse(StudentTeacherDropDownList.SelectedValue.ToString()));
                         ResetButton_Click(sender, e);
+                        MessageBox.Show("Added: "+ i + " " +  StudentPurgatory[i].FirstName + StudentPurgatory[i].LastName + "!", "StudentPurgatoryArray");
 
-
+                        break;
                     }
-                    catch (SqlException ex)
-                    {
-                        Console.Write(ex.Message);
-                    }
-                    con.Close();
                 }
             }
             else
             {
                 MessageBox.Show("Oops", "All fields must be filled");
             }
+            MessageBox.Show("Added: " + StudentPurgatory[0].FirstName + StudentPurgatory[0].LastName + "!", "StudentPurgatoryArray");
+
+        }
+        protected void CommitStudent_Click(object sender, EventArgs e)
+        {
+            string example = "";
+            for (int i = 0; i < StudentPurgatory.Length; i++)
+            {
+                if (StudentPurgatory[i] != null) {
+                    example += (StudentPurgatory[i].LastName);
+                        }
+
+            }
+            MessageBox.Show("Added: " + example, "StudentPurgArray");
+
+            MultiView_ActiveViewChanged(sender, e);
+             Array.Clear(StudentPurgatory, 0, StudentPurgatory.Length);
+             ResetButton_Click(sender, e);
 
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
@@ -217,6 +289,42 @@ namespace CIS484Solution1
                 con.Close();
             }
 
+        }
+        protected void Page_Unload(object sender, EventArgs e)
+        {
+            MessageBox.Show("Page Unload", "Confirmation");
+
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+            string sqlStatement = string.Empty;
+                try
+                {
+                    // open the Sql connection
+                    connection.Open();
+                    foreach (Student item in StudentPurgatory)
+                    {
+                    if (item != null)
+                    {
+                        sqlStatement = "DELETE FROM Student WHERE FirstName ='" + item.FirstName + "' and LastName ='" + item.LastName + "' ";
+                        cmd = new SqlCommand(sqlStatement, connection);
+                        cmd.CommandType = CommandType.Text;
+                        cmd.ExecuteNonQuery();
+                    }
+                    }
+                   
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
+                }
         }
         protected void TeacherNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -325,7 +433,7 @@ namespace CIS484Solution1
                     {
                         if (item.Selected)
                         {
-                            sqlStatement = "Insert into EventAttendanceList (TeacherID, EventID) values('" + TeacherNameDDL.SelectedValue + "','" + item.Value + "') ";
+                            sqlStatement = "If Not Exists (select 1 from EventAttendanceList where TeacherID= '" + TeacherNameDDL.SelectedValue + "' and EventID= '" + item.Value + "') Insert into EventAttendanceList (TeacherID, EventID) values('" + TeacherNameDDL.SelectedValue + "','" + item.Value + "') ";
                             cmd = new SqlCommand(sqlStatement, connection);
                             cmd.CommandType = CommandType.Text;
                             cmd.ExecuteNonQuery();

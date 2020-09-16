@@ -23,7 +23,12 @@
     <script src="global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
- 
+    <script type="text/javascript">
+        window.onbeforeunload = closingCode;
+        function closingCode(){
+           PageMethods.
+        }
+    </script>
 </head>
 
 <body>
@@ -37,7 +42,9 @@
     <div class="card card-4">
       <div class="card-body">
        <h2 class="title" >Field Trip Program Adventure: John Paul Wehner </h2>
-         <form id="form2" runat="server">
+         <form id="LabForm" runat="server">
+             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+               </asp:ScriptManager>
              <asp:Menu  
                 ID="MasterMenu"  
                 CssClass="navc"
@@ -55,7 +62,7 @@
 
                 </Items>  
             </asp:Menu>
-            <asp:MultiView ID="MasterMultiView" runat="server" ActiveViewIndex="0">  
+            <asp:MultiView ID="MasterMultiView" runat="server"  OnActiveViewChanged="MultiView_ActiveViewChanged" ActiveViewIndex="0">  
                <asp:View runat="server">  
                    <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
                        <div class="row row-space">
@@ -148,7 +155,7 @@
                             <asp:MenuItem Text="Existing" Value="1" />  
                         </Items>  
                     </asp:Menu>  
-                    <asp:MultiView ID="multiviewEmployee" runat="server" ActiveViewIndex="0">  
+                    <asp:MultiView ID="multiviewStudent" OnActiveViewChanged="MultiView_ActiveViewChanged" runat="server" ActiveViewIndex="0">  
                         <asp:View runat="server">  
                             <div style="margin-top: 40px;">  
                                 <div class="row row-space">
@@ -259,6 +266,9 @@
                             </div>
                             <div class="p-t-15">
                                     <asp:Button ID="SubmitButton" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
+                                </div> 
+                            <div class="p-t-15">
+                                    <asp:Button ID="CommitButton" runat="server" OnClick="CommitStudent_Click" ValidationGroup="StudentInput" CausesValidation="False" Text="Commit" UseSubmitBehavior="False" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
                             <div class="p-t-15">
                                     <asp:Button ID="PopulateButton" runat="server" OnClick="PopulateText_Click" ValidationGroup="StudentInput" CausesValidation="False" Text="Populate" CssClass="btn btn--radius-2 btn--green" ValidateRequestMode="Inherit" UseSubmitBehavior="False" />
