@@ -24,10 +24,20 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
     <script type="text/javascript">
-        window.onbeforeunload = closingCode;
-        function closingCode(){
-           PageMethods.
-        }
+        var needToConfirm = true;
+   
+        $(document).ready(function () {
+            $(":input").change(function () {
+                needToConfirm = true;
+                window.onbeforeunload = function () {
+                    if (needToConfirm) {
+                        PageMethods.ClosingTime();
+                        return false;
+                    }
+                    needToConfirm = true;
+                }
+            });
+        });   
     </script>
 </head>
 
@@ -52,8 +62,8 @@
                 Width="100%"  
                 Text-Align="center"
                 runat="server"  
-                OnMenuItemClick="MasterMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
-                <Items >  
+                OnMenuItemClick="MasterMenu_MenuItemClick"  NavigateUrl="javascript:  needToConfirm = false;" StaticMenuItemStyle-CssClass="menuItems" OnClientClick="javascript: needToConfirm = false;"  StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                <Items  >  
                     <asp:MenuItem Text="Home" Value="0" Selected="true"/>  
                     <asp:MenuItem  Text="Student" Value="1" />  
                     <asp:MenuItem Text="Teacher" Value="2" />  

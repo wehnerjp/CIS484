@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Web.Configuration;
 using System.Configuration;
 using System.Windows.Forms;
+using System.Web.Services;
 
 namespace CIS484Solution1
 {
@@ -153,10 +154,6 @@ namespace CIS484Solution1
             rep1.DataSource = items;
             rep1.DataBind();
 
-
-
-
-
             DataTable dt = new DataTable();
             sqlAdapter1.Fill(dt);
 
@@ -290,7 +287,8 @@ namespace CIS484Solution1
             }
 
         }
-        protected void Page_Unload(object sender, EventArgs e)
+        [WebMethod]
+        public static void ClosingTime()
         {
             MessageBox.Show("Page Unload", "Confirmation");
 
