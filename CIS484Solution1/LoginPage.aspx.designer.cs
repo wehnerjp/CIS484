@@ -652,24 +652,6 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.TextBox TextBox2;
         
         /// <summary>
-        /// VolunteerEventSignUp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label VolunteerEventSignUp;
-        
-        /// <summary>
-        /// EventSignUp control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList EventSignUp;
-        
-        /// <summary>
         /// Label10 control.
         /// </summary>
         /// <remarks>
@@ -706,49 +688,67 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.DropDownList VolunteerTshirtColor;
         
         /// <summary>
-        /// Button3 control.
+        /// VolunteerSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button3;
+        protected global::System.Web.UI.WebControls.Button VolunteerSubmit;
         
         /// <summary>
-        /// Label12 control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label12;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// Label13 control.
+        /// VolunteerListDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label13;
+        protected global::System.Web.UI.WebControls.SqlDataSource VolunteerListDataSource;
         
         /// <summary>
-        /// Label14 control.
+        /// VolunteerNameDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label14;
+        protected global::System.Web.UI.WebControls.DropDownList VolunteerNameDDL;
         
         /// <summary>
-        /// VolunteerEventList control.
+        /// VolunteerFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList VolunteerEventList;
+        protected global::System.Web.UI.WebControls.FormView VolunteerFormView;
+        
+        /// <summary>
+        /// VolunteerEventCheckBoxList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList VolunteerEventCheckBoxList;
+        
+        /// <summary>
+        /// VolunteerValidator control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator VolunteerValidator;
         
         /// <summary>
         /// CoordinatorMenu control.
@@ -841,49 +841,67 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.DropDownList DropDownList5;
         
         /// <summary>
-        /// Button4 control.
+        /// CoordinatorSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button Button4;
+        protected global::System.Web.UI.WebControls.Button CoordinatorSubmit;
         
         /// <summary>
-        /// Label16 control.
+        /// CoordinatorNameLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label16;
+        protected global::System.Web.UI.WebControls.Label CoordinatorNameLabel;
         
         /// <summary>
-        /// Label17 control.
+        /// CoordinatorListDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label17;
+        protected global::System.Web.UI.WebControls.SqlDataSource CoordinatorListDataSource;
         
         /// <summary>
-        /// Label19 control.
+        /// CoordinatorNameDDL control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label19;
+        protected global::System.Web.UI.WebControls.DropDownList CoordinatorNameDDL;
         
         /// <summary>
-        /// Label9 control.
+        /// CoordinatorFormView control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label9;
+        protected global::System.Web.UI.WebControls.FormView CoordinatorFormView;
+        
+        /// <summary>
+        /// CoordinatorCheckBoxList control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList CoordinatorCheckBoxList;
+        
+        /// <summary>
+        /// EventNameLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label EventNameLabel;
         
         /// <summary>
         /// EventName control.
@@ -895,13 +913,13 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.TextBox EventName;
         
         /// <summary>
-        /// Label18 control.
+        /// EventDateLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label18;
+        protected global::System.Web.UI.WebControls.Label EventDateLabel;
         
         /// <summary>
         /// Calendar1 control.
@@ -913,13 +931,13 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.Calendar Calendar1;
         
         /// <summary>
-        /// Label21 control.
+        /// EventTimeLabel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label21;
+        protected global::System.Web.UI.WebControls.Label EventTimeLabel;
         
         /// <summary>
         /// EventTime control.

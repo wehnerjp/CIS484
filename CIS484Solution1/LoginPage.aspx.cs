@@ -15,14 +15,16 @@ namespace CIS484Solution1
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        Student[] StudentArray = null;
+        public static Student[] StudentArray = null;
         public static Student[] StudentPurgatory = new Student[100];
+        public static int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
+            //Load existing users into Student Array C# Object
             string sql = "SELECT  Student.FirstName, Student.LastName, Student.Age, Student.Notes, Tshirt.Color, Tshirt.Size, Student.SchoolID, Student.TeacherID FROM Student " +
                 "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID";
             using (var command = new SqlCommand(sql, con))
@@ -84,21 +86,30 @@ namespace CIS484Solution1
                 }
 
             }
- //           MessageBox.Show("Right Now: " + example, "StudentPurgArray");
-
+            //Connect to DB
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd;
+            int sub;
                 try
                 {
+                    
                     // open the Sql connection
                     connection.Open();
+                    //Check for size in Note field and insert temporarily or permanently into DB if it does not exist
                     foreach (Student item in StudentPurgatory)
                     {
                         if (item != null) {
-   //                     MessageBox.Show("Currently: " + item.FirstName, "StudentPurgArray");
+                        if (NotesTextBox.Text.Length > 20)
+                        {
+                            sub = 20;
+                        }
+                        else
+                        {
+                            sub = item.Notes.Length;
+                        }
 
-                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, 20) + "', " +
+                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, sub) + "', " +
                                 "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + item.TshirtSize + "' and Color = '" + item.TshirtColor + "'), '" + item.SchoolID + "', '" + item.TeacherID + "'); ";
                                 cmd = new SqlCommand(sqlStatement, connection);
                                 cmd.CommandType = CommandType.Text;
@@ -106,6 +117,7 @@ namespace CIS484Solution1
                          }
                     }
                 }
+                //If it does not work
                 catch (System.Data.SqlClient.SqlException ex)
                 {
                     string msg = "Insert/Update Error:";
@@ -121,6 +133,8 @@ namespace CIS484Solution1
 
         protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+            //Queries Relevant to home page, fetching event info student info and more
             String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date, (select EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as CoordinatorName from EventPresenters " +
                 "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Coordinator' and EventPresenters.EventID = " + EventList.SelectedItem.Value + ") as CoordinatorName, RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
             String sqlQuery1 = "SELECT Student.FirstName +' ' + Student.LastName as StudentName, Student.TeacherID from Student " +
@@ -147,13 +161,14 @@ namespace CIS484Solution1
                 {
                     while (reader.Read())
                     {
+                        //Read info into List
                         items.Add(reader.GetString(0));
                     }
                 }
             }
             rep1.DataSource = items;
             rep1.DataBind();
-
+            //Fill table with data
             DataTable dt = new DataTable();
             sqlAdapter1.Fill(dt);
 
@@ -176,6 +191,7 @@ namespace CIS484Solution1
         }
         protected void StudentSchool_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Make Teacher selection DDL conditional based on what school they selected
             String sqlQuery = "Select TeacherID, FirstName +' ' + LastName as TeacherName from Teacher where SchoolID = " + StudentSchoolDropDownList.SelectedItem.Value;
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
@@ -185,10 +201,9 @@ namespace CIS484Solution1
             DataTable dt = new DataTable();
             SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
             sqlAdapter.Fill(dt);
-
+            //same procedure to create DDL
             if (dt.Rows.Count > 0)
             {
-
                 StudentTeacherDropDownList.DataSource = dt;
                 StudentTeacherDropDownList.DataTextField = "TeacherName";
                 StudentTeacherDropDownList.DataValueField = "TeacherID";
@@ -199,6 +214,7 @@ namespace CIS484Solution1
         }
         protected void StudentNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Student Selection information for user display
             String sqlQuery = "Select Student.StudentID, Student.FirstName + ' ' + Student.LastName as StudentName, Student.Age, Student.Notes, Teacher.FirstName + ' ' + Teacher.LastName as TeacherName, Tshirt.Size, Tshirt.Color, School.SchoolName from Student " +
                  "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID " +
                 "inner join Teacher on Student.TeacherID = Teacher.TeacherID " +
@@ -212,6 +228,7 @@ namespace CIS484Solution1
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
             con.Open();
+            //Filling out data for display
             SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
             DataSet ds = new DataSet();
             sqlAdapter.Fill(ds);
@@ -223,9 +240,49 @@ namespace CIS484Solution1
 
         protected void AddStudent_Click(object sender, EventArgs e)
         {
-
-            if (FirstNameTextBox.Text != "" && LastNameTextBox.Text != "" && StudentAgeList.SelectedIndex > -1 && NotesTextBox.Text != "" && TshirtList.SelectedIndex > -1 && TshirtColorList.SelectedIndex > -1 && StudentSchoolDropDownList.SelectedIndex > -1 && StudentTeacherDropDownList.SelectedIndex > -1)
+            Boolean dup = false;
+            //Checking for duplicates before inserting into C# object, if there is a duplicate then there is a message box letting you know, a different message box if you didn't fill everything out
+            for (int i = 0; i < StudentPurgatory.Length; i++)
             {
+                if (StudentPurgatory[i] != null)
+                {
+                    if (FirstNameTextBox.Text.Trim() == StudentPurgatory[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentPurgatory[i].LastName.Trim())
+                    {
+                        dup = true;
+                    }
+                    if (dup == true)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+            for (int i = 0; i < StudentArray.Length; i++)
+            {
+                if (StudentArray[i] != null)
+                {
+                    if (FirstNameTextBox.Text.Trim() == StudentArray[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentArray[i].LastName.Trim())
+                    {
+                        dup = true;
+                    }
+                    if (dup == true)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+
+            if (dup == false && FirstNameTextBox.Text != "" && LastNameTextBox.Text != "" && StudentAgeList.SelectedIndex > -1 && NotesTextBox.Text != "" && TshirtList.SelectedIndex > -1 && TshirtColorList.SelectedIndex > -1 && StudentSchoolDropDownList.SelectedIndex > -1 && StudentTeacherDropDownList.SelectedIndex > -1)
+            {
+                //If filled out and non duplicate it inserts into object
                 for (int i = 0; i < StudentPurgatory.Length; i++)
                 {
                     if (StudentPurgatory[i] == null)
@@ -238,11 +295,15 @@ namespace CIS484Solution1
                     }
                 }
             }
+            //Failure alternatives
+            else if( dup == true)
+            {
+                MessageBox.Show("Try Again", "Duplicate");
+            }
             else
             {
                 MessageBox.Show("Oops", "All fields must be filled");
             }
-         //   MessageBox.Show("Added: " + StudentPurgatory[0].FirstName + StudentPurgatory[0].LastName + "!", "StudentPurgatoryArray");
 
         }
         protected void CommitStudent_Click(object sender, EventArgs e)
@@ -255,8 +316,7 @@ namespace CIS484Solution1
                         }
 
             }
-      //      MessageBox.Show("Added: " + example, "StudentPurgArray");
-
+            //Call function to send array into DB and then clear current Array and erase screen fields
             MultiView_ActiveViewChanged(sender, e);
              Array.Clear(StudentPurgatory, 0, StudentPurgatory.Length);
              ResetButton_Click(sender, e);
@@ -264,6 +324,7 @@ namespace CIS484Solution1
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
+            //Inserting teacher query
             String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email) values " +
                 "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
                 "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "'); ";
@@ -290,8 +351,7 @@ namespace CIS484Solution1
         [WebMethod]
         public static void ClosingTime()
         {
-            MessageBox.Show("Page Unload", "Confirmation");
-
+            //When the page unloads it makes sure to scrub database of extraneous values that don't belong
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd;
@@ -326,6 +386,7 @@ namespace CIS484Solution1
         }
         protected void TeacherNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Listing teachers and summoning teacher info
             String sqlQuery = "Select Teacher.TeacherID, Teacher.FirstName + ' ' + Teacher.LastName as TeacherName, Teacher.Email, Teacher.Notes, School.SchoolName, Tshirt.Size, Tshirt.Color from Teacher " +
                 "inner join School on School.SchoolID = Teacher.SchoolID " +
                 "inner join Tshirt on Tshirt.TshirtID = Teacher.TshirtID " +
@@ -343,6 +404,7 @@ namespace CIS484Solution1
             sqlAdapter.Fill(ds);
             TeacherFormView.DataSource = ds;
             TeacherFormView.DataBind();
+            //If everything is kosher then the checkbox db interaction function is called
             if (CheckBoxList1.Items.Count > 1 && TeacherNameDDL.SelectedItem.Value != null)
             {
                 CheckBoxListSelect();
@@ -352,6 +414,7 @@ namespace CIS484Solution1
         }
         protected void EventDateDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
+            //Selection for event date when displaying activities
             Console.WriteLine(EventDateDDL.SelectedValue);
             String sqlQuery = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event where Date  = '" + EventDateDDL.SelectedValue + "'";
             
@@ -385,6 +448,8 @@ namespace CIS484Solution1
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
             con.Open();
+            //Determining which boxes to start checked and unchecked based on DB info
+
             if (EventDateDDL.SelectedItem.Value != null && TeacherNameDDL.SelectedItem.Value != null)
             {
                 try
@@ -421,6 +486,7 @@ namespace CIS484Solution1
             SqlConnection connection = new SqlConnection(strcon);
             SqlCommand cmd;
             string sqlStatement = string.Empty;
+            //Making DB changes when user alters event signup schedule, inserting if checked, deleting if unchecked
             if (EventDateDDL.SelectedItem.Value != null && TeacherNameDDL.SelectedItem.Value != null)
             {
                 try
@@ -460,6 +526,7 @@ namespace CIS484Solution1
         }
         protected void PopulateText_Click(object sender, EventArgs e)
         {
+            //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
             Random rnd = new Random();
             FirstNameTextBox.Text = Faker.Name.First();
             LastNameTextBox.Text = Faker.Name.Last();
@@ -475,6 +542,7 @@ namespace CIS484Solution1
         }
         protected void ResetButton_Click(object sender, EventArgs e)
         {
+            //Clear all student input selections
             FirstNameTextBox.Text = string.Empty;
             LastNameTextBox.Text = string.Empty;
             StudentAgeList.SelectedIndex = 0;
@@ -488,6 +556,8 @@ namespace CIS484Solution1
         }
         protected void PopulateTextTeacher_Click(object sender, EventArgs e)
         {
+            //Using faker api to generate random names en masse for teachers so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
+
             Random rnd = new Random();
             TeacherFirstNameText.Text = Faker.Name.First();
             TeacherLastNameInput.Text = Faker.Name.Last();
@@ -501,6 +571,7 @@ namespace CIS484Solution1
         }
         protected void ResetTeacherButton_Click(object sender, EventArgs e)
         {
+            //clear teacher input
             TeacherFirstNameText.Text = string.Empty;
             TeacherLastNameInput.Text = string.Empty;
             TeacherSchoolList.SelectedIndex = 0;
@@ -511,6 +582,254 @@ namespace CIS484Solution1
 
 
         }
+        protected void VolunteerNameDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Reacting to selections for Existing volunteer ddl dropdown, filling out info below
+            String sqlQuery = "Select EventPersonnel.VolunteerID, EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as VolunteerName, EventPersonnel.Notes, Tshirt.Size, Tshirt.Color, EventPersonnel.PersonnelType from EventPersonnel " +
+                "inner join Tshirt on Tshirt.TshirtID = EventPersonnel.TshirtID " +
+                "where EventPersonnel.VolunteerID = '" + VolunteerNameDDL.SelectedItem.Value + "' and Tshirt.TshirtID = (select TshirtID from EventPersonnel where VolunteerID = " + VolunteerNameDDL.SelectedItem.Value + ")";
+            String sqlQuery1 = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event";
+
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataTable dtx = new DataTable();
+            SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+            sqlAdapter1.Fill(dtx);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            VolunteerFormView.DataSource = ds;
+            VolunteerFormView.DataBind();
+            //Allow for event sign ups and association, interaction
+            if (dtx.Rows.Count > 0)
+            {
+                count = 0;
+                VolunteerEventCheckBoxList.DataSource = dtx;
+                VolunteerEventCheckBoxList.DataTextField = "EventNameTime";
+                VolunteerEventCheckBoxList.DataValueField = "EventID";
+                VolunteerEventCheckBoxList.DataBind();
+            } 
+
+            if (VolunteerEventCheckBoxList.Items.Count > 1 && VolunteerNameDDL.SelectedItem.Value != null)
+            {
+                VolunteerCheckBoxListSelect();
+            }
+            con.Close();
+
+
+
+        }
+        protected void VolunteerCheckBoxListSelect()
+        {
+            //This determines where to check and uncheck initially based on DB values
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            if (VolunteerNameDDL.SelectedItem.Value != null)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Select EP.EventID from EventPresenters EP where EP.PersonnelID = '" + VolunteerNameDDL.SelectedValue + "'", con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    for (int i = 0; i < VolunteerEventCheckBoxList.Items.Count; i++)
+                        VolunteerEventCheckBoxList.Items[i].Selected = false;
+
+                    while (reader.Read())
+                    {
+                        ListItem li = VolunteerEventCheckBoxList.Items.FindByValue(reader["EventID"].ToString());
+                        if (li != null)
+                        {
+                            li.Selected = true;
+                            count++;
+                        }
+                        else
+                        {
+                            li.Selected = false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    Response.Redirect("user.aspx", false);
+                }
+            }
+
+        }
+
+        protected void VolunteerEventCheckBoxList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Enables volunteer checkbox interaction live with DB, only inserting if not exists and deleting if unchecked
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+            string sqlStatement = string.Empty;
+            if (VolunteerNameDDL.SelectedItem.Value != null)
+            {
+                try
+                {
+                    // open the Sql connection
+                    connection.Open();
+                    foreach (ListItem item in VolunteerEventCheckBoxList.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            sqlStatement = "If Not Exists (select 1 from EventPresenters where PersonnelID= '" + VolunteerNameDDL.SelectedValue + "' and EventID= '" + item.Value + "') Insert into EventPresenters (PersonnelID, EventID, Role) values('" + VolunteerNameDDL.SelectedValue + "','" + item.Value + "',(select PersonnelType from EventPersonnel where VolunteerID=" + VolunteerNameDDL.SelectedItem.Value + ")) ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            sqlStatement = "DELETE FROM EventPresenters WHERE PersonnelID ='" + VolunteerNameDDL.SelectedValue + "' and EventID ='" + item.Value + "' ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
+                }
+            }
+        }
+
+        protected void CoordinatorNameDDL_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+            //Similar process for reacting to coordinator selection as with volunteer
+            String sqlQuery = "Select EventPersonnel.VolunteerID, EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as CoordinatorName, EventPersonnel.Notes, Tshirt.Size, Tshirt.Color, EventPersonnel.PersonnelType from EventPersonnel " +
+                "inner join Tshirt on Tshirt.TshirtID = EventPersonnel.TshirtID " +
+                "where EventPersonnel.VolunteerID = '" + CoordinatorNameDDL.SelectedItem.Value + "' and Tshirt.TshirtID = (select TshirtID from EventPersonnel where VolunteerID = " + CoordinatorNameDDL.SelectedItem.Value + ")";
+            String sqlQuery1 = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event";
+
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataTable dtx = new DataTable();
+            SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+            sqlAdapter1.Fill(dtx);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            CoordinatorFormView.DataSource = ds;
+            CoordinatorFormView.DataBind();
+            //Displaying events below for coordinator sign up
+            if (dtx.Rows.Count > 0)
+            {
+                count = 0;
+                CoordinatorCheckBoxList.DataSource = dtx;
+                CoordinatorCheckBoxList.DataTextField = "EventNameTime";
+                CoordinatorCheckBoxList.DataValueField = "EventID";
+                CoordinatorCheckBoxList.DataBind();
+            }
+
+            if (CoordinatorCheckBoxList.Items.Count > 1 && CoordinatorNameDDL.SelectedItem.Value != null)
+            {
+                CoordinatorCheckBoxListSelect();
+            }
+            con.Close();
+
+
+
+        }
+        protected void CoordinatorCheckBoxListSelect()
+        {
+            //Determines inital boolean values for selection Coo. Event List
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
+
+            if (CoordinatorNameDDL.SelectedItem.Value != null)
+            {
+                try
+                {
+                    SqlCommand cmd = new SqlCommand("Select EP.EventID from EventPresenters EP where EP.PersonnelID = '" + CoordinatorNameDDL.SelectedValue + "'", con);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    for (int i = 0; i < CoordinatorCheckBoxList.Items.Count; i++)
+                        CoordinatorCheckBoxList.Items[i].Selected = false;
+
+                    while (reader.Read())
+                    {
+                        ListItem li = CoordinatorCheckBoxList.Items.FindByValue(reader["EventID"].ToString());
+                        if (li != null)
+                        {
+                            li.Selected = true;
+                        }
+                        else
+                        {
+                            li.Selected = false;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    Response.Redirect("user.aspx", false);
+                }
+            }
+
+        }
+
+        protected void CoordinatorEventCheckBoxList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Enables coordinator sign up interaction with DB and live modification
+
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+            string sqlStatement = string.Empty;
+            if (CoordinatorNameDDL.SelectedItem.Value != null)
+            {
+                try
+                {
+                    // open the Sql connection
+                    connection.Open();
+                    foreach (ListItem item in CoordinatorCheckBoxList.Items)
+                    {
+                        if (item.Selected)
+                        {
+                            sqlStatement = "If Not Exists (select 1 from EventPresenters where PersonnelID= '" + CoordinatorNameDDL.SelectedValue + "' and EventID= '" + item.Value + "') Insert into EventPresenters (PersonnelID, EventID, Role) values('" + CoordinatorNameDDL.SelectedValue + "','" + item.Value + "',(select PersonnelType from EventPersonnel where VolunteerID=" + CoordinatorNameDDL.SelectedItem.Value + ")) ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                        else
+                        {
+                            sqlStatement = "DELETE FROM EventPresenters WHERE PersonnelID ='" + CoordinatorNameDDL.SelectedValue + "' and EventID ='" + item.Value + "' ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
+                }
+            }
+        }
+
 
     }
 }
