@@ -25,14 +25,43 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
     <script type="text/javascript">
         var needToConfirm = true;
-   
+        var warn = true;
+        $("a").click(dontWarn);
+        $("form").submit(dontWarn);
+        $(document).bind('keypress', function(e) {
+              warn = false;
+          });
+
+          // Attach the event click for all links in the page
+          $("a").bind("click", function() {
+            warn = false;
+          });
+
+          // Attach the event submit for all forms in the page
+          $("form").bind("submit", function() {
+            warn = false;
+          });
+
+          // Attach the event click for all inputs in the page
+          $("input[type=submit]").bind("click", function() {
+            warn = false;
+          });
+        function dontWarn() {
+            // Don't warn
+            warn = false;
+
+            // ...but if we're still on the page a second later, set the flag again
+            setTimeout(function() {
+                warn = true;
+            }, 1000);
+        }
         $(document).ready(function () {
             $(":input").change(function () {
                 needToConfirm = true;
                 window.onbeforeunload = function () {
-                    if (needToConfirm) {
+                    if (needToConfirm && warn) {
                         PageMethods.ClosingTime();
-                        return false;
+                        return null;
                     }
                     needToConfirm = true;
                 }
@@ -92,6 +121,7 @@
                                                 AutoPostBack="true" 
                                                 OnSelectedIndexChanged="EventList_SelectedIndexChanged"
                                                 runat="server"
+                                                OnClientClick="javascript: needToConfirm = false;"
                                                 CssClass="js-example-basic-single"
                                                 Width="50%" />
                                             </div>

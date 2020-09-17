@@ -84,7 +84,7 @@ namespace CIS484Solution1
                 }
 
             }
-            MessageBox.Show("Right Now: " + example, "StudentPurgArray");
+ //           MessageBox.Show("Right Now: " + example, "StudentPurgArray");
 
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             SqlConnection connection = new SqlConnection(strcon);
@@ -96,9 +96,9 @@ namespace CIS484Solution1
                     foreach (Student item in StudentPurgatory)
                     {
                         if (item != null) {
-                        MessageBox.Show("Currently: " + item.FirstName, "StudentPurgArray");
+   //                     MessageBox.Show("Currently: " + item.FirstName, "StudentPurgArray");
 
-                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, 30) + "', " +
+                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, 20) + "', " +
                                 "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + item.TshirtSize + "' and Color = '" + item.TshirtColor + "'), '" + item.SchoolID + "', '" + item.TeacherID + "'); ";
                                 cmd = new SqlCommand(sqlStatement, connection);
                                 cmd.CommandType = CommandType.Text;
@@ -232,7 +232,7 @@ namespace CIS484Solution1
                     {
                         StudentPurgatory[i] = new Student(FirstNameTextBox.Text, LastNameTextBox.Text, Int32.Parse(StudentAgeList.SelectedValue.ToString()), NotesTextBox.Text, TshirtList.SelectedItem.Value, TshirtColorList.SelectedItem.Value, Int32.Parse(StudentSchoolDropDownList.SelectedValue.ToString()), Int32.Parse(StudentTeacherDropDownList.SelectedValue.ToString()));
                         ResetButton_Click(sender, e);
-                        MessageBox.Show("Added: "+ i + " " +  StudentPurgatory[i].FirstName + StudentPurgatory[i].LastName + "!", "StudentPurgatoryArray");
+               //         MessageBox.Show("Added: "+ i + " " +  StudentPurgatory[i].FirstName + StudentPurgatory[i].LastName + "!", "StudentPurgatoryArray");
 
                         break;
                     }
@@ -242,7 +242,7 @@ namespace CIS484Solution1
             {
                 MessageBox.Show("Oops", "All fields must be filled");
             }
-            MessageBox.Show("Added: " + StudentPurgatory[0].FirstName + StudentPurgatory[0].LastName + "!", "StudentPurgatoryArray");
+         //   MessageBox.Show("Added: " + StudentPurgatory[0].FirstName + StudentPurgatory[0].LastName + "!", "StudentPurgatoryArray");
 
         }
         protected void CommitStudent_Click(object sender, EventArgs e)
@@ -255,7 +255,7 @@ namespace CIS484Solution1
                         }
 
             }
-            MessageBox.Show("Added: " + example, "StudentPurgArray");
+      //      MessageBox.Show("Added: " + example, "StudentPurgArray");
 
             MultiView_ActiveViewChanged(sender, e);
              Array.Clear(StudentPurgatory, 0, StudentPurgatory.Length);
