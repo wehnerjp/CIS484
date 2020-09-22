@@ -24,7 +24,7 @@ namespace CIS484Solution1
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
-            //Load existing users into Student Array C# Object
+            //Load existing users into Student Array C# ObjectS
             string sql = "SELECT  Student.FirstName, Student.LastName, Student.Age, Student.Notes, Tshirt.Color, Tshirt.Size, Student.SchoolID, Student.TeacherID FROM Student " +
                 "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID";
             using (var command = new SqlCommand(sql, con))

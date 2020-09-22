@@ -139,10 +139,10 @@
                                    </div>
                               </div>
                               <div class="col-2">
+                                   <!-- Info Display -->
                                    <div class="input-group">
                                       <asp:Label ID="Label22" CssClass="label" runat="server" Text="Event Details"></asp:Label>
                                       <asp:FormView CssClass="container" ID="FormView1" EmptyDataText=" " runat="server"> 
-                                      <!-- Info Display-->
 
                                         <ItemTemplate>  
                                             <table class="table table-bordered table-striped">  
