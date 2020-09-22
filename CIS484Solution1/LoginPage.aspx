@@ -162,13 +162,21 @@
                                                     <td>Room Number: </td>  
                                                     <td><%#Eval("RoomNbr") %></td>  
                                                 </tr>  
-                                                <tr>  
-                                                    <td>Coordinator: </td>  
-                                                    <td><%#Eval("CoordinatorName") %></td>  
-                                                </tr> 
                                             </table>  
                                         </ItemTemplate>  
                                     </asp:FormView>  
+
+                                    <asp:Repeater ID="CoordinatorRepeater" runat="server">
+                                        <ItemTemplate>
+                                            <table>
+                                                <tr>  
+                                                    <td>Coordinator: </td>  
+                                                    <td><%# Container.DataItem %></td>  
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
+                                    </asp:Repeater> 
+
                                     <!-- Repeater Displays all Volunteers-->
 
                                     <asp:Repeater ID="rep1" runat="server">

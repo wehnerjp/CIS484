@@ -137,14 +137,15 @@ namespace CIS484Solution1
         {
 
             //Queries Relevant to home page, fetching event info student info and more
-            String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date, (select EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as CoordinatorName from EventPresenters " +
-                "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Coordinator' and EventPresenters.EventID = " + EventList.SelectedItem.Value + ") as CoordinatorName, RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
+            String sqlQuery = "Select EventName, Time, FORMAT(Date,'dd/MM/yyyy') as Date,  RoomNbr from Event where EventID = " + EventList.SelectedItem.Value;
             String sqlQuery1 = "SELECT Student.FirstName +' ' + Student.LastName as StudentName, Student.TeacherID from Student " +
                 "inner join Teacher on Student.TeacherID = Teacher.TeacherID " +
                 "inner join EventAttendanceList on EventAttendanceList.TeacherID = Teacher.TeacherID " +
                 "where EventAttendanceList.EventID = " + EventList.SelectedItem.Value;
             String sqlQuery2 = "select EventPersonnel.FirstName +' ' + EventPersonnel.LastName as VolunteerName, EventPersonnel.PersonnelType from EventPresenters " +
                 "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Volunteer' and EventPresenters.EventID = " + EventList.SelectedItem.Value;
+            String sqlQuery3 = "select EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as CoordinatorName from EventPresenters " +
+                "inner join EventPersonnel on EventPersonnel.VolunteerID = EventPresenters.PersonnelID where EventPresenters.Role = 'Coordinator' and EventPresenters.EventID = " + EventList.SelectedItem.Value;
 
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
@@ -173,6 +174,25 @@ namespace CIS484Solution1
             //Fill table with data
             DataTable dt = new DataTable();
             sqlAdapter1.Fill(dt);
+
+            var items1 = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(sqlQuery3, con))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //Read info into List
+                        items1.Add(reader.GetString(0));
+                    }
+                }
+            }
+            CoordinatorRepeater.DataSource = items1;
+            CoordinatorRepeater.DataBind();
+            //Fill table with data
+            DataTable dt2 = new DataTable();
+            sqlAdapter2.Fill(dt2);
 
             if (dt.Rows.Count > 0)
             {
