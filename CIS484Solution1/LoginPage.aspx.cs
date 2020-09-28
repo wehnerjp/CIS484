@@ -17,29 +17,11 @@ namespace CIS484Solution1
 {
     public partial class WebForm1 : System.Web.UI.Page
     {
-        public static Student[] StudentArray = null;
-        public static Student[] StudentPurgatory = new Student[100];
         public static int count = 0;
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            //create new sqlconnection and connection to database by using connection string from web.config file  
-            SqlConnection con = new SqlConnection(strcon);
-            //Load existing users into Student Array C# ObjectS
-            string sql = "SELECT  Student.FirstName, Student.LastName, Student.Age, Student.Notes, Tshirt.Color, Tshirt.Size, Student.SchoolID, Student.TeacherID FROM Student " +
-                "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID";
-            using (var command = new SqlCommand(sql, con))
-            {
-                con.Open();
-                using (var reader = command.ExecuteReader())
-                {
-                    var list = new List<Student>();
-                    while (reader.Read())
-                        list.Add(new Student(reader.GetString(0), reader.GetString(1), reader.GetInt32(2), reader.GetString(3), reader.GetString(5), reader.GetString(4), reader.GetInt32(6), reader.GetInt32(7)));
-                    StudentArray = list.ToArray();
-                }
-            }
+           
         }
 
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
@@ -79,58 +61,9 @@ namespace CIS484Solution1
         }
         protected void MultiView_ActiveViewChanged(object sender, EventArgs e)
         {
-            string example = "";
-            for (int i = 0; i < StudentPurgatory.Length; i++)
-            {
-                if (StudentPurgatory[i] != null)
-                {
-                    example += (StudentPurgatory[i].LastName);
-                }
 
-            }
             //Connect to DB
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd;
-            int sub;
-                try
-                {
-                    
-                    // open the Sql connection
-                    connection.Open();
-                    //Check for size in Note field and insert temporarily or permanently into DB if it does not exist
-                    foreach (Student item in StudentPurgatory)
-                    {
-                        if (item != null) {
-                        if (NotesTextBox.Text.Length > 20)
-                        {
-                            sub = 20;
-                        }
-                        else
-                        {
-                            sub = item.Notes.Length;
-                        }
-
-                        string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + item.FirstName + "' and LastName= '" + item.LastName + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + item.FirstName + "', '" + item.LastName + "', '" + item.Age + "', '" + item.Notes.Substring(0, sub) + "', " +
-                                "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + item.TshirtSize + "' and Color = '" + item.TshirtColor + "'), '" + item.SchoolID + "', '" + item.TeacherID + "'); ";
-                                cmd = new SqlCommand(sqlStatement, connection);
-                                cmd.CommandType = CommandType.Text;
-                                cmd.ExecuteNonQuery();
-                         }
-                    }
-                }
-                //If it does not work
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    string msg = "Insert/Update Error:";
-                    msg += ex.Message;
-                    throw new Exception(msg);
-                }
-                finally
-                {
-                    // close the Sql Connection
-                    connection.Close();
-                }
+           
         }
 
         protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
@@ -264,57 +197,57 @@ namespace CIS484Solution1
         {
             Boolean dup = false;
             //Checking for duplicates before inserting into C# object, if there is a duplicate then there is a message box letting you know, a different message box if you didn't fill everything out
-            for (int i = 0; i < StudentPurgatory.Length; i++)
-            {
-                if (StudentPurgatory[i] != null)
-                {
-                    if (FirstNameTextBox.Text.Trim() == StudentPurgatory[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentPurgatory[i].LastName.Trim())
-                    {
-                        dup = true;
-                    }
-                    if (dup == true)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
-            for (int i = 0; i < StudentArray.Length; i++)
-            {
-                if (StudentArray[i] != null)
-                {
-                    if (FirstNameTextBox.Text.Trim() == StudentArray[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentArray[i].LastName.Trim())
-                    {
-                        dup = true;
-                    }
-                    if (dup == true)
-                    {
-                        break;
-                    }
-                }
-                else
-                {
-                    break;
-                }
-            }
+            //for (int i = 0; i < StudentNameDataSource; i++)           {
+            //        if (FirstNameTextBox.Text.Trim() == StudentNameDataSource[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentNameDataSource[i].LastName.Trim()) {
+            //            dup = true;
+            //        }
+            //        if (dup == true) {
+            //            break;
+            //        }
+                
+
 
 
             if (dup == false && FirstNameTextBox.Text != "" && LastNameTextBox.Text != "" && StudentAgeList.SelectedIndex > -1 && NotesTextBox.Text != "" && TshirtList.SelectedIndex > -1 && TshirtColorList.SelectedIndex > -1 && StudentSchoolDropDownList.SelectedIndex > -1 && StudentTeacherDropDownList.SelectedIndex > -1)
             {
                 //If filled out and non duplicate it inserts into object
-                for (int i = 0; i < StudentPurgatory.Length; i++)
+                string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+                SqlConnection connection = new SqlConnection(strcon);
+                SqlCommand cmd;
+                int sub;
+                try
                 {
-                    if (StudentPurgatory[i] == null)
-                    {
-                        StudentPurgatory[i] = new Student(FirstNameTextBox.Text, LastNameTextBox.Text, Int32.Parse(StudentAgeList.SelectedValue.ToString()), NotesTextBox.Text, TshirtList.SelectedItem.Value, TshirtColorList.SelectedItem.Value, Int32.Parse(StudentSchoolDropDownList.SelectedValue.ToString()), Int32.Parse(StudentTeacherDropDownList.SelectedValue.ToString()));
-                        ResetButton_Click(sender, e);
-               //         MessageBox.Show("Added: "+ i + " " +  StudentPurgatory[i].FirstName + StudentPurgatory[i].LastName + "!", "StudentPurgatoryArray");
 
-                        break;
-                    }
+                    // open the Sql connection
+                    connection.Open();
+                    //Check for size in Note field and insert temporarily or permanently into DB if it does not exist
+                    
+                            if (NotesTextBox.Text.Length > 20)
+                            {
+                                sub = 20;
+                            }
+                            else
+                            {
+                                sub = NotesTextBox.Text.Length;
+                            }
+
+                            string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + FirstNameTextBox.Text + "' and LastName= '" + LastNameTextBox.Text + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + FirstNameTextBox.Text + "', '" + LastNameTextBox.Text + "', '" + StudentAgeList.SelectedValue + "', '" + NotesTextBox.Text.Substring(0, sub) + "', " +
+                                    "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedValue + "' and Color = '" + TshirtColorList.SelectedValue + "'), '" + StudentSchoolDropDownList.SelectedValue + "', '" + StudentTeacherDropDownList.SelectedValue + "'); ";
+                            cmd = new SqlCommand(sqlStatement, connection);
+                            cmd.CommandType = CommandType.Text;
+                            cmd.ExecuteNonQuery();
+                }
+                //If it does not work
+                catch (System.Data.SqlClient.SqlException ex)
+                {
+                    string msg = "Insert/Update Error:";
+                    msg += ex.Message;
+                    throw new Exception(msg);
+                }
+                finally
+                {
+                    // close the Sql Connection
+                    connection.Close();
                 }
             }
             //Failure alternatives
@@ -326,22 +259,6 @@ namespace CIS484Solution1
             {
                 MessageBox.Show("Oops", "All fields must be filled");
             }
-
-        }
-        protected void CommitStudent_Click(object sender, EventArgs e)
-        {
-            string example = "";
-            for (int i = 0; i < StudentPurgatory.Length; i++)
-            {
-                if (StudentPurgatory[i] != null) {
-                    example += (StudentPurgatory[i].LastName);
-                        }
-
-            }
-            //Call function to send array into DB and then clear current Array and erase screen fields
-            MultiView_ActiveViewChanged(sender, e);
-             Array.Clear(StudentPurgatory, 0, StudentPurgatory.Length);
-             ResetButton_Click(sender, e);
 
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
@@ -370,42 +287,7 @@ namespace CIS484Solution1
             }
 
         }
-        [WebMethod]
-        public static void ClosingTime()
-        {
-            //When the page unloads it makes sure to scrub database of extraneous values that don't belong
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            SqlConnection connection = new SqlConnection(strcon);
-            SqlCommand cmd;
-            string sqlStatement = string.Empty;
-                try
-                {
-                    // open the Sql connection
-                    connection.Open();
-                    foreach (Student item in StudentPurgatory)
-                    {
-                    if (item != null)
-                    {
-                        sqlStatement = "DELETE FROM Student WHERE FirstName ='" + item.FirstName + "' and LastName ='" + item.LastName + "' ";
-                        cmd = new SqlCommand(sqlStatement, connection);
-                        cmd.CommandType = CommandType.Text;
-                        cmd.ExecuteNonQuery();
-                    }
-                    }
-                   
-                }
-                catch (System.Data.SqlClient.SqlException ex)
-                {
-                    string msg = "Insert/Update Error:";
-                    msg += ex.Message;
-                    throw new Exception(msg);
-                }
-                finally
-                {
-                    // close the Sql Connection
-                    connection.Close();
-                }
-        }
+       
         protected void TeacherNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Listing teachers and summoning teacher info

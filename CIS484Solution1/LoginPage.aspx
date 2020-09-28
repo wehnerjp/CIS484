@@ -24,53 +24,6 @@
     <script src="global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
-    <script type="text/javascript">
-        //To summarize this is the client side javascript that actively checks and resolves differences between the ephemeral data and the DB data
-        //And triggers a function to precede the closing of the window
-        var needToConfirm = true;
-        var warn = true;
-        $("a").click(dontWarn);
-        $("form").submit(dontWarn);
-        $(document).bind('keypress', function(e) {
-              warn = false;
-          });
-
-          // Attach the event click for all links in the page
-          $("a").bind("click", function() {
-            warn = false;
-          });
-
-          // Attach the event submit for all forms in the page
-          $("form").bind("submit", function() {
-            warn = false;
-          });
-
-          // Attach the event click for all inputs in the page
-          $("input[type=submit]").bind("click", function() {
-            warn = false;
-          });
-        function dontWarn() {
-            // Don't warn
-            warn = false;
-
-            // ...but if we're still on the page a second later, set the flag again
-            setTimeout(function() {
-                warn = true;
-            }, 1000);
-        }
-        $(document).ready(function () {
-            $(":input").change(function () {
-                needToConfirm = true;
-                window.onbeforeunload = function () {
-                    if (needToConfirm && warn) {
-                        PageMethods.ClosingTime();
-                        return null;
-                    }
-                    needToConfirm = true;
-                }
-            });
-        });   
-    </script>
 
 </head>
 
@@ -332,9 +285,6 @@
                             <!--Button options for Submit, Commit Populate and Reset Distinguishable-->
                             <div class="p-t-15">
                                     <asp:Button ID="SubmitButton" runat="server" OnClick="AddStudent_Click" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
-                                </div> 
-                            <div class="p-t-15">
-                                    <asp:Button ID="CommitButton" runat="server" OnClick="CommitStudent_Click" ValidationGroup="StudentInput" CausesValidation="False" Text="Commit" UseSubmitBehavior="False" CssClass="btn btn--radius-2 btn--blue"/>
                                 </div> 
                             <div class="p-t-15">
                                     <asp:Button ID="PopulateButton" runat="server" OnClick="PopulateText_Click" ValidationGroup="StudentInput" CausesValidation="False" Text="Populate" CssClass="btn btn--radius-2 btn--green" ValidateRequestMode="Inherit" UseSubmitBehavior="False" />
