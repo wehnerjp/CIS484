@@ -306,6 +306,7 @@ h6 {
     font-size: 18px;
     color: #fff;
     font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
+    overflow: visible;
 }
 
 .btn--radius {

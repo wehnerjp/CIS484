@@ -1,0 +1,291 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="CIS484Solution1.Site1" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <meta name="description" content="Wehner"/>
+    <meta name="author" content="Wehner"/>
+    <meta name="keywords" content="Wehner"/>
+    <title >Event Registration Page: John Paul Wehner</title>
+    <!-- Font Awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- Google Fonts -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+<!-- Bootstrap core CSS -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+<!-- Material Design Bootstrap -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <!-- JQuery -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <!-- Font special for pages-->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet"/>
+    <!-- Main CSS-->
+    <link href="main.css" rel="stylesheet" media="all"/>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+    <!-- Main JS-->
+    <script src="jquery.js"></script>
+    <script src="global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"  ></script>
+
+
+
+    <script type="text/javascript">
+        function newwin() {  
+            if (document.getElementById("LoginForm").textContent != "Launch Login Form") {
+                document.getElementById("LoginForm").href = location.href;
+                document.getElementById('LoginForm').click();
+            }
+         
+        }
+        function ShowMessage(message, messagetype) {
+            var cssclass;
+            switch (messagetype) {
+                case 'Success':
+                    cssclass = 'alert-success';
+                    break;
+                case 'Error':
+                    cssclass = 'alert-danger';
+                    break;
+                case 'Warning':
+                    cssclass = 'alert-warning';
+                    break;
+                default:
+                    cssclass = 'alert-info';
+            }
+            $('#alert_container').append('<div class="alert ' + cssclass + ' alert-dismissible fade show" role="alert"> <strong>' + messagetype + '</strong> ' + message + ' <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <span aria-hidden="true">&times;</span></button></div>');
+        }
+    </script>
+</head>
+<body>
+
+  <script type="text/javascript">
+   //Implementing select2 api in order to modernize and stylize the selections
+    $(document).ready(function() {
+    $(".js-example-basic-single").select2();
+    });
+    </script>
+  <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+   <div class="wrapper wrapper--w680">
+    <div class="card card-4">
+      <div class="card-body">
+        <!-- My Heading and my Name included in the Title and in the body-->
+        <div class="row">
+            <div class="col">
+                <h2 class="title" style="width: 100%;">Field Trip Program: John Paul Wehner </h2>
+            </div>
+       <div id="LoginDiv" class="col text-right" runat="server">
+           <a href="" runat="server" id="LoginForm" class="btn btn-primary btn-sm float-right" onclick='newwin()' data-toggle="modal" style="padding-top: 0%; padding-bottom: 0%;" data-target="#modalLoginForm">Launch Login Form</a>
+       </div>
+       <div id="LogoutDiv" style="display: none;" class="col text-right" runat="server">
+           <a href="javascript: window.location.href = window.location.href; Session.abondon();"  runat="server" id="Logout" class="btn btn-primary btn-sm float-right"  style="padding-top: 0%; padding-bottom: 0%;">Logout</a>
+       </div>
+        </div>
+         <form id="LabForm" runat="server">
+             <asp:ScriptManager ID="ScriptManager1" runat="server" EnablePageMethods="true">
+               </asp:ScriptManager>
+                 <!-- Macro Menu for overarching personnel type selection-->
+
+             
+             
+             <div class="text-center">
+                 <div class="messagealert" id="alert_container">
+                   </div>
+             <asp:Menu  
+                ID="MasterMenu"  
+                CssClass="navbar navbar-expand-lg navbar-light bg-light text-center"
+                Orientation="Horizontal"  
+                Text-Align="center"
+                runat="server"  
+                OnMenuItemClick="MasterMenu_MenuItemClick"  NavigateUrl="javascript:  needToConfirm = false;" StaticMenuItemStyle-CssClass="menuItems" OnClientClick="javascript: needToConfirm = false;"  StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                <Items  >  
+                    <asp:MenuItem Text="Home" Value="0" Selected="true"/>  
+                    <asp:MenuItem  Text="Student" Value="1" />  
+                    <asp:MenuItem Text="Teacher" Value="2" />  
+                    <asp:MenuItem Text="Volunteer" Value="3" /> 
+                    <asp:MenuItem Text="Coordinator" Value="4" />  
+                    <asp:MenuItem Text="User: None"  Enabled="False" />  
+                </Items>  
+            </asp:Menu>
+             
+        </div>
+             
+              <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header text-center">
+                        <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body mx-3">
+                        <div class="md-form mb-5">
+                          <i class="fas fa-envelope prefix grey-text"></i>
+                          <asp:TextBox CssClass="form-control validate" type="email" ID="defaultFormEmail" runat="server" required="true" />
+                          <label data-error="wrong" data-success="right" for="defaultFormEmail">Your email</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                          <i class="fas fa-lock prefix grey-text"></i>
+                          <asp:TextBox CssClass="form-control validate" type="password" ID="defaultFormPass" runat="server" required="true" />
+                          <label data-error="wrong" data-success="right" for="defaultFormPass">Your password</label>
+                        </div>
+
+                      </div>
+        
+                      <div class="modal-footer d-flex justify-content-center">
+                        <asp:Button ID="LoginButton" runat="server" CssClass="btn btn-success" Text="Login" OnClick="LoginButton_Click"/>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            <!-- Used Multiview to enable static page load at the beginning in order to boost responsiveness during user interaction-->
+             
+            <asp:MultiView ID="MasterMultiView" runat="server"  ActiveViewIndex="0"> 
+                <asp:View runat="server">
+
+                   <asp:ContentPlaceHolder ID="HomePlaceHolder" runat="server">  
+          
+                    </asp:ContentPlaceHolder>  
+                </asp:View>
+                <asp:View runat="server">
+                        <!--New and Existing Student Sub Menus-->
+                    <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
+                    <asp:Menu  
+                        ID="menuTabsCurrent"  
+                        CssClass="navb"
+                        Orientation="Horizontal"  
+                        Width="100%"  
+                        Text-Align="center"
+                        runat="server"  AutoPostBack="true" 
+                        OnMenuItemClick="menuTabsCurrent_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItemsg" ValidateRequestMode="Inherit">
+                        <Items >  
+                            <asp:MenuItem  Text="New" Value="0" Selected="true"  />  
+                            <asp:MenuItem Text="Existing" Value="1" />  
+                        </Items>  
+                    </asp:Menu> 
+
+                    <!--Validating and Populable Student input with responsive list selection-->
+                    <asp:MultiView ID="multiviewStudent" runat="server" ActiveViewIndex="0">  
+                        <asp:View ID="StudentNew" runat="server">  
+                    <asp:ContentPlaceHolder ID="NewStudentPlaceHolder" runat="server">  
+          
+                    </asp:ContentPlaceHolder>
+                            </asp:View>  
+                        <asp:View ID="StudentExisting" runat="server"> 
+                            <asp:ContentPlaceHolder ID="StudentExistingPlaceholder" runat="server">  
+          
+                            </asp:ContentPlaceHolder>
+                        </asp:View>  
+                    </asp:MultiView>  
+                   </div>  
+                </asp:View>
+                <asp:View runat="server">
+                    <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
+                    <asp:Menu  
+                        ID="TeacherMenu"  
+                        CssClass="navb"
+                        Orientation="Horizontal"  
+                        Width="100%"  
+                        Text-Align="center"
+                        runat="server"  
+                        OnMenuItemClick="TeacherMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                        <Items >  
+                            <asp:MenuItem  Text="New" Value="0"  Selected="true" />  
+                            <asp:MenuItem Text="Existing" Value="1" />  
+                        </Items>  
+                    </asp:Menu> 
+                    <!--Teacher Input Extra Functionality-->
+                  <asp:MultiView ID="TeacherView" runat="server" ActiveViewIndex="0">  
+                   <asp:View runat="server"> 
+                    <asp:ContentPlaceHolder ID="TeacherNewPlaceholder" runat="server">  
+          
+                    </asp:ContentPlaceHolder>  
+                    </asp:View>  
+                        <asp:View runat="server">  
+                            <asp:ContentPlaceHolder ID="TeacherExistingPlaceholder" runat="server">  
+          
+                            </asp:ContentPlaceHolder>  
+                        </asp:View>  
+                  </asp:MultiView>  
+                  </div>
+                </asp:View>
+                <asp:View runat="server">
+                    <div style="width: 100%; margin-left: 20px; margin-top: 50px; margin-right: 20px;">
+                       <!--Input Template for Volunteer generation not connected to back end DB-->
+                    <asp:Menu  
+                        ID="VolunteerMenu"  
+                        CssClass="navb"
+                        Orientation="Horizontal"  
+                        Width="100%"  
+                        Text-Align="center"
+                        runat="server"  
+                        OnMenuItemClick="VolunteerMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                        <Items >  
+                            <asp:MenuItem  Text="New" Value="0"  Selected="true" />  
+                            <asp:MenuItem Text="Existing" Value="1" />  
+                        </Items>  
+                    </asp:Menu> 
+                    <asp:MultiView ID="VolunteerMultiview" runat="server" ActiveViewIndex="0">  
+                        <asp:View runat="server">  
+                            <asp:ContentPlaceHolder ID="NewVolunteerPlaceholder" runat="server">  
+          
+                            </asp:ContentPlaceHolder>  
+                        </asp:View>  
+                        <asp:View runat="server"> 
+                            <asp:ContentPlaceHolder ID="VolunteerExistingPlaceholder" runat="server">  
+          
+                            </asp:ContentPlaceHolder>
+                        <!--Volunteer Selection and Info Display-->
+                        </asp:View>  
+                    </asp:MultiView>  
+                  </div>
+                </asp:View>
+                <asp:View runat="server">
+                   <div style="width: 100%; margin-left: 20px; margin-top: 50px; margin-right: 20px;"> 
+                    <asp:Menu  
+                        ID="CoordinatorMenu"  
+                        CssClass="navb"
+                        Orientation="Horizontal"  
+                        Width="100%"  
+                        Text-Align="center"
+                        runat="server"  
+                        OnMenuItemClick="CoordinatorMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                        <Items >  
+                            <asp:MenuItem  Text="New" Value="0"  Selected="true" />  
+                            <asp:MenuItem Text="Existing" Value="1" />  
+                        </Items>  
+                    </asp:Menu> 
+                    <!--Coordinator Menu and stand alone insert template-->
+                    <asp:MultiView ID="CoordinatorMultiView" runat="server" ActiveViewIndex="0">  
+                        <asp:View runat="server">  
+                    <asp:ContentPlaceHolder ID="CoordinatorNewPlaceholder" runat="server">  
+          
+                    </asp:ContentPlaceHolder>  
+                        </asp:View>  
+                        <asp:View runat="server">  
+                            <asp:ContentPlaceHolder ID="CoordinatorExistingPlaceholder" runat="server">  
+          
+                            </asp:ContentPlaceHolder>
+                        </asp:View>  
+                    </asp:MultiView>  
+                  </div>
+                </asp:View>
+            </asp:MultiView>
+          </form>
+         </div>
+    </div>
+   </div>
+  </div>
+</body>
+</html>
