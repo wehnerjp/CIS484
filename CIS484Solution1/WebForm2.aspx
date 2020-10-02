@@ -370,7 +370,7 @@
                                     <asp:Button ID="SubmitTeacher" runat="server" OnClick="AddTeacher_Click" Text="Submit" style="margin-left: 0%;" CssClass="btn btn-primary"/>
                                 </div> 
                             <div class="col-sm text-left">
-                                    <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click"  CausesValidation="False" Text="Populate" CssClass="btn btn-success"  UseSubmitBehavior="False" />
+                                    <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click"  CausesValidation="False" Text=" Fill " CssClass="btn btn-success"  UseSubmitBehavior="False" />
                                 </div> 
                             <div class="col-sm text-left">
                                     <asp:Button ID="ResetTeacher" runat="server" OnClick="ResetTeacherButton_Click"   CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger"/>

@@ -22,7 +22,13 @@ namespace CIS484Solution1
         public enum MessageType { Success, Error, Info, Warning };
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if(LoginDiv.Style["display"] != "none")
+            {
+                UserLoginType = null;
+                UserLoginID = -1;
+                UserLoginName = null;
+                UserLoginEmail = null;
+            }
         }
 
         protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
@@ -127,7 +133,7 @@ namespace CIS484Solution1
                     while (sdr1.Read())
                     {
                         UserLoginID = sdr1.GetInt32(0);
-                        UserLoginName = (sdr1.GetString(1).Substring(0, 1) + ". " + sdr1.GetString(2));
+                        UserLoginName = (sdr1.GetString(2).Substring(0, 1) + ". " + sdr1.GetString(3));
                     }
                 }
                 else
