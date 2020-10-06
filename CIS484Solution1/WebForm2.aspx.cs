@@ -15,9 +15,21 @@ namespace CIS484Solution1
 {
     public partial class WebForm2 : System.Web.UI.Page
     {
+        public static int StID = -1;
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            ScriptManager.RegisterStartupScript(
+                        UpdatePanel1,
+                        this.GetType(),
+                        "MyAction",
+                        "$(document).ready(function() { $('.js-example-basic-single').select2(); });",
+                        true);
+            ScriptManager.RegisterStartupScript(
+                        UpdatePanel2,
+                        this.GetType(),
+                        "MyAction",
+                        "$(document).ready(function() { $('.js-example-basic-single').select2();  $('.grid').masonry({ itemSelector: '.grid-item', columnWidth: 160,  gutter: 20   }); $(document).ready(function () {$('#manBt').click(function() {$('#manPan1').slideToggle('slow');});});});",
+                        true);
         }
 
         protected void MultiView_ActiveViewChanged(object sender, EventArgs e)
@@ -131,7 +143,7 @@ namespace CIS484Solution1
         protected void StudentNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
             //Student Selection information for user display
-            String sqlQuery = "Select Student.StudentID, Student.FirstName + ' ' + Student.LastName as StudentName, Student.Age, Student.Notes, Teacher.FirstName + ' ' + Teacher.LastName as TeacherName, Tshirt.Size, Tshirt.Color, School.SchoolName from Student " +
+            String sqlQuery = "Select Student.StudentID, TRIM(Student.FirstName) + ' ' + TRIM(Student.LastName) as StudentName, Student.Age, Student.Notes, TRIM(Teacher.FirstName) + ' ' + TRIM(Teacher.LastName) as TeacherName, Tshirt.Size, Tshirt.Color, TRIM(School.SchoolName) from Student " +
                  "inner join Tshirt on Tshirt.TshirtID = Student.TshirtID " +
                 "inner join Teacher on Student.TeacherID = Teacher.TeacherID " +
                 "inner join School on School.SchoolID = Student.SchoolID " +
@@ -142,14 +154,35 @@ namespace CIS484Solution1
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
+            
+            
             SqlConnection con = new SqlConnection(strcon);
+            SqlConnection con1 = new SqlConnection(strcon);
+            con1.Open();
+            SqlCommand myCommand = new SqlCommand(sqlQuery, con1);
+            SqlDataReader myReader = myCommand.ExecuteReader();
             con.Open();
+            while (myReader.Read())
+            {
+                StID = Int32.Parse(myReader[0].ToString());
+                StudentNameData.Text = (myReader[1].ToString());
+                StudentAgeEdit.SelectedValue = (myReader[2].ToString());
+                StudentNotesData.Text = (myReader[3].ToString());
+                StudentSchoolData.Text = (myReader[7].ToString());
+                StudentTeacherData.Text = (myReader[4].ToString());
+                StudentColorEdit.SelectedValue = (myReader[6].ToString());
+                StudentSizeEdit.SelectedValue = (myReader[5].ToString());
+               
+                
+
+            }
+            
             //Filling out data for display
-            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
-            DataSet ds = new DataSet();
-            sqlAdapter.Fill(ds);
-            StudentFormView.DataSource = ds;
-            StudentFormView.DataBind();
+           // SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+           // DataSet ds = new DataSet();
+           // sqlAdapter.Fill(ds);
+           // StudentFormView.DataSource = ds;
+           // StudentFormView.DataBind();
             con.Close();
 
         }
@@ -225,13 +258,18 @@ namespace CIS484Solution1
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
             //Inserting teacher query
-            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email) values " +
+            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
                 "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "'); ";
+                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value +"'); ";
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //Inserting teacher query
+            String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
+                "('" + EmailTextBox.Text + "', '" + modalLRInput13.Text + "', 'Teacher');";            //Get connection string from web.config file  
+            string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
+            SqlConnection con1 = new SqlConnection(strcon1);
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 con.Open();
@@ -245,6 +283,20 @@ namespace CIS484Solution1
                     Console.Write(ex.Message);
                 }
                 con.Close();
+            }
+            using (SqlCommand command = new SqlCommand(sqlQuery1, con1))
+            {
+                con1.Open();
+                try
+                {
+                    command.ExecuteNonQuery();
+                    Console.Write("insert successful");
+                }
+                catch (SqlException ex)
+                {
+                    Console.Write(ex.Message);
+                }
+                con1.Close();
             }
 
         }
@@ -430,7 +482,8 @@ namespace CIS484Solution1
             TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
             TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
             TeacherNoteTextBox.Text = Faker.Lorem.Sentence();
-            EmailTextBox.Text = TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1) + "@gmail.com";
+            EmailTextBox.Text = TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1) + "@edu.com";
+            modalLRInput13.Text = "1111";
 
 
         }
@@ -692,11 +745,6 @@ namespace CIS484Solution1
             }
         }
 
-        protected void Unnamed_MenuItemClick(object sender, MenuEventArgs e)
-        {
-
-        }
-
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
         {
             System.Web.UI.WebControls.Menu menuTabsCurrent = sender as System.Web.UI.WebControls.Menu;
@@ -724,6 +772,48 @@ namespace CIS484Solution1
             MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
             multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
 
+        }
+
+        protected void StudentUpdateButton_Click(object sender, EventArgs e)
+        {
+            //If filled out and non duplicate it inserts into object
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            SqlConnection connection = new SqlConnection(strcon);
+            SqlCommand cmd;
+            int sub;
+            try
+            {
+
+                // open the Sql connection
+                connection.Open();
+                //Check for size in Note field and insert temporarily or permanently into DB if it does not exist
+
+                if (StudentNotesData.Text.Length > 20)
+                {
+                    sub = 20;
+                }
+                else
+                {
+                    sub = StudentNotesData.Text.Length;
+                }
+                string sqlStatement = "UPDATE Student SET Age ='" + StudentAgeEdit.SelectedValue + "', Notes ='" + StudentNotesData.Text.Substring(0, sub) + "', TshirtID = (SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + StudentSizeEdit.SelectedValue + "' and Color = '" + StudentColorEdit.SelectedValue + "')" +
+                    "Where StudentID ='" + StID + "'";
+                cmd = new SqlCommand(sqlStatement, connection);
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            //If it does not work
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Update Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                // close the Sql Connection
+                connection.Close();
+            }
         }
     }
 }

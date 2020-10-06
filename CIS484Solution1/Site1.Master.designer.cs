@@ -22,15 +22,6 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl LoginDiv;
         
         /// <summary>
-        /// LoginForm control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlAnchor LoginForm;
-        
-        /// <summary>
         /// LogoutDiv control.
         /// </summary>
         /// <remarks>
@@ -85,6 +76,15 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.TextBox defaultFormEmail;
         
         /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
         /// defaultFormPass control.
         /// </summary>
         /// <remarks>
@@ -94,6 +94,15 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.TextBox defaultFormPass;
         
         /// <summary>
+        /// RequiredFieldValidator2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
+        
+        /// <summary>
         /// LoginButton control.
         /// </summary>
         /// <remarks>
@@ -101,6 +110,15 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button LoginButton;
+        
+        /// <summary>
+        /// TeacherNewPlaceholder control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder TeacherNewPlaceholder;
         
         /// <summary>
         /// MasterMultiView control.
@@ -193,15 +211,6 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.MultiView TeacherView;
         
         /// <summary>
-        /// TeacherNewPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder TeacherNewPlaceholder;
-        
-        /// <summary>
         /// TeacherExistingPlaceholder control.
         /// </summary>
         /// <remarks>
@@ -211,33 +220,6 @@ namespace CIS484Solution1 {
         protected global::System.Web.UI.WebControls.ContentPlaceHolder TeacherExistingPlaceholder;
         
         /// <summary>
-        /// VolunteerMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu VolunteerMenu;
-        
-        /// <summary>
-        /// VolunteerMultiview control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView VolunteerMultiview;
-        
-        /// <summary>
-        /// NewVolunteerPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder NewVolunteerPlaceholder;
-        
-        /// <summary>
         /// VolunteerExistingPlaceholder control.
         /// </summary>
         /// <remarks>
@@ -245,33 +227,6 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder VolunteerExistingPlaceholder;
-        
-        /// <summary>
-        /// CoordinatorMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu CoordinatorMenu;
-        
-        /// <summary>
-        /// CoordinatorMultiView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView CoordinatorMultiView;
-        
-        /// <summary>
-        /// CoordinatorNewPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder CoordinatorNewPlaceholder;
         
         /// <summary>
         /// CoordinatorExistingPlaceholder control.

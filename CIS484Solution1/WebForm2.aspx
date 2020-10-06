@@ -1,97 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="CIS484Solution1.WebForm2" %>
 <asp:Content ID="Home" ContentPlaceHolderID="HomePlaceholder" runat="server">
     <div class="container" style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;"> 
-                       <div class="row">
-                          <div class="col">
-                             <!--Implements home page and dynamic dropdown and viewbox based on event you select -->
-                               <div class="form-group">
-                                 <asp:Label ID="Label20" CssClass="label" runat="server" Text="Event"></asp:Label>
-                                   <asp:SqlDataSource runat="server" 
-                                     ID="dtasrcEventList"
-                                     DataSourceMode="DataReader"
-                                     ConnectionString="<%$ ConnectionStrings:dbconnection%>"
-                                     SelectCommand="SELECT EventID, EventName FROM Event" />
-                                   <asp:DropDownList 
-                                     ID="EventList"
-                                     DataSourceID="dtasrcEventList" 
-                                     DataTextField="EventName" 
-                                     DataValueField="EventID" 
-                                     AutoPostBack="true" 
-                                     OnSelectedIndexChanged="EventList_SelectedIndexChanged"
-                                     runat="server"
-                                     OnClientClick="javascript: needToConfirm = false;"
-                                     CssClass="js-example-basic-single"
-                                     Width="100%" />
-                                   </div>
-                              </div>
-                          <div class="col">
-                                   <!-- Info Display -->
-                                   <div class="form-group">
-                                      <asp:Label ID="Label22" CssClass="label" runat="server" Text="Event Details"></asp:Label>
-                                      <asp:FormView CssClass="container" ID="FormView1" EmptyDataText=" " runat="server"> 
 
-                                        <ItemTemplate>  
-                                            <table class="table table-bordered table-striped">  
-                                                <tr>  
-                                                    <td>Event Name: </td>  
-                                                    <td><%#Eval("EventName") %></td>  
-                                                </tr>
-                                                <tr>  
-                                                    <td>Date: </td>  
-                                                    <td><%#Eval("Date") %></td>  
-                                                </tr>  
-                                                <tr>  
-                                                    <td>Time: </td>  
-                                                    <td><%#Eval("Time") %></td>  
-                                                </tr>  
-                                                <tr>  
-                                                    <td>Room Number: </td>  
-                                                    <td><%#Eval("RoomNbr") %></td>  
-                                                </tr>  
-                                            </table>  
-                                        </ItemTemplate>  
-                                    </asp:FormView>  
-
-                                    <asp:Repeater ID="CoordinatorRepeater" runat="server">
-                                        <ItemTemplate>
-                                            <table>
-                                                <tr>  
-                                                    <td>Coordinator: </td>  
-                                                    <td><%# Container.DataItem %></td>  
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
-                                    </asp:Repeater> 
-
-                                    <!-- Repeater Displays all Volunteers-->
-
-                                    <asp:Repeater ID="rep1" runat="server">
-                                        <ItemTemplate>
-                                            <table>
-                                                <tr>  
-                                                    <td>Volunteer: </td>  
-                                                    <td><%# Container.DataItem %></td>  
-                                                </tr>
-                                            </table>
-                                        </ItemTemplate>
-                                    </asp:Repeater>                                
-                                   </div>
-                                 </div>
-                          <div class="w-100"></div>
-                         <!--Displays Students attending event-->
-
-                             <div class="col">
-                                <div class="form-group">
-                                    <asp:Label ID="Label23" CssClass="label" runat="server" Text="Students Attending Event"></asp:Label>
-                                    <asp:ListBox ID="ListBox1" CssClass="w-50 custom-select" runat="server">
-                                    </asp:ListBox>
-                                </div>
-                             </div>
-                        </div>
     </div>
 </asp:Content>
 <asp:Content ID="NewStudent" ContentPlaceHolderID="NewStudentPlaceholder" runat="server">
-
+    <asp:UpdatePanel ID="UpdatePanel2" runat="server">
+                <ContentTemplate>
                             <div style="margin-top: 40px;">  
                                 <div class="row">
                                     <div class="col">
@@ -209,7 +124,8 @@
                                 </div>
                               </div>
                             </div>
-                        
+      </ContentTemplate>
+     </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID ="StudentExisting" ContentPlaceHolderID="StudentExistingPlaceholder" runat="server">
     <script type="text/javascript">
@@ -217,29 +133,187 @@
                                               $(".js-example-basic-single").select2();
                                             });
                             </script>
-                            <div style="margin-top: 40px;">  
-                                <div class="form-group">
-                                    <!--Student Dropdown allows for profile data viewing-->
-                                    <asp:Label ID="StudentNameLabel" CssClass="label" runat="server" Text="Student Name"></asp:Label>
-                                    <asp:SqlDataSource runat="server" 
-                                               ID="StudentNameDataSource"
-                                               DataSourceMode="DataReader"
-                                               ConnectionString="<%$ ConnectionStrings:dbconnection%>"
-                                               SelectCommand="SELECT StudentID, FirstName +' ' + LastName as StudentName FROM Student" />
-                                        <asp:DropDownList ID="StudentNameDDL"
-                                            DataSourceID="StudentNameDataSource" 
-                                            DataTextField="StudentName" 
-                                            DataValueField="StudentID" 
-                                            AutoPostBack="true" 
-                                            OnSelectedIndexChanged="StudentNameDDL_SelectedIndexChanged"
-                                            runat="server"
-                                            Width="50%" 
-                                            CssClass="js-example-basic-single" />
-                                </div>
-                                <div class="form-group">
+                            <div style="margin-top: 40px;"> 
+                                <div class="container-fluid">
+  
+                                  <h1 class="my-4 font-weight-bold">Masonry - columnWidth</h1>
+
+                                  <div class="grid">
+                                    
+                                          <div class="grid-item">
+                                     <div class="form-group">
+                                         <asp:Label ID="Label5" CssClass="label" runat="server" Text="Event"></asp:Label>
+                                           <asp:SqlDataSource runat="server" 
+                                             ID="dtasrcEventList"
+                                             DataSourceMode="DataReader"
+                                             ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                             SelectCommand="SELECT EventID, EventName FROM Event" />
+                                           <asp:DropDownList 
+                                             ID="EventList"
+                                             DataSourceID="dtasrcEventList" 
+                                             DataTextField="EventName" 
+                                             DataValueField="EventID" 
+                                             AutoPostBack="true" 
+                                             OnSelectedIndexChanged="EventList_SelectedIndexChanged"
+                                             runat="server"
+                                             OnClientClick="javascript: needToConfirm = false;"
+                                             CssClass="js-example-basic-single" />
+                                           </div>
+                                    </div>
+                                  <div class="grid-item grid-item--width2 grid-item--height3">
+                                      <!-- Info Display -->
+                                   <div class="form-group">
+                                      <asp:Label ID="Label8" CssClass="label" runat="server" Text="Event Details"></asp:Label>
+                                      <asp:FormView CssClass="container" ID="FormView1" EmptyDataText=" " runat="server"> 
+
+                                        <ItemTemplate>  
+                                            <table class="table table-bordered table-striped">  
+                                                <tr>  
+                                                    <td>Event Name: </td>  
+                                                    <td><%#Eval("EventName") %></td>  
+                                                </tr>
+                                                <tr>  
+                                                    <td>Date: </td>  
+                                                    <td><%#Eval("Date") %></td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Time: </td>  
+                                                    <td><%#Eval("Time") %></td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Room Number: </td>  
+                                                    <td><%#Eval("RoomNbr") %></td>  
+                                                </tr>  
+                                            </table>  
+                                        </ItemTemplate>  
+                                    </asp:FormView>  
+
+                                                                  
+                                   </div>
+                                          
+                                        
+                                    </div>
+                                    <div class="grid-item grid-item--height2" >
+                                        <h4>Coordinator: </h4>
+                                        <asp:Repeater ID="CoordinatorRepeater" runat="server">
+                                        <ItemTemplate>
+                                            <table>
+                                                <tr>  
+                                                    <td><%# Container.DataItem %></td>  
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
+                                    </asp:Repeater> 
+                                    <!-- Repeater Displays all Volunteers-->
+                                    <h4>Volunteer: </h4>
+                                    <asp:Repeater ID="rep1" runat="server">
+                                        <ItemTemplate>
+                                            <table>
+                                                <tr>  
+                                                    <td><%# Container.DataItem %></td>  
+                                                </tr>
+                                            </table>
+                                        </ItemTemplate>
+                                    </asp:Repeater>  
+                                        
+                                    </div>
+                                    <div class="grid-item grid-item--width2 grid-item--height2 ">
+                                        <div class="form-group">
+                                            <asp:Label ID="Label9" CssClass="label" runat="server" Text="Students Attending Event"></asp:Label>
+                                            <asp:ListBox ID="ListBox1" CssClass="custom-select" runat="server">
+                                            </asp:ListBox>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                   
+                                    <div class="grid-item">
+                                        <div class="form-group">
+                                            <!--Student Dropdown allows for profile data viewing-->
+                                            <asp:Label ID="StudentNameLabel" CssClass="label" runat="server" Text="Student Name"></asp:Label>
+                                            <asp:SqlDataSource runat="server" 
+                                                       ID="StudentNameDataSource"
+                                                       DataSourceMode="DataReader"
+                                                       ConnectionString="<%$ ConnectionStrings:dbconnection%>"
+                                                       SelectCommand="SELECT StudentID, TRIM(FirstName +' ' + LastName) as StudentName FROM Student" />
+                                                <asp:DropDownList ID="StudentNameDDL"
+                                                    DataSourceID="StudentNameDataSource" 
+                                                    DataTextField="StudentName" 
+                                                    DataValueField="StudentID" 
+                                                    AutoPostBack="true" 
+                                                    OnSelectedIndexChanged="StudentNameDDL_SelectedIndexChanged"
+                                                    runat="server"
+                                                    width="100%"
+                                                    CssClass="js-example-basic-single" />
+                                             </div>
+                                    </div>
+                                    <div class="grid-item grid-item--height2 grid-item--width2" style="align-items: flex-end">
+                                        <div class="form-group">
+                                            <table class="table table-bordered table-striped" style="margin-left: 5px">  
+                                                <tr>  
+                                                    <td>Name:    </td>  
+                                                    <td><asp:Label ID="StudentNameData" runat="server"></asp:Label></td>  
+                                                </tr>
+                                                <tr>  
+                                                    <td>Age: </td>  
+                                                    <td><asp:DropDownList 
+                                                    ID="StudentAgeEdit" 
+                                                    runat="server"
+                                                    CssClass="js-example-basic-single"
+                                                    Width="50%">
+                                                    <asp:ListItem Value="6" />
+                                                    <asp:ListItem Value="7" />
+                                                    <asp:ListItem Value="8" />
+                                                    <asp:ListItem Value="9" />
+                                                    <asp:ListItem Value="10" />
+                                                    <asp:ListItem Value="11" />
+                                            </asp:DropDownList></td>  
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Notes: </td>
+                                                    <td><asp:TextBox ID="StudentNotesData" runat="server"></asp:TextBox></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>School: </td>  
+                                                    <td><asp:Label ID="StudentSchoolData" runat="server"></asp:Label></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Teacher: </td>
+                                                    <td><asp:Label ID="StudentTeacherData" runat="server"></asp:Label></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Tshirt Color: </td>  
+                                                    <td> <asp:DropDownList 
+                                                        ID="StudentColorEdit" 
+                                                        runat="server"
+                                                        CssClass="js-example-basic-single"
+                                                        Width="50%">
+                                                        <asp:ListItem Value="Green" />
+                                                        <asp:ListItem Value="Blue" />
+                                                        <asp:ListItem Value="Red" />
+                                                </asp:DropDownList></td>  
+
+                                                </tr>  
+                                                <tr>  
+                                                    <td>Tshirt Size: </td>
+                                                    <td><asp:DropDownList 
+                                                        ID="StudentSizeEdit" 
+                                                        runat="server"
+                                                        CssClass="js-example-basic-single"
+                                                        Width="50%">
+                                                        <asp:ListItem Value="Small" />
+                                                        <asp:ListItem Value="Medium" />
+                                                        <asp:ListItem Value="Large" />
+                                        </asp:DropDownList></td>  
+
+                                                </tr> 
+                                            </table>  
                                     <asp:FormView ID="StudentFormView" runat="server">
                                          <ItemTemplate>  
-                                            <table >  
+                                            <table class="table table-bordered table-striped" style="margin-left: 5px">  
                                                 <tr>  
                                                     <td>Student Name:    </td>  
                                                     <td><%#Eval("StudentName") %></td>  
@@ -277,22 +351,47 @@
                                         </ItemTemplate>  
                                     </asp:FormView>
                                 </div>
+                                        
+                                        
+                                    </div>
+                                    
+                                    <div class="grid-item">
+                                        <asp:Button ID="StudentUpdateButton" runat="server" OnClick="StudentUpdateButton_Click" style="padding-top: 0%; padding-bottom: 0%;" CssClass="btn btn-primary btn-sm" Text="Update" />
+                                    </div>
+                                  </div>
+  
+                                </div>
+                                
+                                
                             </div>  
 </asp:Content>
 <asp:Content ID="TeacherNew" ContentPlaceHolderID="TeacherNewPlaceholder" runat="server">
-     
+         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+                <ContentTemplate>
                             <div style="margin-top: 40px;">  
                                 <div class="row">
                                     <div class="col">
                                         <div class="form-group">
                                             <asp:Label ID="TeacherFirstName" CssClass="label" runat="server" Text="First Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherFirstNameText" required="true" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherFirstNameText"  runat="server" causesvalidation="false" />
+                                        <asp:requiredfieldvalidator id="RequiredFieldValidator2"
+                                          controltovalidate="TeacherFirstNameText"
+                                          validationgroup="SignUpGroup"
+                                          errormessage="Enter Name."
+                                          runat="Server">
+                                        </asp:requiredfieldvalidator>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
                                             <asp:Label ID="TeacherLastName" CssClass="label" runat="server" Text="Last Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherLastNameInput" required="true" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherLastNameInput" runat="server" causesvalidation="false" />
+                                        <asp:requiredfieldvalidator id="RequiredFieldValidator1"
+                                          controltovalidate="TeacherLastNameInput"
+                                          validationgroup="SignUpGroup"
+                                          errormessage="Enter Name."
+                                          runat="Server">
+                                        </asp:requiredfieldvalidator>
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +449,13 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <asp:Label ID="TeacherNoteLabel" CssClass="label" runat="server" Text="Notes"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TeacherNoteTextBox" required="true" runat="server" />
+                                            <asp:TextBox CssClass="input--style-4" ID="TeacherNoteTextBox"  runat="server" causesvalidation="false" />
+                                       <asp:requiredfieldvalidator id="RequiredFieldValidator3"
+                                          controltovalidate="TeacherNoteTextBox"
+                                          validationgroup="SignUpGroup"
+                                          errormessage="Enter Notes."
+                                          runat="Server">
+                                        </asp:requiredfieldvalidator>
                                         </div>
                                     </div>
                                 </div>
@@ -358,26 +463,63 @@
                                     <div class="col">
                                         <div class="form-group">
                                             <asp:Label ID="Label24" CssClass="label" runat="server" Text="Email"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" required="true" />
+                                            <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" causesvalidation="false" />
+                                        <asp:requiredfieldvalidator id="RequiredFieldValidator4"
+                                          controltovalidate="EmailTextBox"
+                                          validationgroup="SignUpGroup"
+                                          errormessage="Enter Email."
+                                          runat="Server">
+                                        </asp:requiredfieldvalidator>
                                         </div>
                                     </div>
+                                    <div class="col">
+                                    <div class="form-group">
+                                    <asp:Label ID="Label3" CssClass="label" runat="server" Text="Grade"></asp:Label>
+                                        <asp:DropDownList 
+                                            ID="GradeDDL" 
+                                            runat="server"
+                                            CssClass="js-example-basic-single"
+                                            Width="50%">
+                                            <asp:ListItem Value="6" />
+                                            <asp:ListItem Value="7" />
+                                            <asp:ListItem Value="8" />
+                                        </asp:DropDownList>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="row">
+                                <div class="md-form form-sm mb-5">
+                                    <i class="fas fa-lock prefix"></i>
+                                    <asp:Label ID="Label4" CssClass="label" runat="server" Text="Password" AssociatedControlId="modalLRInput13" />
+                                    <asp:TextBox CssClass="form-control form-control-sm validate" type="password" ID="modalLRInput13" causesvalidation="false" runat="server"/>
+                                    <asp:requiredfieldvalidator id="RequiredFieldValidator5"
+                                          controltovalidate="modalLRInput13"
+                                          validationgroup="SignUpGroup"
+                                          errormessage="Enter Email."
+                                          runat="Server">
+                                    </asp:requiredfieldvalidator>
+                                  </div>
                                 </div>
                             </div>
                             <!--Same button functions outside of commit in order to streamline process-->
                             <div class="container">
-                              <div class="row">
-                                <div class="col-sm text-left">
-                                    <asp:Button ID="SubmitTeacher" runat="server" OnClick="AddTeacher_Click" Text="Submit" style="margin-left: 0%;" CssClass="btn btn-primary"/>
+                              <div class="col">
+                                <div class="row text-center form-sm mt-2">
+                                    <asp:Button ID="SubmitTeacher" runat="server" ValidationGroup="SignUpGroup" OnClick="AddTeacher_Click" Text="Submit" style="margin-left: 0%;" CssClass="btn btn-info"/>
                                 </div> 
-                            <div class="col-sm text-left">
+                            <div class="row text-center form-sm mt-2">
                                     <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click"  CausesValidation="False" Text=" Fill " CssClass="btn btn-success"  UseSubmitBehavior="False" />
                                 </div> 
-                            <div class="col-sm text-left">
+                            <div class="row text-center form-sm mt-2">
                                     <asp:Button ID="ResetTeacher" runat="server" OnClick="ResetTeacherButton_Click"   CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger"/>
                                 </div>
                               </div>
                             </div>
-
+                </ContentTemplate>
+        <Triggers>
+            <asp:AsyncPostBackTrigger ControlID="TeacherSchoolList" />
+        </Triggers>
+        </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="TeacherExisting" ContentPlaceHolderID="TeacherExistingPlaceholder" runat="server">
         <div style="margin-top: 40px;"> 
@@ -467,60 +609,7 @@
                                  </div>
                             </div>  
 </asp:Content>
-<asp:Content ID="NewVolunteer" ContentPlaceHolderID="NewVolunteerPlaceholder" runat="server">
-    
-                            <div style="margin-top: 40px;">  
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="input-group">
-                                            <asp:Label ID="VolunteerFirstName" CssClass="label" runat="server" Text="First Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TextBox1" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="form-group">
-                                            <asp:Label ID="VolunteerLastName" CssClass="label" runat="server" Text="Last Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TextBox2" runat="server" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                                <asp:Label ID="Label10" CssClass="label" runat="server" Text="T-shirt Size"></asp:Label>
-                                                <asp:DropDownList 
-                                                    ID="VolunteerTshirtList" 
-                                                    runat="server"
-                                                    CssClass="js-example-basic-single"
-                                                    Width="50%">
-                                                    <asp:ListItem Value="Small" />
-                                                    <asp:ListItem Value="Medium" />
-                                                    <asp:ListItem Value="Large" />
-                                                </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                <div class="form-group">
-                                    <asp:Label ID="VolunteerTshirtColorLabel" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
-                                        <asp:DropDownList 
-                                            ID="VolunteerTshirtColor" 
-                                            runat="server"
-                                            CssClass="js-example-basic-single"
-                                            Width="50%">
-                                            <asp:ListItem Value="Green" />
-                                            <asp:ListItem Value="Blue" />
-                                            <asp:ListItem Value="Red" />
-                                        </asp:DropDownList>
-                                         </div>
-                                </div>
-                                </div>
-                            </div>
-                                <div class="p-t-15">
-                                    <asp:Button ID="VolunteerSubmit" runat="server" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
-                                </div> 
-</asp:Content>
+
 <asp:Content ID="VolunteerExisting" ContentPlaceHolderID="VolunteerExistingPlaceholder" runat="server">
 
                             <div style="margin-top: 40px;"> 
@@ -603,61 +692,7 @@
                                 </div> 
   
 </asp:Content>
-<asp:Content ID="CoordinatorNew" ContentPlaceHolderID="CoordinatorNewPlaceholder" runat="server">
-    
-                            <div style="margin-top: 40px;">  
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="input-group">
-                                            <asp:Label ID="Label5" CssClass="label" runat="server" Text="First Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TextBox3" runat="server" />
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="input-group">
-                                            <asp:Label ID="Label8" CssClass="label" runat="server" Text="Last Name"></asp:Label>
-                                            <asp:TextBox CssClass="input--style-4" ID="TextBox4" runat="server" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="form-group">
-                                             <asp:Label ID="Label11" CssClass="label" runat="server" Text="T-shirt Size"></asp:Label>
-                                        <asp:DropDownList 
-                                            ID="DropDownList4" 
-                                            runat="server"
-                                            CssClass="js-example-basic-single"
-                                            Width="50%">
-                                            <asp:ListItem Value="Small" />
-                                            <asp:ListItem Value="Medium" />
-                                            <asp:ListItem Value="Large" />
-                                        </asp:DropDownList>
-                                        </div>
-                                    </div>
-                                <div class="col">
 
-                                <div class="form-group">
-                                    <asp:Label ID="Label15" CssClass="label" runat="server" Text="T-shirt Color"></asp:Label>
-                                        <asp:DropDownList 
-                                            ID="DropDownList5" 
-                                            runat="server"
-                                            CssClass="js-example-basic-single"
-                                            Width="50%">
-                                            <asp:ListItem Value="Green" />
-                                            <asp:ListItem Value="Blue" />
-                                            <asp:ListItem Value="Red" />
-                                        </asp:DropDownList>
-
-                                </div>
-                            </div>
-                            </div>
-                            </div>
-                                <div class="p-t-15">
-                                    <asp:Button ID="CoordinatorSubmit" runat="server" Text="Submit" CssClass="btn btn--radius-2 btn--blue"/>
-                                </div> 
-                        <!--Coordinator info and activity sign up interacts with DB-->
-</asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="CoordinatorExistingPlaceholder" runat="server">
                             <div style="margin-top: 40px;"> 
                                 <div style="margin-top: 40px;"> 
@@ -710,29 +745,7 @@
                                         </div>
                                  </fieldset>
                                 </div> 
-                                <!--Event Creation Functionality UI hidden until it is connected to back end-->
-                                <div class="input-group" hidden="hidden">
-                                    <h2>Event Creation</h2>
-                                        <asp:Label ID="EventNameLabel" CssClass="label"  runat="server" Text="Event Name"></asp:Label>
-                                        <asp:TextBox ID="EventName"  CssClass="input--style-4" runat="server"></asp:TextBox>
-                                        <asp:Label ID="EventDateLabel" CssClass="label" runat="server" Text="Event Date"></asp:Label>
-                                        <asp:Calendar ID="Calendar1" runat="server"></asp:Calendar>
-                                </div>
-                                <div class="form-group" hidden="hidden">
-                                    <div class="p-t-10">
-                                    <asp:Label ID="EventTimeLabel" runat="server" CssClass="label" Text="Event Time"></asp:Label>
-                                    <asp:RadioButtonList ID="EventTime" CssClass="radio-container"  runat="server">
-                                        <asp:ListItem Text="9am" />
-                                        <asp:ListItem Text="10am" />
-                                        <asp:ListItem Text="11am" />
-                                        <asp:ListItem Text="12pm" />
-                                        <asp:ListItem Text="1pm" />
-                                        <asp:ListItem Text="2pm" />
-                                        <asp:ListItem Text="3pm" />
-                                        <asp:ListItem Text="4pm" />
-                                    </asp:RadioButtonList>
-                                    </div>
-                                </div>
+
                             </div>  
 
 </asp:Content>

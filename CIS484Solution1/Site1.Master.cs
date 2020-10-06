@@ -89,21 +89,21 @@ namespace CIS484Solution1
         }
         protected void LoginForm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("IT WORKS");
+            //MessageBox.Show("IT WORKS");
             if(UserLoginType != null)
             {
                 UserLoginType = null;
                 UserLoginID = -1;
                 UserLoginName = null;
                 UserLoginEmail = null;
-                LoginForm.InnerHtml = "Launch Login Form";
+                //LoginForm.InnerHtml = "Launch Login Form";
                 MasterMenu.Items[5].Text = "User: None";
             }
         }
             protected void LoginButton_Click(object sender, EventArgs e)
         {
 
-           
+           // MessageBox.Show("IT WORKS");
             string email = defaultFormEmail.Text;
             string pass = defaultFormPass.Text;
             //ShowMessage("Heard! " + email + pass, MessageType.Info);
@@ -150,7 +150,7 @@ namespace CIS484Solution1
                 ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: " + UserLoginType, MessageType.Success);
                 if (UserLoginEmail != null)
                 {
-                    MasterMenu.Items[5].Text = (UserLoginName.Trim()).Trim();
+                    MasterMenu.Items[3].Text = (UserLoginName.Trim()).Trim();
 
                 }
                 else
@@ -158,7 +158,7 @@ namespace CIS484Solution1
                     ShowMessage("Still Null!" + reader.GetString(2), MessageType.Warning);
 
                 }
-                LoginForm.InnerHtml = "LogOut";
+               // LoginForm.InnerHtml = "LogOut";
                 LoginDiv.Style.Add("display", "none");
                 LogoutDiv.Style.Add("display", "block");
             }
