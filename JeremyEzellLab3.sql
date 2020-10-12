@@ -5,7 +5,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	SELECT Email, Password
+	SELECT TOP (1) * 
 	FROM UserInfo
 	Where Email = @Email
 	AND Password = @Password;
