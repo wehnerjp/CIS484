@@ -29,9 +29,7 @@ namespace CIS484Solution1
                 UserLoginName = null;
                 UserLoginEmail = null;
             }
-           
         }
-  
 
         protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
@@ -104,17 +102,32 @@ namespace CIS484Solution1
         }
             protected void LoginButton_Click(object sender, EventArgs e)
         {
+            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+            //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
+            //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString);
+            //SqlCommand loginCommand = new SqlCommand();
+            //loginCommand.Connection = dbConnection;
+            //loginCommand.CommandType = CommandType.StoredProcedure;
+            //loginCommand.CommandText = "Auth";
+            //loginCommand.Parameters.AddWithValue("@Email", email);
+            //loginCommand.Parameters.AddWithValue("@Password", pass);
+            //dbConnection.Open();
+            //SqlDataReader loginresults = loginCommand.ExecuteReader(); 
+            //if (loginresults.Read())
+            //{
 
-           // MessageBox.Show("IT WORKS");
-            string email = defaultFormEmail.Text;
-            string pass = defaultFormPass.Text;
-            //ShowMessage("Heard! " + email + pass, MessageType.Info);
-            
-                //Get connection string from web.config file  
-                string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-                //create new sqlconnection and connection to database by using connection string from web.config file  
-                SqlConnection con = new SqlConnection(strcon);
-                con.Open();
+            //}
+
+            MessageBox.Show("IT WORKS");
+            string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+            string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
+            ShowMessage("Heard! " + email + pass, MessageType.Info);
+
+            //Get connection string from web.config file  
+            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
+            //create new sqlconnection and connection to database by using connection string from web.config file  
+            SqlConnection con = new SqlConnection(strcon);
+            con.Open();
             try
             {
                 SqlCommand cmd = new SqlCommand("select TOP (1) * from UserInfo where Email='" + email + "' and Password='" + pass + "'", con);
@@ -152,7 +165,7 @@ namespace CIS484Solution1
                 ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: " + UserLoginType, MessageType.Success);
                 if (UserLoginEmail != null)
                 {
-                    MasterMenu.Items[3].Text = (UserLoginName.Trim()).Trim();
+                    MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
 
                 }
                 else
@@ -160,7 +173,7 @@ namespace CIS484Solution1
                     ShowMessage("Still Null!" + reader.GetString(2), MessageType.Warning);
 
                 }
-               // LoginForm.InnerHtml = "LogOut";
+                // LoginForm.InnerHtml = "LogOut";
                 LoginDiv.Style.Add("display", "none");
                 LogoutDiv.Style.Add("display", "block");
             }
@@ -176,7 +189,7 @@ namespace CIS484Solution1
             {
                 con.Close();
             }
-            }
+        }
 
 
     }
