@@ -29,7 +29,9 @@ namespace CIS484Solution1
                 UserLoginName = null;
                 UserLoginEmail = null;
             }
+           
         }
+  
 
         protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
