@@ -224,10 +224,13 @@ namespace CIS484Solution1
                     {
                         sub = NotesTextBox.Text.Length;
                     }
-
-                    string sqlStatement = "If Not Exists (select 1 from Student where FirstName= '" + FirstNameTextBox.Text + "' and LastName= '" + LastNameTextBox.Text + "') Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values('" + FirstNameTextBox.Text + "', '" + LastNameTextBox.Text + "', '" + StudentAgeList.SelectedValue + "', '" + NotesTextBox.Text.Substring(0, sub) + "', " +
-                            "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedValue + "' and Color = '" + TshirtColorList.SelectedValue + "'), '" + StudentSchoolDropDownList.SelectedValue + "', '" + StudentTeacherDropDownList.SelectedValue + "'); ";
+                    string sqlStatement = "If Not Exists (select 1 from Student where FirstName= @FirstName and LastName= @LastName) Insert into Student (FirstName, LastName, Age, Notes, TshirtID, SchoolID, TeacherID) values(@FirstName, @LastName, '" + StudentAgeList.SelectedValue + "', @Notes, " +
+                           "(SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + TshirtList.SelectedValue + "' and Color = '" + TshirtColorList.SelectedValue + "'), '" + StudentSchoolDropDownList.SelectedValue + "', '" + StudentTeacherDropDownList.SelectedValue + "'); ";
                     cmd = new SqlCommand(sqlStatement, connection);
+                    cmd.Parameters.AddWithValue("@FirstName", FirstNameTextBox.Text);
+                    cmd.Parameters.AddWithValue("@LastName", LastNameTextBox.Text);
+                    cmd.Parameters.AddWithValue("@Notes", NotesTextBox.Text.Substring(0, sub));
+
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
                 }
@@ -278,7 +281,8 @@ namespace CIS484Solution1
                     command.ExecuteNonQuery();
                     Console.Write("insert successful");
                 }
-                catch (SqlException ex)
+                catch (SqlException ex)            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+                                                   //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
                 {
                     Console.Write(ex.Message);
                 }
@@ -443,9 +447,9 @@ namespace CIS484Solution1
         }
         protected void PopulateText_Click(object sender, EventArgs e)
         {
-            Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
+            //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
             Random rnd = new Random();
-            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First()));
+            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
             LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
             StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
@@ -796,9 +800,10 @@ namespace CIS484Solution1
                 {
                     sub = StudentNotesData.Text.Length;
                 }
-                string sqlStatement = "UPDATE Student SET Age ='" + StudentAgeEdit.SelectedValue + "', Notes ='" + StudentNotesData.Text.Substring(0, sub) + "', TshirtID = (SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + StudentSizeEdit.SelectedValue + "' and Color = '" + StudentColorEdit.SelectedValue + "')" +
+                string sqlStatement = "UPDATE Student SET Age ='" + StudentAgeEdit.SelectedValue + "', Notes = @Notes, TshirtID = (SELECT  TshirtID FROM[Lab1].[dbo].Tshirt where Size = '" + StudentSizeEdit.SelectedValue + "' and Color = '" + StudentColorEdit.SelectedValue + "')" +
                     "Where StudentID ='" + StID + "'";
                 cmd = new SqlCommand(sqlStatement, connection);
+                cmd.Parameters.AddWithValue("@Notes", NotesTextBox.Text.Substring(0,sub));
                 cmd.CommandType = CommandType.Text;
                 cmd.ExecuteNonQuery();
             }
