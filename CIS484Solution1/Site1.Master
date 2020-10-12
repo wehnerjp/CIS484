@@ -265,7 +265,6 @@
           
                             </asp:ContentPlaceHolder> 
                       <div class="form-group">
-                          
                         <h3>Welcome, if you're a new Teacher sign up or else log in</h3>
                       </div>
                     </div>

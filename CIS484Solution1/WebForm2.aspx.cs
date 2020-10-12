@@ -165,11 +165,11 @@ namespace CIS484Solution1
             while (myReader.Read())
             {
                 StID = Int32.Parse(myReader[0].ToString());
-                StudentNameData.Text = (myReader[1].ToString());
+                StudentNameData.Text = (HttpUtility.HtmlEncode(myReader[1].ToString()));
                 StudentAgeEdit.SelectedValue = (myReader[2].ToString());
-                StudentNotesData.Text = (myReader[3].ToString());
-                StudentSchoolData.Text = (myReader[7].ToString());
-                StudentTeacherData.Text = (myReader[4].ToString());
+                StudentNotesData.Text = (HttpUtility.HtmlEncode(myReader[3].ToString()));
+                StudentSchoolData.Text = (HttpUtility.HtmlEncode(myReader[7].ToString()));
+                StudentTeacherData.Text = (HttpUtility.HtmlEncode(myReader[4].ToString()));
                 StudentColorEdit.SelectedValue = (myReader[6].ToString());
                 StudentSizeEdit.SelectedValue = (myReader[5].ToString());
                
@@ -265,7 +265,7 @@ namespace CIS484Solution1
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //Inserting teacher query
             String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
-                "('" + EmailTextBox.Text + "', '" + modalLRInput13.Text + "', 'Teacher');";            //Get connection string from web.config file  
+                "('" + EmailTextBox.Text + "', '" + PasswordHash.HashPassword(modalLRInput13.Text) + "', 'Teacher');";            //Get connection string from web.config file  
             string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
@@ -443,17 +443,17 @@ namespace CIS484Solution1
         }
         protected void PopulateText_Click(object sender, EventArgs e)
         {
-            //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
+            Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
             Random rnd = new Random();
-            FirstNameTextBox.Text = Faker.Name.First();
-            LastNameTextBox.Text = Faker.Name.Last();
+            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First()));
+            LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
             StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
             StudentSchool_SelectedIndexChanged(sender, e);
             StudentTeacherDropDownList.SelectedIndex = rnd.Next(0, StudentTeacherDropDownList.Items.Count - 1);
             TshirtList.SelectedIndex = rnd.Next(0, TshirtList.Items.Count - 1);
             TshirtColorList.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            NotesTextBox.Text = Faker.Lorem.Sentence();
+            NotesTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
 
 
         }
@@ -476,13 +476,13 @@ namespace CIS484Solution1
             //Using faker api to generate random names en masse for teachers so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
 
             Random rnd = new Random();
-            TeacherFirstNameText.Text = Faker.Name.First();
-            TeacherLastNameInput.Text = Faker.Name.Last();
+            TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
+            TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
             TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
             TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            TeacherNoteTextBox.Text = Faker.Lorem.Sentence();
-            EmailTextBox.Text = TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1) + "@edu.com";
+            TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
+            EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
             modalLRInput13.Text = "1111";
 
 

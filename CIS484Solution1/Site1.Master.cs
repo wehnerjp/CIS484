@@ -29,9 +29,7 @@ namespace CIS484Solution1
                 UserLoginName = null;
                 UserLoginEmail = null;
             }
-           
         }
-  
 
         protected void MasterMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
@@ -106,9 +104,9 @@ namespace CIS484Solution1
         {
 
            // MessageBox.Show("IT WORKS");
-            string email = defaultFormEmail.Text;
-            string pass = defaultFormPass.Text;
-            //ShowMessage("Heard! " + email + pass, MessageType.Info);
+            string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+            string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
+            ShowMessage("Heard! " + email + pass, MessageType.Info);
             
                 //Get connection string from web.config file  
                 string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
