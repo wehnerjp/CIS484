@@ -100,50 +100,34 @@ namespace CIS484Solution1
                 MasterMenu.Items[5].Text = "User: None";
             }
         }
-            protected void LoginButton_Click(object sender, EventArgs e)
+        protected void LoginButton_Click(object sender, EventArgs e)
         {
-            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
-            //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-            //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbConnection"].ConnectionString);
-            //SqlCommand loginCommand = new SqlCommand();
-            //loginCommand.Connection = dbConnection;
-            //loginCommand.CommandType = CommandType.StoredProcedure;
-            //loginCommand.CommandText = "Auth";
-            //loginCommand.Parameters.AddWithValue("@Email", email);
-            //loginCommand.Parameters.AddWithValue("@Password", pass);
-            //dbConnection.Open();
-            //SqlDataReader loginresults = loginCommand.ExecuteReader(); 
-            //if (loginresults.Read())
-            //{
-
-            //}
-
-            MessageBox.Show("IT WORKS");
             string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
             string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-            ShowMessage("Heard! " + email + pass, MessageType.Info);
-
-            //Get connection string from web.config file  
-            string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            //create new sqlconnection and connection to database by using connection string from web.config file  
-            SqlConnection con = new SqlConnection(strcon);
-            con.Open();
+            SqlConnection authConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["authconnection"].ConnectionString);
+            SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            SqlCommand loginCommand = new SqlCommand();
+            loginCommand.Connection = authConnection;
+            loginCommand.CommandType = CommandType.StoredProcedure;
+            loginCommand.CommandText = "Auth";
+            loginCommand.Parameters.AddWithValue("@Email", email);
+            loginCommand.Parameters.AddWithValue("@Password", pass);
+            dbConnection.Open();
+            authConnection.Open();
             try
             {
-                SqlCommand cmd = new SqlCommand("select TOP (1) * from UserInfo where Email='" + email + "' and Password='" + pass + "'", con);
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                SqlDataReader loginresults = loginCommand.ExecuteReader();
+                while (loginresults.Read())
                 {
                     UserLoginEmail = email;
-                    UserLoginType = reader.GetString(2).Trim();
+                    UserLoginType = loginresults.GetString(2).Trim();
                 }
-                reader.Close(); // <- too easy to forget
-                reader.Dispose();
-
+                loginresults.Close(); // <- too easy to forget
+                loginresults.Dispose();
                 if (UserLoginType.Equals("Teacher"))
                 {
                     string qry1 = "select * from Teacher where Email='" + email + "'";
-                    SqlCommand cmd1 = new SqlCommand(qry1, con);
+                    SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
                     SqlDataReader sdr1 = cmd1.ExecuteReader();
                     while (sdr1.Read())
                     {
@@ -154,7 +138,7 @@ namespace CIS484Solution1
                 else
                 {
                     string qry1 = "select * from EventPersonnel where Email='" + email + "'";
-                    SqlCommand cmd1 = new SqlCommand(qry1, con);
+                    SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
                     SqlDataReader sdr1 = cmd1.ExecuteReader();
                     while (sdr1.Read())
                     {
@@ -170,7 +154,7 @@ namespace CIS484Solution1
                 }
                 else
                 {
-                    ShowMessage("Still Null!" + reader.GetString(2), MessageType.Warning);
+                    ShowMessage("Still Null!" + loginresults.GetString(2), MessageType.Warning);
 
                 }
                 // LoginForm.InnerHtml = "LogOut";
@@ -187,8 +171,12 @@ namespace CIS484Solution1
 
             finally
             {
-                con.Close();
+                dbConnection.Close();
+                authConnection.Close();
             }
+
+            // MessageBox.Show("IT WORKS");
+            ShowMessage("Heard! " + email + pass, MessageType.Info);
         }
 
 

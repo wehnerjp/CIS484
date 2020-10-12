@@ -187,7 +187,7 @@
             <div class="modal-body mb-1">
               <div class="md-form form-sm mb-5">
                 <i class="fas fa-envelope prefix"></i>
-                <asp:TextBox CssClass="form-control form-control-sm validate" type="email" ID="defaultFormEmail" runat="server" required="true" />
+                <asp:TextBox CssClass="form-control form-control-sm validate" type="email" ID="defaultFormEmail" runat="server" causesvalidation="false" />
                 <label data-error="wrong" data-success="right" for="defaultFormEmail">Your email</label>
                   <asp:requiredfieldvalidator id="RequiredFieldValidator1"
                       controltovalidate="defaultFormEmail"
@@ -199,7 +199,7 @@
 
               <div class="md-form form-sm mb-4">
                 <i class="fas fa-lock prefix"></i>
-                <asp:TextBox CssClass="form-control form-control-sm validate" type="password" ID="defaultFormPass" runat="server" required="true" />
+                <asp:TextBox CssClass="form-control form-control-sm validate" type="password" ID="defaultFormPass" runat="server" causesvalidation="false" />
                 <label data-error="wrong" data-success="right" for="defaultFormPass">Your password</label>
                   <asp:requiredfieldvalidator id="RequiredFieldValidator2"
                       controltovalidate="defaultFormPass"

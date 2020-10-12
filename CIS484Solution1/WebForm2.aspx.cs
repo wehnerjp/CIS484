@@ -190,14 +190,6 @@ namespace CIS484Solution1
         protected void AddStudent_Click(object sender, EventArgs e)
         {
             Boolean dup = false;
-            //Checking for duplicates before inserting into C# object, if there is a duplicate then there is a message box letting you know, a different message box if you didn't fill everything out
-            //for (int i = 0; i < StudentNameDataSource; i++)           {
-            //        if (FirstNameTextBox.Text.Trim() == StudentNameDataSource[i].FirstName.Trim() && LastNameTextBox.Text.Trim() == StudentNameDataSource[i].LastName.Trim()) {
-            //            dup = true;
-            //        }
-            //        if (dup == true) {
-            //            break;
-            //        }
 
 
 
@@ -233,6 +225,7 @@ namespace CIS484Solution1
 
                     cmd.CommandType = CommandType.Text;
                     cmd.ExecuteNonQuery();
+                    ResetButton_Click(sender, e);
                 }
                 //If it does not work
                 catch (System.Data.SqlClient.SqlException ex)
@@ -261,7 +254,7 @@ namespace CIS484Solution1
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
             //Inserting teacher query
-            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
+            String sqlQuery = "If Not Exists (select 1 from Teacher where FirstName= '" + TeacherFirstNameText.Text + "' and LastName= '" + TeacherLastNameInput.Text + "')  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
                 "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
                 "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value +"'); ";
             //Get connection string from web.config file  
@@ -273,35 +266,28 @@ namespace CIS484Solution1
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
             SqlConnection con1 = new SqlConnection(strcon1);
+            SqlCommand cmd = new SqlCommand(sqlQuery1, con1);
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 con.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                    Console.Write("insert successful");
-                }
-                catch (SqlException ex)            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
-                                                   //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-                {
-                    Console.Write(ex.Message);
-                }
-                con.Close();
-            }
-            using (SqlCommand command = new SqlCommand(sqlQuery1, con1))
-            {
                 con1.Open();
                 try
                 {
                     command.ExecuteNonQuery();
                     Console.Write("insert successful");
+                    MessageBox.Show("insert teacher success");
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    ResetTeacherButton_Click(sender, e);
                 }
                 catch (SqlException ex)
                 {
                     Console.Write(ex.Message);
                 }
+                con.Close();
                 con1.Close();
             }
+            
 
         }
 

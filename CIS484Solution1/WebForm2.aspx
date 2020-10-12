@@ -503,17 +503,15 @@
                             </div>
                             <!--Same button functions outside of commit in order to streamline process-->
                             <div class="container">
-                              <div class="col">
-                                <div class="row text-center form-sm mt-2">
+                                <div class="row text-center form-sm">
                                     <asp:Button ID="SubmitTeacher" runat="server" ValidationGroup="SignUpGroup" OnClick="AddTeacher_Click" Text="Submit" style="margin-left: 0%;" CssClass="btn btn-info"/>
                                 </div> 
-                            <div class="row text-center form-sm mt-2">
+                            <div class="row text-center form-sm">
                                     <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click"  CausesValidation="False" Text=" Fill " CssClass="btn btn-success"  UseSubmitBehavior="False" />
                                 </div> 
-                            <div class="row text-center form-sm mt-2">
+                            <div class="row text-center form-sm">
                                     <asp:Button ID="ResetTeacher" runat="server" OnClick="ResetTeacherButton_Click"   CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger"/>
                                 </div>
-                              </div>
                             </div>
                 </ContentTemplate>
         <Triggers>
