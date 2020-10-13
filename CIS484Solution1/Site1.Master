@@ -140,7 +140,7 @@
                             <h2 class="title" style="width: 100%;">Field Trip Program: John Paul Wehner </h2>
                         </div>
                         <div id="LoginDiv" class="col text-right" runat="server">
-                            <a href="" class="btn btn-primary btn-sm float-right" data-toggle="modal" id="LoginForm" onclick='newwin()' style="padding-top: 0%; padding-bottom: 0%;" data-target="#modalLRForm">LogIn/Register</a>
+                            <a href="#" class="btn btn-primary btn-sm float-right" data-toggle="modal" id="LoginForm" onclick='newwin()' style="padding-top: 0%; padding-bottom: 0%;" data-target="#modalLRForm">LogIn/Register</a>
                         </div>
 
                         <div id="LogoutDiv" style="display: none;" class="col text-right" runat="server">
