@@ -22,7 +22,7 @@ namespace CIS484Solution1
         public enum MessageType { Success, Error, Info, Warning };
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (LoginDiv.Style["display"] != "none")
+            if(LoginDiv.Style["display"] != "none")
             {
                 UserLoginType = null;
                 UserLoginID = -1;
@@ -36,13 +36,13 @@ namespace CIS484Solution1
             System.Web.UI.WebControls.Menu MasterMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
             //MessageBox.Show(UserLoginType + Int32.Parse(MasterMenu.SelectedValue));
-            if (UserLoginType == "Teacher" && (Int32.Parse(MasterMenu.SelectedValue) == 1 || Int32.Parse(MasterMenu.SelectedValue) == 2 || Int32.Parse(MasterMenu.SelectedValue) == 0)) {
+            if(UserLoginType == "Teacher" && (Int32.Parse(MasterMenu.SelectedValue) == 1 || Int32.Parse(MasterMenu.SelectedValue) == 2 || Int32.Parse(MasterMenu.SelectedValue) == 0)){
                 multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
             }
-            else if (UserLoginType == "Volunteer" && (Int32.Parse(MasterMenu.SelectedValue) == 3 || Int32.Parse(MasterMenu.SelectedValue) == 0)) {
+            else if(UserLoginType == "Volunteer" && (Int32.Parse(MasterMenu.SelectedValue) == 3 || Int32.Parse(MasterMenu.SelectedValue) == 0)){
                 multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
             }
-            else if (UserLoginType == "Coordinator") {
+            else if (UserLoginType == "Coordinator"){
                 multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
             }
             else
@@ -90,7 +90,7 @@ namespace CIS484Solution1
         protected void LoginForm_Click(object sender, EventArgs e)
         {
             //MessageBox.Show("IT WORKS");
-            if (UserLoginType != null)
+            if(UserLoginType != null)
             {
                 UserLoginType = null;
                 UserLoginID = -1;
@@ -180,83 +180,8 @@ namespace CIS484Solution1
             // MessageBox.Show("IT WORKS");
             ShowMessage("Heard! " + email + pass, MessageType.Info);
         }
-        //SqlConnection authConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["authconnection"].ConnectionString);
-        //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
-        //authConnection.Open();
-        //dbConnection.Open();
-        //System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
-        //findPass.CommandText = "Select Passowrd from Auth where Email = @Email";
-        //findPass.Connection = authConnection;
-        //findPass.Parameters.Add(new SqlParameter("@Email", defaultFormEmail));
-        //SqlDataReader reader = findPass.ExecuteReader();
-        //if (reader.HasRows)
-        //{
-        //    while (reader.Read())
-        //    {
-        //        string storedHash = reader["Password"].ToString();
-        //        if (PasswordHash.ValidatePassword(defaultFormPass.Text, storedHash))
-        //        {
-        //            string qry1 = "select * from Teacher where Email= @Email";
-        //            SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
-        //            SqlDataReader sdr1 = cmd1.ExecuteReader();
-        //            while (sdr1.Read())
-        //            {
-        //                UserLoginID = sdr1.GetInt32(0);
-        //                UserLoginName = (sdr1.GetString(2).Substring(0, 1) + ". " + sdr1.GetString(3));
-        //            }
-        //        }
-        //        else
-        //        {
-        //            string qry1 = "select * from EventPersonnel where Email= @Email";
-        //            SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
-        //            SqlDataReader sdr1 = cmd1.ExecuteReader();
-        //            while (sdr1.Read())
-        //            {
-        //                UserLoginID = sdr1.GetInt32(0);
-        //                UserLoginName = (sdr1.GetString(1).Substring(0, 1) + ". " + sdr1.GetString(2));
-        //            }
-        //        }
-        //        ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: " + UserLoginType, MessageType.Success);
-        //        if (UserLoginEmail != null)
-        //        {
-        //            MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
-
-        //        }
-        //        else
-        //        {
-        //            //ShowMessage("Still Null!" + loginresults.GetString(2), MessageType.Warning);
-
-        //        }
-        //        // LoginForm.InnerHtml = "LogOut";
-        //        //LoginDiv.Style.Add("display", "none");
-        //        //LogoutDiv.Style.Add("display", "block");
-
-        //        catch (Exception ex)
-        //        {
-
-        //            Response.Write(ex.Message);
-
-        //            ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Couldn't Find That Login!','Warning');", true);
-        //        }
-
-        //        finally
-        //        {
-        //            dbConnection.Close();
-        //            authConnection.Close();
-        //        }
-
-        //        // MessageBox.Show("IT WORKS");
-        //        //ShowMessage("Heard! " + email + pass, MessageType.Info);
-        //    }
-        //}
-        //    }
-        //}
 
 
     }
-
-    }
-
-        
     
-
+}
