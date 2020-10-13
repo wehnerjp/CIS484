@@ -253,54 +253,47 @@ namespace CIS484Solution1
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
-            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
+            //Inserting teacher query
+            String sqlQuery = "If Not Exists (select 1 from Teacher where FirstName= @FirstName and LastName= @LastName)  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
                 "(@FirstName, @LastName, @Notes, " +
-                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', @Email, '" + GradeDDL.SelectedItem.Value + "'); ";
-           
+                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value +"'); ";
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //Inserting teacher query
             String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
-                "(@Email, @Password, 'Teacher');";            //Get connection string from web.config file  
+                "(@Email, '" + PasswordHash.HashPassword(modalLRInput13.Text) + "', 'Teacher');";            //Get connection string from web.config file  
             string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
-
             SqlConnection con1 = new SqlConnection(strcon1);
+            SqlCommand cmd = new SqlCommand(sqlQuery1, con1);
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 con.Open();
                 command.Parameters.Add(new SqlParameter("@FirstName", TeacherFirstNameText.Text));
                 command.Parameters.Add(new SqlParameter("@LastName", TeacherLastNameInput.Text));
                 command.Parameters.Add(new SqlParameter("@Notes", TeacherNoteTextBox.Text));
-                try
-                {
-                    command.ExecuteNonQuery();
-                    Console.Write("insert successful");
-                }
-                catch (SqlException ex)            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
-                                                   //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-                {
-                    Console.Write(ex.Message);
-                }
-                con.Close();
-            }
-            using (SqlCommand command = new SqlCommand(sqlQuery1, con1))
-            {
+
                 con1.Open();
-                command.Parameters.Add(new SqlParameter("Email", EmailTextBox.Text));
-                command.Parameters.Add(new SqlParameter("Password", PasswordHash.HashPassword(modalLRInput13.Text)));
+                cmd.Parameters.Add(new SqlParameter("@Email", EmailTextBox.Text));
+
                 try
                 {
                     command.ExecuteNonQuery();
                     Console.Write("insert successful");
+                    MessageBox.Show("insert teacher success");
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    ResetTeacherButton_Click(sender, e);
                 }
                 catch (SqlException ex)
                 {
                     Console.Write(ex.Message);
                 }
+                con.Close();
                 con1.Close();
             }
+            
 
         }
 
@@ -447,16 +440,16 @@ namespace CIS484Solution1
         protected void PopulateText_Click(object sender, EventArgs e)
         {
             //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
-            Random rnd = new Random();
-            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
-            LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
-            StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
-            StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
-            StudentSchool_SelectedIndexChanged(sender, e);
-            StudentTeacherDropDownList.SelectedIndex = rnd.Next(0, StudentTeacherDropDownList.Items.Count - 1);
-            TshirtList.SelectedIndex = rnd.Next(0, TshirtList.Items.Count - 1);
-            TshirtColorList.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            NotesTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
+            //Random rnd = new Random();
+            //FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
+            //LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
+            //StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
+            //StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
+            //StudentSchool_SelectedIndexChanged(sender, e);
+            //StudentTeacherDropDownList.SelectedIndex = rnd.Next(0, StudentTeacherDropDownList.Items.Count - 1);
+            //TshirtList.SelectedIndex = rnd.Next(0, TshirtList.Items.Count - 1);
+            //TshirtColorList.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
+            //NotesTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
 
 
         }
@@ -479,14 +472,14 @@ namespace CIS484Solution1
             //Using faker api to generate random names en masse for teachers so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
 
             Random rnd = new Random();
-            TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
-            TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
-            TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
-            TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
-            TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
-            EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
-            modalLRInput13.Text = "1111";
+            //TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
+            //TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
+            //TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
+            //TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
+            //TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
+            //TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
+            //EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
+            //modalLRInput13.Text = "1111";
 
 
         }
