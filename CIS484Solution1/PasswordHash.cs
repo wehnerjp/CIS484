@@ -30,5 +30,24 @@ namespace CIS484Solution1
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
         }
+        public static bool ValidatePassword(string password, string correctHash)
+        {
+            char[] delimiter = { ':' };
+            var split = correctHash.Split(delimiter);
+            var iterations = Int32.Parse(split[IterationIndex]);
+            var salt = Convert.FromBase64String(split[SaltIndex]);
+            var hash = Convert.FromBase64String(split[Pbkdf2Index]);
+            var testhash = GetPbkdf2Bytes(password, salt, iterations, hash.Length);
+            return SlowEquals(hash, testhash);
+        }
+        private static bool SlowEquals(byte[] a, byte[] b)
+        {
+            var diff = (uint)a.Length ^ (uint)b.Length;
+            for (int i = 0; i < a.Length && i < b.Length; i++)
+            {
+                diff = (uint)(a[i] ^ b[i]);
+            }
+            return diff == 0;
+        }
     }
 }

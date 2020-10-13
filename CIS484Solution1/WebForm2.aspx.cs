@@ -253,41 +253,54 @@ namespace CIS484Solution1
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
-            //Inserting teacher query
-            String sqlQuery = "If Not Exists (select 1 from Teacher where FirstName= '" + TeacherFirstNameText.Text + "' and LastName= '" + TeacherLastNameInput.Text + "')  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
-                "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value +"'); ";
+            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
+                "(@FirstName, @LastName, @Notes, " +
+                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', @Email, '" + GradeDDL.SelectedItem.Value + "'); ";
+           
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //Inserting teacher query
             String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
-                "('" + EmailTextBox.Text + "', '" + PasswordHash.HashPassword(modalLRInput13.Text) + "', 'Teacher');";            //Get connection string from web.config file  
+                "(@Email, @Password, 'Teacher');";            //Get connection string from web.config file  
             string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
+
             SqlConnection con1 = new SqlConnection(strcon1);
-            SqlCommand cmd = new SqlCommand(sqlQuery1, con1);
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 con.Open();
-                con1.Open();
+                command.Parameters.Add(new SqlParameter("@FirstName", TeacherFirstNameText.Text));
+                command.Parameters.Add(new SqlParameter("@LastName", TeacherLastNameInput.Text));
+                command.Parameters.Add(new SqlParameter("@Notes", TeacherNoteTextBox.Text));
                 try
                 {
                     command.ExecuteNonQuery();
                     Console.Write("insert successful");
-                    MessageBox.Show("insert teacher success");
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery();
-                    ResetTeacherButton_Click(sender, e);
+                }
+                catch (SqlException ex)            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+                                                   //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
+                {
+                    Console.Write(ex.Message);
+                }
+                con.Close();
+            }
+            using (SqlCommand command = new SqlCommand(sqlQuery1, con1))
+            {
+                con1.Open();
+                command.Parameters.Add(new SqlParameter("Email", EmailTextBox.Text));
+                command.Parameters.Add(new SqlParameter("Password", PasswordHash.HashPassword(modalLRInput13.Text)));
+                try
+                {
+                    command.ExecuteNonQuery();
+                    Console.Write("insert successful");
                 }
                 catch (SqlException ex)
                 {
                     Console.Write(ex.Message);
                 }
-                con.Close();
                 con1.Close();
             }
-            
 
         }
 
