@@ -444,9 +444,9 @@ namespace CIS484Solution1
         }
         protected void PopulateText_Click(object sender, EventArgs e)
         {
-            Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
+            //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
             Random rnd = new Random();
-            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First()));
+            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
             LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
             StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
