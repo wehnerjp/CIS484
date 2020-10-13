@@ -116,9 +116,11 @@ namespace CIS484Solution1
             authConnection.Open();
             try
             {
+                
                 SqlDataReader loginresults = loginCommand.ExecuteReader();
                 while (loginresults.Read())
                 {
+                    MessageBox.Show(loginresults.GetString(2).Trim(), loginresults.GetString(1).Trim());
                     UserLoginEmail = email;
                     UserLoginType = loginresults.GetString(2).Trim();
                 }
