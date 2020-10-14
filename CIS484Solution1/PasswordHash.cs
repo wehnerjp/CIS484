@@ -32,7 +32,7 @@ namespace CIS484Solution1
         }
         public static bool ValidatePassword(string password, string correctHash)
         {
-            char[] delimiter = { ':' };
+            char[] delimiter = { ':' }; 
             var split = correctHash.Split(delimiter);
             var iterations = Int32.Parse(split[IterationIndex]);
             var salt = Convert.FromBase64String(split[SaltIndex]);

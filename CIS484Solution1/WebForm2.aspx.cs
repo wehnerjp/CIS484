@@ -253,54 +253,47 @@ namespace CIS484Solution1
         }
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
-            String sqlQuery = "  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
+            //Inserting teacher query
+            String sqlQuery = "If Not Exists (select 1 from Teacher where FirstName= @FirstName and LastName= @LastName)  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
                 "(@FirstName, @LastName, @Notes, " +
-                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', @Email, '" + GradeDDL.SelectedItem.Value + "'); ";
-           
+                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value +"'); ";
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
             //Inserting teacher query
             String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
-                "(@Email, @Password, 'Teacher');";            //Get connection string from web.config file  
+                "(@Email, '" + PasswordHash.HashPassword(modalLRInput13.Text) + "', 'Teacher');";            //Get connection string from web.config file  
             string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
-
             SqlConnection con1 = new SqlConnection(strcon1);
+            SqlCommand cmd = new SqlCommand(sqlQuery1, con1);
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 con.Open();
                 command.Parameters.Add(new SqlParameter("@FirstName", TeacherFirstNameText.Text));
                 command.Parameters.Add(new SqlParameter("@LastName", TeacherLastNameInput.Text));
                 command.Parameters.Add(new SqlParameter("@Notes", TeacherNoteTextBox.Text));
-                try
-                {
-                    command.ExecuteNonQuery();
-                    Console.Write("insert successful");
-                }
-                catch (SqlException ex)            //string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
-                                                   //string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-                {
-                    Console.Write(ex.Message);
-                }
-                con.Close();
-            }
-            using (SqlCommand command = new SqlCommand(sqlQuery1, con1))
-            {
+
                 con1.Open();
-                command.Parameters.Add(new SqlParameter("Email", EmailTextBox.Text));
-                command.Parameters.Add(new SqlParameter("Password", PasswordHash.HashPassword(modalLRInput13.Text)));
+                cmd.Parameters.Add(new SqlParameter("@Email", EmailTextBox.Text));
+
                 try
                 {
                     command.ExecuteNonQuery();
                     Console.Write("insert successful");
+                    MessageBox.Show("insert teacher success");
+                    cmd.CommandType = CommandType.Text;
+                    cmd.ExecuteNonQuery();
+                    ResetTeacherButton_Click(sender, e);
                 }
                 catch (SqlException ex)
                 {
                     Console.Write(ex.Message);
                 }
+                con.Close();
                 con1.Close();
             }
+            
 
         }
 
@@ -478,7 +471,7 @@ namespace CIS484Solution1
         {
             //Using faker api to generate random names en masse for teachers so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
 
-            //Random rnd = new Random();
+            Random rnd = new Random();
             //TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
             //TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             //TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
@@ -486,7 +479,7 @@ namespace CIS484Solution1
             //TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
             //TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
             //EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
-            modalLRInput13.Text = "1111";
+            //modalLRInput13.Text = "1111";
 
 
         }
@@ -505,73 +498,39 @@ namespace CIS484Solution1
         }
         protected void VolunteerNameDDL_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ////Reacting to selections for Existing volunteer ddl dropdown, filling out info below
-            //String sqlQuery = "Select EventPersonnel.VolunteerID, EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as VolunteerName, EventPersonnel.Notes, Tshirt.Size, Tshirt.Color, EventPersonnel.PersonnelType from EventPersonnel " +
-            //    "inner join Tshirt on Tshirt.TshirtID = EventPersonnel.TshirtID " +
-            //    "where EventPersonnel.VolunteerID = '" + VolunteerNameDDL.SelectedItem.Value + "' and Tshirt.TshirtID = (select TshirtID from EventPersonnel where VolunteerID = " + VolunteerNameDDL.SelectedItem.Value + ")";
-            //String sqlQuery1 = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event";
+            //Reacting to selections for Existing volunteer ddl dropdown, filling out info below
+            String sqlQuery = "Select EventPersonnel.VolunteerID, EventPersonnel.FirstName + ' ' + EventPersonnel.LastName as VolunteerName, EventPersonnel.Notes, Tshirt.Size, Tshirt.Color, EventPersonnel.PersonnelType from EventPersonnel " +
+                "inner join Tshirt on Tshirt.TshirtID = EventPersonnel.TshirtID " +
+                "where EventPersonnel.VolunteerID = '" + VolunteerNameDDL.SelectedItem.Value + "' and Tshirt.TshirtID = (select TshirtID from EventPersonnel where VolunteerID = " + VolunteerNameDDL.SelectedItem.Value + ")";
+            String sqlQuery1 = "Select EventID, EventName, EventName + '    ' +  convert(nvarchar, convert(nvarchar, Time, 0)) as EventNameTime, Date from Event";
 
-            ////Get connection string from web.config file  
-            //string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            ////create new sqlconnection and connection to database by using connection string from web.config file  
-            //SqlConnection con = new SqlConnection(strcon);
-            //con.Open();
-            //SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
-            //DataTable dtx = new DataTable();
-            //SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
-            //sqlAdapter1.Fill(dtx);
-            //DataSet ds = new DataSet();
-            //sqlAdapter.Fill(ds);
-            //VolunteerFormView.DataSource = ds;
-            //VolunteerFormView.DataBind();
-            ////Allow for event sign ups and association, interaction
-            //if (dtx.Rows.Count > 0)
-            //{
-            //    VolunteerEventCheckBoxList.DataSource = dtx;
-            //    VolunteerEventCheckBoxList.DataTextField = "EventNameTime";
-            //    VolunteerEventCheckBoxList.DataValueField = "EventID";
-            //    VolunteerEventCheckBoxList.DataBind();
-            //}
-
-            //if (VolunteerEventCheckBoxList.Items.Count > 1 && VolunteerNameDDL.SelectedItem.Value != null)
-            //{
-            //    VolunteerCheckBoxListSelect();
-            //}
-            //con.Close();
-            //Inserting teacher query
-            String sqlQuery = "If Not Exists (select 1 from Teacher where FirstName= '" + TeacherFirstNameText.Text + "' and LastName= '" + TeacherLastNameInput.Text + "')  Insert into Teacher (FirstName, LastName, Notes, TshirtID, SchoolID, Email, Grade) values " +
-                "('" + TeacherFirstNameText.Text + "', '" + TeacherLastNameInput.Text + "', '" + TeacherNoteTextBox.Text + "', " +
-                "(SELECT  TshirtID FROM Tshirt where Size = '" + TeacherTshirtSize.SelectedItem.Value + "' and Color = '" + TeacherTshirtColor.SelectedItem.Value + "'), '" + TeacherSchoolList.SelectedItem.Value + "', '" + EmailTextBox.Text + "', '" + GradeDDL.SelectedItem.Value + "'); ";
             //Get connection string from web.config file  
             string strcon = ConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString;
-            //Inserting teacher query
-            String sqlQuery1 = "  Insert into UserInfo (Email, Password, Role) values " +
-                "('" + EmailTextBox.Text + "', '" + PasswordHash.HashPassword(modalLRInput13.Text) + "', 'Teacher');";            //Get connection string from web.config file  
-            string strcon1 = ConfigurationManager.ConnectionStrings["authconnection"].ConnectionString;
             //create new sqlconnection and connection to database by using connection string from web.config file  
             SqlConnection con = new SqlConnection(strcon);
-            SqlConnection con1 = new SqlConnection(strcon1);
-            SqlCommand cmd = new SqlCommand(sqlQuery1, con1);
-            using (SqlCommand command = new SqlCommand(sqlQuery, con))
+            con.Open();
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
+            DataTable dtx = new DataTable();
+            SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+            sqlAdapter1.Fill(dtx);
+            DataSet ds = new DataSet();
+            sqlAdapter.Fill(ds);
+            VolunteerFormView.DataSource = ds;
+            VolunteerFormView.DataBind();
+            //Allow for event sign ups and association, interaction
+            if (dtx.Rows.Count > 0)
             {
-                con.Open();
-                con1.Open();
-                try
-                {
-                    command.ExecuteNonQuery();
-                    Console.Write("insert successful");
-                    MessageBox.Show("insert teacher success");
-                    cmd.CommandType = CommandType.Text;
-                    cmd.ExecuteNonQuery();
-                    ResetTeacherButton_Click(sender, e);
-                }
-                catch (SqlException ex)
-                {
-                    Console.Write(ex.Message);
-                }
-                con.Close();
-                con1.Close();
+                VolunteerEventCheckBoxList.DataSource = dtx;
+                VolunteerEventCheckBoxList.DataTextField = "EventNameTime";
+                VolunteerEventCheckBoxList.DataValueField = "EventID";
+                VolunteerEventCheckBoxList.DataBind();
             }
+
+            if (VolunteerEventCheckBoxList.Items.Count > 1 && VolunteerNameDDL.SelectedItem.Value != null)
+            {
+                VolunteerCheckBoxListSelect();
+            }
+            con.Close();
 
 
 
