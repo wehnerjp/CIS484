@@ -1,7 +1,7 @@
 ﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="CIS484Solution1.Site1" %>
 
 <!DOCTYPE html>
-<!-- John Wehner Max Vaughn -->
+<!-- John Wehner Max Vaughan -->
 
 <html>
 <head runat="server">
