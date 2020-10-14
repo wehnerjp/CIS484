@@ -365,8 +365,10 @@ input {
     font-size: 14px;
     font-family: inherit;
 }
-#CheckBoxList1 input{
-    width: unset;
+#CheckBoxList1 {
+    input {
+              width: unset;
+          }
 }
 .input--style-4 {
     line-height: 50px;

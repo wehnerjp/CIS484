@@ -136,7 +136,7 @@
                             <div style="margin-top: 40px;"> 
                                 <div class="container-fluid">
   
-                                  
+                                  <h1 class="my-4 font-weight-bold">Masonry - columnWidth</h1>
 
                                   <div class="grid">
                                     
