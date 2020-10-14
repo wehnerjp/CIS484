@@ -1,5 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="LoginPage.aspx.cs" Inherits="CIS484Solution1.WebForm1" %>
-    <!-- John Wehner Lab 1-->
+    <!-- John Wehner, Max Vaughan Lab 3-->
 
 
 <!DOCTYPE html>
