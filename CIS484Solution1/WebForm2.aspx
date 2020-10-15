@@ -1,7 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="CIS484Solution1.WebForm2" %>
 
 <asp:Content ID="Home" ContentPlaceHolderID="HomePlaceholder" runat="server">
-    <!-- John Wehner Max Vaughn -->
+    <!-- John Wehner Max Vaughan -->
     <div class="container" style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
     </div>
 </asp:Content>
