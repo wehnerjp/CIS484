@@ -239,6 +239,13 @@ namespace CIS484Solution1
             }
         }
 
+        //
+        // protected void AddTeacher_Click1(object sender, EventArgs e)
+        // {
+        //     ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('" + PasswordHash.HashPassword("1111") + "','Warning');", true);
+        //     MessageBox.Show(PasswordHash.HashPassword("1111"));
+        // }
+
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
             //Inserting teacher query

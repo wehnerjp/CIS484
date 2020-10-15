@@ -185,7 +185,7 @@ namespace CIS484Solution1
             }
 
             // MessageBox.Show("IT WORKS");
-            ShowMessage("Heard! " + email + pass, MessageType.Info);
+            //ShowMessage("Heard! " + email + pass, MessageType.Info);
         }
     }
 }
