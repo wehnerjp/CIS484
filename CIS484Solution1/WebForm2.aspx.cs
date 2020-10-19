@@ -425,15 +425,15 @@ namespace CIS484Solution1
         {
             //Using faker api to generate random names en masse for students so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
             Random rnd = new Random();
-            FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
-            LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
+            //FirstNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.First());
+            //LastNameTextBox.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             StudentAgeList.SelectedIndex = rnd.Next(0, StudentAgeList.Items.Count - 1);
             StudentSchoolDropDownList.SelectedIndex = rnd.Next(0, StudentSchoolDropDownList.Items.Count - 1);
             StudentSchool_SelectedIndexChanged(sender, e);
             StudentTeacherDropDownList.SelectedIndex = rnd.Next(0, StudentTeacherDropDownList.Items.Count - 1);
             TshirtList.SelectedIndex = rnd.Next(0, TshirtList.Items.Count - 1);
             TshirtColorList.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            NotesTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
+            //NotesTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
         }
 
         protected void ResetButton_Click(object sender, EventArgs e)
@@ -454,12 +454,12 @@ namespace CIS484Solution1
             //Using faker api to generate random names en masse for teachers so it doesn't get repetitive, randomly selecting DDL options, meeting conditional needs
 
             Random rnd = new Random();
-            TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
-            TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
+            //TeacherFirstNameText.Text = HttpUtility.HtmlEncode(Faker.Name.First());
+            //TeacherLastNameInput.Text = HttpUtility.HtmlEncode(Faker.Name.Last());
             TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
             TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
             TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
+            //TeacherNoteTextBox.Text = HttpUtility.HtmlEncode(Faker.Lorem.Sentence());
             EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
             modalLRInput13.Text = "1111";
         }
