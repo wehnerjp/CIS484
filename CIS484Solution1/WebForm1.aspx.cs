@@ -68,14 +68,13 @@ namespace CIS484Solution1
             tColumn = new System.Data.DataColumn("Delete", System.Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Contact Code", System.Type.GetType("System.String"));
-
             submissionDataTable.Columns.Add(tColumn);
         }
 
         private void AddRowsToGrid()
         {
             //Queries Relevant to home page, fetching event info student info and more
-            String sqlQuery = "Select * from Event";
+            String sqlQuery = "Select * from ContactRequest";
 
             //Get connection string from web.config file
             string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
@@ -91,7 +90,7 @@ namespace CIS484Solution1
                     while (reader.Read())
                     {
                         //Read info into List
-                        submissionDataTable.Rows.Add(reader.GetString(0));
+                        submissionDataTable.Rows.Add(reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
                     }
                 }
             }
@@ -113,7 +112,7 @@ namespace CIS484Solution1
                     //addEvent.OnClientClick();
                     row.Cells[7].Controls.Add(addEvent);
                     Button deleteEvent = new Button();
-                    deleteEvent.ID = "AddEvent" + count;
+                    deleteEvent.ID = "DeleteEvent" + count;
                     deleteEvent.Text = "Add";
                     //deleteEvent.OnClientClick();
                     row.Cells[8].Controls.Add(deleteEvent);
