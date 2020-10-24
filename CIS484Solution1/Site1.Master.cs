@@ -14,7 +14,6 @@ namespace CIS484Solution1
         public static string UserLoginName = null;
         public static string UserLoginEmail = null;
         public static string UserLoginType = null;
-        //public static string UserAccessCodeType = null;
 
         public enum MessageType { Success, Error, Info, Warning };
 
@@ -212,7 +211,7 @@ namespace CIS484Solution1
                 {
                     while (reader.Read())
                     {
-                        string tempAccessCode = reader["acessCode"].ToString();
+                        string tempAccessCode = reader["accessCode"].ToString();
                         Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
                         string accessCode = txtAccessCodeEntry.Text;
 
