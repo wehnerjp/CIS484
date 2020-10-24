@@ -3,6 +3,26 @@
 <asp:Content ID="Home" ContentPlaceHolderID="HomePlaceholder" runat="server">
     <!--Tanner Elphee John Wehner Max Vaughan -->
     <div class="container" style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
+        <div class="form-group">
+            <h2 style="text-align: center">Welcome to Cyber Day 2021</h2>
+            <h3>New users please sign up. Log in.</h3>
+            <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5">
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Label ID="lblAccessCode" runat="server" Text="Have an Access code?"></asp:Label>
+                        <asp:Label ID="lblAccessCodeStatus" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:TextBox ID="txtAccessCodeEntry" BorderStyle="Double" runat="server"></asp:TextBox>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Button ID="btnAccessCodeEntry" runat="server" Text="Confirm" OnClick="btnAccessCodeEntry_Click" />
+                    </asp:TableCell>
+                </asp:TableRow>
+            </asp:Table>
+        </div>
     </div>
 </asp:Content>
 <asp:Content ID="NewStudent" ContentPlaceHolderID="NewStudentPlaceholder" runat="server">
