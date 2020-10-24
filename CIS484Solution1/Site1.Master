@@ -275,6 +275,11 @@
                                     <asp:ContentPlaceHolder ID="HomePlaceHolder" runat="server">
                                     </asp:ContentPlaceHolder>
                                 </div>
+                                <div style="margin-top: 40px;">
+                                    <h2>Coordinator Datelist View</h2>
+                                    <asp:ContentPlaceHolder ID="CoordinatorSubmissionViewPlaceholder" runat="server">
+                                    </asp:ContentPlaceHolder>
+                                </div>
                             </asp:View>
                             <asp:View runat="server">
                                 <!--New and Existing Student Sub Menus-->

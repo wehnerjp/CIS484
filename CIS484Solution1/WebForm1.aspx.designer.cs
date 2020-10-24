@@ -132,13 +132,13 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.TextBox ContactRequestOrganizationNameText;
 
         /// <summary>
-        /// OrganizationType control.
+        /// Label5 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label OrganizationType;
+        protected global::System.Web.UI.WebControls.Label Label5;
 
         /// <summary>
         /// OrganizationTypeList control.
@@ -148,15 +148,6 @@ namespace CIS484Solution1
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList OrganizationTypeList;
-
-        /// <summary>
-        /// Label1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label1;
 
         /// <summary>
         /// Label4 control.
@@ -177,6 +168,24 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.TextBox EventNameRequest;
 
         /// <summary>
+        /// Label1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label1;
+
+        /// <summary>
+        /// EventRequestDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Calendar EventRequestDate;
+
+        /// <summary>
         /// SubmitButton control.
         /// </summary>
         /// <remarks>
@@ -193,6 +202,24 @@ namespace CIS484Solution1
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ResetButton;
+
+        /// <summary>
+        /// ContactSubmissionGrid control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView ContactSubmissionGrid;
+
+        /// <summary>
+        /// CoordinatorFormView control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.FormView CoordinatorFormView;
 
         /// <summary>
         /// StudentNameData control.

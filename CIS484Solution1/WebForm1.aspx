@@ -48,55 +48,97 @@
                                     <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestEmailText" runat="server" required="true" />
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
+
                             <div class="col">
                                 <div class="form-group">
-                                    <asp:Label ID="Label3" CssClass="label" runat="server" Text="Organization Name"></asp:Label>
+                                    <asp:Label ID="Label3" CssClass="label" runat="server" Text="Org Name"></asp:Label>
                                     <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestOrganizationNameText" runat="server" required="true" />
                                 </div>
                             </div>
-                            <div class="w-100"></div>
                             <div class="col">
                                 <div class="form-group">
-                                    <asp:Label ID="OrganizationType" CssClass="label" runat="server" Text="Organization Type"></asp:Label>
+                                    <asp:Label ID="Label5" CssClass="label" runat="server" Text="Organization Type"></asp:Label>
                                     <asp:DropDownList
                                         ID="OrganizationTypeList"
                                         runat="server"
-                                        CssClass="js-example-basic-single"
-                                        Width="50%">
-                                        <asp:ListItem Value="School" Text="School" />
+                                        CssClass="js-example-basic-single">
+                                        <asp:ListItem Value="School" Selected="True" Text="School" />
                                         <asp:ListItem Value="HomeSchool" Text="Home School Co-Op" />
                                         <asp:ListItem Value="AfterSchoolOrg" Text="After School Program" />
                                         <asp:ListItem Value="Other" Text="Other" />
                                     </asp:DropDownList>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <asp:Label ID="Label1" CssClass="label" runat="server" Text="What Date Do You Want Your Event On?"></asp:Label>
-                                <asp:Calendar runat="server"></asp:Calendar>
-                            </div>
-                            <div class="form-group">
-                                <asp:Label ID="Label4" CssClass="label" runat="server" Text="Event Name"></asp:Label>
-                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="EventNameRequest" runat="server" required="true" />
+                            <div class="col">
+                                <div class="form-group">
+                                    <asp:Label ID="Label4" CssClass="label" runat="server" Text="Event Name"></asp:Label>
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="EventNameRequest" runat="server" required="true" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <!--Button options for Submit, Commit Populate and Reset Distinguishable-->
-                    <div class="container">
                         <div class="row">
-                            <div class="col-sm text-left">
-                                <asp:Button ID="SubmitButton" runat="server" ValidationGroup="ContactRequestInput" OnClick="AddRequest_Click" Text="Submit" Style="margin-left: 0%;" CssClass="btn btn-primary" />
-                            </div>
+                            <div class="w-100"></div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label1" CssClass="label" runat="server" Text="What Date Do You Want Your Event On?"></asp:Label>
+                            <asp:Calendar ID="EventRequestDate" OnSelectionChanged="EventRequestDate_SelectionChanged" runat="server"></asp:Calendar>
+                        </div>
 
-                            <div class="col-sm text-right">
-                                <asp:Button ID="ResetButton" runat="server" OnClick="ResetRequest_Click" ValidationGroup="ContactRequestInput" CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger" />
+                        <!--Button options for Submit, Commit Populate and Reset Distinguishable-->
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm text-left">
+                                    <asp:Button ID="SubmitButton" runat="server" ValidationGroup="ContactRequestInput" OnClick="AddRequest_Click" Text="Submit" Style="margin-left: 0%;" CssClass="btn btn-primary" />
+                                </div>
+                                <div class="col-sm text-right">
+                                    <asp:Button ID="ResetButton" runat="server" OnClick="ResetButton_Click" ValidationGroup="ContactRequestInput" CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger" />
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </ContentTemplate>
             </asp:UpdatePanel>
         </div>
     </div>
 </asp:Content>
+<asp:Content ID="Content8" ContentPlaceHolderID="CoordinatorSubmissionViewPlaceholder" runat="server">
+    <div class="form-group">
+        <asp:GridView ID="ContactSubmissionGrid"
+            Font-Names="Arial"
+            Font-Size="0.75em"
+            CellPadding="5" CellSpacing="0"
+            ForeColor="#333"
+            AutoGenerateColumns="true"
+            runat="server">
+
+            <HeaderStyle BackColor="#989898" ForeColor="white" />
+        </asp:GridView>
+        <asp:FormView ID="CoordinatorFormView" runat="server">
+            <ItemTemplate>
+                <table>
+                    <tr>
+                        <td>Coordinator Name:    </td>
+                        <td><%#Eval("CoordinatorName") %></td>
+                    </tr>
+                    <tr>
+                        <td>Notes: </td>
+                        <td><%#Eval("Notes") %></td>
+                    </tr>
+                    <tr>
+                        <td>Tshirt Color: </td>
+                        <td><%#Eval("Color") %></td>
+                    </tr>
+                    <tr>
+                        <td>Tshirt Size: </td>
+                        <td><%#Eval("Size") %></td>
+                    </tr>
+                </table>
+            </ItemTemplate>
+        </asp:FormView>
+    </div>
+</asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="NewStudentPlaceHolder" runat="server">
     <script type="text/javascript">
         $(document).ready(function () {

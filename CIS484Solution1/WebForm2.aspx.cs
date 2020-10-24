@@ -72,8 +72,8 @@ namespace CIS484Solution1
                             Session.Add("ACCESSCODE", accessCode);
                             lblAccessCodeStatus.Text = "Session variable saved";
                         }
-                        else
-                            StudentExistingPlaceholder.Visible = true;
+                        // else
+                        //StudentExistingPlaceholder.Visible = true;
                     }
                 }
                 else // if the accesscode doesn't exist, it will show failure
