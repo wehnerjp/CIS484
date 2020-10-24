@@ -7,11 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace CIS484Solution1 {
-    
-    
-    public partial class WebForm2 {
-        
+namespace CIS484Solution1
+{
+
+
+    public partial class WebForm2
+    {
+
         /// <summary>
         /// UpdatePanel2 control.
         /// </summary>
@@ -20,7 +22,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel2;
-        
+
         /// <summary>
         /// FirstName control.
         /// </summary>
@@ -29,7 +31,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label FirstName;
-        
+
         /// <summary>
         /// FirstNameTextBox control.
         /// </summary>
@@ -38,7 +40,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox FirstNameTextBox;
-        
+
         /// <summary>
         /// LastName control.
         /// </summary>
@@ -47,7 +49,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label LastName;
-        
+
         /// <summary>
         /// LastNameTextBox control.
         /// </summary>
@@ -56,7 +58,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox LastNameTextBox;
-        
+
         /// <summary>
         /// Age control.
         /// </summary>
@@ -65,7 +67,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Age;
-        
+
         /// <summary>
         /// StudentAgeList control.
         /// </summary>
@@ -74,7 +76,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentAgeList;
-        
+
         /// <summary>
         /// SchoolLabel control.
         /// </summary>
@@ -83,7 +85,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label SchoolLabel;
-        
+
         /// <summary>
         /// StudentSchoolDataSource control.
         /// </summary>
@@ -92,7 +94,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource StudentSchoolDataSource;
-        
+
         /// <summary>
         /// StudentSchoolDropDownList control.
         /// </summary>
@@ -101,7 +103,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentSchoolDropDownList;
-        
+
         /// <summary>
         /// TeacherLabel control.
         /// </summary>
@@ -110,7 +112,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TeacherLabel;
-        
+
         /// <summary>
         /// StudentTeacherDropDownList control.
         /// </summary>
@@ -119,7 +121,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentTeacherDropDownList;
-        
+
         /// <summary>
         /// TshirtLabel control.
         /// </summary>
@@ -128,7 +130,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TshirtLabel;
-        
+
         /// <summary>
         /// TshirtList control.
         /// </summary>
@@ -137,7 +139,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TshirtList;
-        
+
         /// <summary>
         /// TshirtColor control.
         /// </summary>
@@ -146,7 +148,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TshirtColor;
-        
+
         /// <summary>
         /// TshirtColorList control.
         /// </summary>
@@ -155,7 +157,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TshirtColorList;
-        
+
         /// <summary>
         /// NotesLable control.
         /// </summary>
@@ -164,7 +166,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label NotesLable;
-        
+
         /// <summary>
         /// NotesTextBox control.
         /// </summary>
@@ -173,7 +175,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox NotesTextBox;
-        
+
         /// <summary>
         /// SubmitButton control.
         /// </summary>
@@ -182,7 +184,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SubmitButton;
-        
+
         /// <summary>
         /// PopulateButton control.
         /// </summary>
@@ -191,7 +193,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button PopulateButton;
-        
+
         /// <summary>
         /// ResetButton control.
         /// </summary>
@@ -200,7 +202,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ResetButton;
-        
+
         /// <summary>
         /// Label5 control.
         /// </summary>
@@ -209,7 +211,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label5;
-        
+
         /// <summary>
         /// dtasrcEventList control.
         /// </summary>
@@ -218,7 +220,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource dtasrcEventList;
-        
+
         /// <summary>
         /// EventList control.
         /// </summary>
@@ -227,7 +229,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList EventList;
-        
+
         /// <summary>
         /// Label8 control.
         /// </summary>
@@ -236,7 +238,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label8;
-        
+
         /// <summary>
         /// FormView1 control.
         /// </summary>
@@ -245,7 +247,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView FormView1;
-        
+
         /// <summary>
         /// CoordinatorRepeater control.
         /// </summary>
@@ -254,7 +256,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater CoordinatorRepeater;
-        
+
         /// <summary>
         /// rep1 control.
         /// </summary>
@@ -263,7 +265,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rep1;
-        
+
         /// <summary>
         /// Label9 control.
         /// </summary>
@@ -272,7 +274,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label9;
-        
+
         /// <summary>
         /// ListBox1 control.
         /// </summary>
@@ -281,7 +283,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ListBox ListBox1;
-        
+
         /// <summary>
         /// StudentNameLabel control.
         /// </summary>
@@ -290,7 +292,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label StudentNameLabel;
-        
+
         /// <summary>
         /// StudentNameDataSource control.
         /// </summary>
@@ -299,7 +301,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource StudentNameDataSource;
-        
+
         /// <summary>
         /// StudentNameDDL control.
         /// </summary>
@@ -308,7 +310,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentNameDDL;
-        
+
         /// <summary>
         /// StudentNameData control.
         /// </summary>
@@ -317,7 +319,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label StudentNameData;
-        
+
         /// <summary>
         /// StudentAgeEdit control.
         /// </summary>
@@ -326,7 +328,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentAgeEdit;
-        
+
         /// <summary>
         /// StudentNotesData control.
         /// </summary>
@@ -335,7 +337,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox StudentNotesData;
-        
+
         /// <summary>
         /// StudentSchoolData control.
         /// </summary>
@@ -344,7 +346,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label StudentSchoolData;
-        
+
         /// <summary>
         /// StudentTeacherData control.
         /// </summary>
@@ -353,7 +355,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label StudentTeacherData;
-        
+
         /// <summary>
         /// StudentColorEdit control.
         /// </summary>
@@ -362,7 +364,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentColorEdit;
-        
+
         /// <summary>
         /// StudentSizeEdit control.
         /// </summary>
@@ -371,7 +373,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList StudentSizeEdit;
-        
+
         /// <summary>
         /// StudentFormView control.
         /// </summary>
@@ -380,7 +382,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView StudentFormView;
-        
+
         /// <summary>
         /// StudentUpdateButton control.
         /// </summary>
@@ -389,7 +391,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button StudentUpdateButton;
-        
+
         /// <summary>
         /// UpdatePanel1 control.
         /// </summary>
@@ -398,7 +400,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.UpdatePanel UpdatePanel1;
-        
+
         /// <summary>
         /// TeacherFirstName control.
         /// </summary>
@@ -407,7 +409,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TeacherFirstName;
-        
+
         /// <summary>
         /// TeacherFirstNameText control.
         /// </summary>
@@ -416,7 +418,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TeacherFirstNameText;
-        
+
         /// <summary>
         /// RequiredFieldValidator2 control.
         /// </summary>
@@ -425,7 +427,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
+
         /// <summary>
         /// TeacherLastName control.
         /// </summary>
@@ -434,7 +436,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TeacherLastName;
-        
+
         /// <summary>
         /// TeacherLastNameInput control.
         /// </summary>
@@ -443,7 +445,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TeacherLastNameInput;
-        
+
         /// <summary>
         /// RequiredFieldValidator1 control.
         /// </summary>
@@ -452,7 +454,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
-        
+
         /// <summary>
         /// TeacherSchoolLabel control.
         /// </summary>
@@ -461,7 +463,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TeacherSchoolLabel;
-        
+
         /// <summary>
         /// TeacherSchoolDataSource control.
         /// </summary>
@@ -470,7 +472,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource TeacherSchoolDataSource;
-        
+
         /// <summary>
         /// TeacherSchoolList control.
         /// </summary>
@@ -479,7 +481,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TeacherSchoolList;
-        
+
         /// <summary>
         /// Label6 control.
         /// </summary>
@@ -488,7 +490,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label6;
-        
+
         /// <summary>
         /// TeacherTshirtSize control.
         /// </summary>
@@ -497,7 +499,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TeacherTshirtSize;
-        
+
         /// <summary>
         /// Label7 control.
         /// </summary>
@@ -506,7 +508,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label7;
-        
+
         /// <summary>
         /// TeacherTshirtColor control.
         /// </summary>
@@ -515,7 +517,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TeacherTshirtColor;
-        
+
         /// <summary>
         /// TeacherNoteLabel control.
         /// </summary>
@@ -524,7 +526,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label TeacherNoteLabel;
-        
+
         /// <summary>
         /// TeacherNoteTextBox control.
         /// </summary>
@@ -533,7 +535,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox TeacherNoteTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator3 control.
         /// </summary>
@@ -542,7 +544,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
+
         /// <summary>
         /// Label24 control.
         /// </summary>
@@ -551,7 +553,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label24;
-        
+
         /// <summary>
         /// EmailTextBox control.
         /// </summary>
@@ -560,7 +562,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox EmailTextBox;
-        
+
         /// <summary>
         /// RequiredFieldValidator4 control.
         /// </summary>
@@ -569,7 +571,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator4;
-        
+
         /// <summary>
         /// Label3 control.
         /// </summary>
@@ -578,7 +580,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label3;
-        
+
         /// <summary>
         /// GradeDDL control.
         /// </summary>
@@ -587,7 +589,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList GradeDDL;
-        
+
         /// <summary>
         /// Label4 control.
         /// </summary>
@@ -596,7 +598,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label4;
-        
+
         /// <summary>
         /// modalLRInput13 control.
         /// </summary>
@@ -605,7 +607,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox modalLRInput13;
-        
+
         /// <summary>
         /// RequiredFieldValidator5 control.
         /// </summary>
@@ -614,7 +616,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator5;
-        
+
         /// <summary>
         /// SubmitTeacher control.
         /// </summary>
@@ -623,7 +625,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button SubmitTeacher;
-        
+
         /// <summary>
         /// PopulateTeacher control.
         /// </summary>
@@ -632,7 +634,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button PopulateTeacher;
-        
+
         /// <summary>
         /// ResetTeacher control.
         /// </summary>
@@ -641,7 +643,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button ResetTeacher;
-        
+
         /// <summary>
         /// Label1 control.
         /// </summary>
@@ -650,7 +652,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label1;
-        
+
         /// <summary>
         /// SqlTeacherDataSource control.
         /// </summary>
@@ -659,7 +661,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource SqlTeacherDataSource;
-        
+
         /// <summary>
         /// TeacherNameDDL control.
         /// </summary>
@@ -668,7 +670,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList TeacherNameDDL;
-        
+
         /// <summary>
         /// TeacherFormView control.
         /// </summary>
@@ -677,7 +679,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView TeacherFormView;
-        
+
         /// <summary>
         /// EventDateDataSource control.
         /// </summary>
@@ -686,7 +688,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource EventDateDataSource;
-        
+
         /// <summary>
         /// EventDateDDL control.
         /// </summary>
@@ -695,7 +697,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList EventDateDDL;
-        
+
         /// <summary>
         /// CheckBoxList1 control.
         /// </summary>
@@ -704,7 +706,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList CheckBoxList1;
-        
+
         /// <summary>
         /// Label2 control.
         /// </summary>
@@ -713,7 +715,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label Label2;
-        
+
         /// <summary>
         /// VolunteerListDataSource control.
         /// </summary>
@@ -722,7 +724,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource VolunteerListDataSource;
-        
+
         /// <summary>
         /// VolunteerNameDDL control.
         /// </summary>
@@ -731,7 +733,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList VolunteerNameDDL;
-        
+
         /// <summary>
         /// VolunteerFormView control.
         /// </summary>
@@ -740,7 +742,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView VolunteerFormView;
-        
+
         /// <summary>
         /// VolunteerEventCheckBoxList control.
         /// </summary>
@@ -749,7 +751,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList VolunteerEventCheckBoxList;
-        
+
         /// <summary>
         /// VolunteerValidator control.
         /// </summary>
@@ -758,7 +760,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CustomValidator VolunteerValidator;
-        
+
         /// <summary>
         /// CoordinatorNameLabel control.
         /// </summary>
@@ -767,7 +769,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label CoordinatorNameLabel;
-        
+
         /// <summary>
         /// CoordinatorListDataSource control.
         /// </summary>
@@ -776,7 +778,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.SqlDataSource CoordinatorListDataSource;
-        
+
         /// <summary>
         /// CoordinatorNameDDL control.
         /// </summary>
@@ -785,7 +787,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList CoordinatorNameDDL;
-        
+
         /// <summary>
         /// CoordinatorFormView control.
         /// </summary>
@@ -794,7 +796,7 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FormView CoordinatorFormView;
-        
+
         /// <summary>
         /// CoordinatorCheckBoxList control.
         /// </summary>
@@ -803,5 +805,14 @@ namespace CIS484Solution1 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBoxList CoordinatorCheckBoxList;
+
+        /// <summary>
+        /// accessCodeEntryPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel accessCodeEntryPanel;
     }
 }
