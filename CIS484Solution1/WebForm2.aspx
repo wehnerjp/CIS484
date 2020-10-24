@@ -585,7 +585,6 @@
         </div>
     </div>
 </asp:Content>
-
 <asp:Content ID="VolunteerExisting" ContentPlaceHolderID="VolunteerExistingPlaceholder" runat="server">
 
     <div style="margin-top: 40px;">
@@ -663,7 +662,6 @@
         </fieldset>
     </div>
 </asp:Content>
-
 <asp:Content ID="Content1" ContentPlaceHolderID="CoordinatorExistingPlaceholder" runat="server">
     <div style="margin-top: 40px;">
         <div style="margin-top: 40px;">
@@ -716,4 +714,8 @@
             </fieldset>
         </div>
     </div>
+</asp:Content>
+<asp:Content ContentPlaceHolderID="accessCodeContentPlaceHolder" runat="server">
+    <asp:Panel ID="accessCodeEntryPanel" runat="server">
+    </asp:Panel>
 </asp:Content>

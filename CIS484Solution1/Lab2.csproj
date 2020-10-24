@@ -60,9 +60,6 @@
     <Reference Include="Bogus, Version=31.0.3.0, Culture=neutral, PublicKeyToken=fa1bb3f3f218129a, processorArchitecture=MSIL">
       <HintPath>..\packages\Bogus.31.0.3\lib\net40\Bogus.dll</HintPath>
     </Reference>
-    <Reference Include="Faker">
-      <HintPath>Release\Faker.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -13,9 +13,11 @@ using System.Web.Services;
 
 namespace CIS484Solution1
 {
+
     public partial class WebForm2 : System.Web.UI.Page
     {
         public static int StID = -1;
+        public static string UserAccessCodeType = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {

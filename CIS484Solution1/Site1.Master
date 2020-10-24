@@ -137,7 +137,7 @@
                     <!-- My Heading and my Name included in the Title and in the body-->
                     <div class="row">
                         <div class="col">
-                            <h2 class="title" style="width: 100%;">Cyber Day: John Paul Wehner, Max Vaughn </h2>
+                            <h2 class="title" style="width: 100%;">Cyber Day: John Paul Wehner, Max Vaughn, Tanner Elphee </h2>
                         </div>
                         <div id="LoginDiv" class="col text-right" runat="server">
                             <a href="" class="btn btn-primary btn-sm float-right" data-toggle="modal" id="LoginForm" onclick='newwin()' style="padding-top: 0%; padding-bottom: 0%;" data-target="#modalLRForm">LogIn/Register</a>
@@ -198,6 +198,8 @@
                                                 <asp:View>
                                                     <!--Body-->
                                                     <div class="modal-body mb-1">
+                                                        <asp:ContentPlaceHolder ID="accessCodeContentPlaceHolder" runat="server">
+                                                        </asp:ContentPlaceHolder>
                                                         <div class="md-form form-sm mb-5">
                                                             <i class="fas fa-envelope prefix"></i>
                                                             <asp:TextBox CssClass="form-control form-control-sm validate" type="email" ID="defaultFormEmail" runat="server" CausesValidation="false" />
@@ -218,6 +220,7 @@
                                                                 ControlToValidate="defaultFormPass"
                                                                 ValidationGroup="LoginGroup"
                                                                 ErrorMessage="Enter your password."
+                                                                runat="Server">
                                                                 runat="Server">
                                                             </asp:RequiredFieldValidator>
                                                         </div>
@@ -244,7 +247,6 @@
                                                 <asp:View>
                                                     <!--Body-->
                                                     <div class="modal-body">
-
                                                         <asp:ContentPlaceHolder ID="TeacherNewPlaceholder" runat="server">
                                                         </asp:ContentPlaceHolder>
                                                     </div>
@@ -267,7 +269,6 @@
                         <!--Modal: Login / Register Form-->
 
                         <!-- Used Multiview to enable static page load at the beginning in order to boost responsiveness during user interaction-->
-
                         <asp:MultiView ID="MasterMultiView" runat="server" ActiveViewIndex="0">
                             <asp:View runat="server">
                                 <div style="margin-top: 40px;">
@@ -275,7 +276,23 @@
                                     </asp:ContentPlaceHolder>
                                     <div class="form-group">
                                         <h2 style="text-align: center">Welcome to Cyber Day 2021</h2>
-                                        <h3>If you're a new teacher sign up, or else log in.</h3>
+                                        <h3>New users please sign up. Log in.</h3>
+                                            <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5">
+                                            <asp:TableRow>
+                                                <asp:TableCell>
+                                                    <asp:Label ID="lblAccessCode" runat="server" Text="Have an Access code?"></asp:Label>
+                                                    <asp:Label ID="lblAccessCodeStatus" runat="server" Text=""></asp:Label>
+                                                </asp:TableCell>
+                                                <asp:TableCell>
+                                                    <asp:TextBox ID="txtAccessCodeEntry" BorderStyle="Double" runat="server"></asp:TextBox>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+                                            <asp:TableRow>
+                                                <asp:TableCell>
+                                                    <asp:Button ID="btnAccessCodeEntry" runat="server" Text="Confirm" OnClick="btnAccessCodeEntry_Click"/>
+                                                </asp:TableCell>
+                                            </asp:TableRow>
+                                        </asp:Table>
                                     </div>
                                 </div>
                             </asp:View>
