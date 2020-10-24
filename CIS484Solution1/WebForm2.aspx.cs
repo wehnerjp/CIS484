@@ -13,9 +13,11 @@ using System.Web.Services;
 
 namespace CIS484Solution1
 {
+
     public partial class WebForm2 : System.Web.UI.Page
     {
         public static int StID = -1;
+        public static string UserAccessCodeType = null;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -239,13 +241,6 @@ namespace CIS484Solution1
             }
         }
 
-        //
-        // protected void AddTeacher_Click1(object sender, EventArgs e)
-        // {
-        //     ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('" + PasswordHash.HashPassword("1111") + "','Warning');", true);
-        //     MessageBox.Show(PasswordHash.HashPassword("1111"));
-        // }
-
         protected void AddTeacher_Click(object sender, EventArgs e)
         {
             //Inserting teacher query
@@ -461,6 +456,7 @@ namespace CIS484Solution1
             TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
             TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
             TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
+            EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
             modalLRInput13.Text = "1111";
         }
 
