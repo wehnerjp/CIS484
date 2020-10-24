@@ -485,7 +485,7 @@
             <!--Same button functions outside of commit in order to streamline process-->
             <div class="container">
                 <div class="row text-center form-sm">
-                    <asp:Button ID="SubmitTeacher" runat="server" ValidationGroup="SignUpGroup" OnClick="AddTeacher_Click" Text="Submit" Style="margin-left: 0%;" CssClass="btn btn-info" />
+                    <asp:Button ID="SubmitTeacher" runat="server" OnClick="AddTeacher_Click" ValidationGroup="SignUpGroup" Text="Submit" Style="margin-left: 0%;" CssClass="btn btn-info" />
                 </div>
                 <div class="row text-center form-sm">
                     <asp:Button ID="PopulateTeacher" runat="server" OnClick="PopulateTextTeacher_Click" CausesValidation="False" Text=" Fill " CssClass="btn btn-success" UseSubmitBehavior="False" />

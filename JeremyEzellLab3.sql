@@ -1,4 +1,4 @@
-CREATE PROCEDURE[dbo].[Auth]
+CREATE PROCEDURE dbo.Auth
 	@Email AS NCHAR(50),
 	@Password AS NCHAR(50)
 AS
