@@ -166,6 +166,8 @@
                                     <asp:MenuItem Text="Home" Value="0" Selected="true" />
                                     <asp:MenuItem Text="Management Center" Value="1" />
                                     <asp:MenuItem Text="SignUp Center" Value="2" />
+                                    <asp:MenuItem Text="Instructor" Value="3" />
+                                    <asp:MenuItem Text="Volunteer" Value="4" />
                                     <asp:MenuItem Text="User: None" Enabled="False" />
                                 </Items>
                             </asp:Menu>
@@ -340,6 +342,63 @@
                                         </asp:View>
                                         <asp:View runat="server">
                                             <asp:ContentPlaceHolder ID="CoordinatorExistingPlaceholder" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                    </asp:MultiView>
+                                </div>
+                            </asp:View>
+
+                              <asp:View runat="server">
+                                <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
+                                    <asp:Menu
+                                        ID="Instructor"
+                                        CssClass="navb"
+                                        Orientation="Horizontal"
+                                        Width="100%"
+                                        Text-Align="center"
+                                        runat="server"
+                                         OnMenuItemClick="Instructor_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                                    </asp:Menu>
+                                    <!--Teacher Input Extra Functionality-->
+                                    <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="InstructorView" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                    </asp:MultiView>
+                                </div>
+                            </asp:View>
+                            <asp:View runat="server">
+                                <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
+                                    <asp:Menu
+                                        ID="Volunteer"
+                                        CssClass="navb"
+                                        Orientation="Horizontal"
+                                        Width="100%"
+                                        Text-Align="center"
+                                        runat="server"
+                                        OnMenuItemClick="Volunteer_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                                    </asp:Menu>
+                                    <!--Teacher Input Extra Functionality-->
+                                    <asp:MultiView ID="MultiView2" runat="server" ActiveViewIndex="0">
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="VolunteerView" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder4" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="ContentPlaceHolder5" runat="server">
                                             </asp:ContentPlaceHolder>
                                         </asp:View>
                                     </asp:MultiView>
