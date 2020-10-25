@@ -123,13 +123,13 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.Button LoginButton;
 
         /// <summary>
-        /// TeacherNewPlaceholder control.
+        /// CoordinatorNewPlaceholder control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder TeacherNewPlaceholder;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder CoordinatorNewPlaceholder;
 
         /// <summary>
         /// MasterMultiView control.

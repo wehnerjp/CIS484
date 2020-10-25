@@ -90,23 +90,18 @@ namespace CIS484Solution1
 
         protected void LoginButton_Click(object sender, EventArgs e)
         {
-            string email = HttpUtility.HtmlEncode(defaultFormEmail.Text);
+            string Username = HttpUtility.HtmlEncode(defaultFormEmail.Text);
             string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-            string type = "Select UserLoginType from UserInfo where Email = " + email;
-            SqlConnection authConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["authconnection"].ConnectionString);
-            SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
+            string type = "Select UserLoginType from Coordinator where Email = " + Username;
+            SqlConnection CDMConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand loginCommand = new SqlCommand();
-            loginCommand.Connection = authConnection;
-            loginCommand.CommandType = CommandType.StoredProcedure;
-            loginCommand.CommandText = "Auth";
-            loginCommand.Parameters.AddWithValue("@Email", email);
-            loginCommand.Parameters.AddWithValue("@Password", pass);
-            dbConnection.Open();
-            authConnection.Open();
+            loginCommand.Connection = CDMConnection;
+            CDMConnection.Open();
             System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
-            findPass.Connection = authConnection;
-            findPass.CommandText = "Select * from UserInfo where Email = @Email";
-            findPass.Parameters.Add(new SqlParameter("@Email", email));
+            findPass.Connection = CDMConnection;
+            findPass.CommandText = "Select Password from CoordinatorAuth where Username = @Username";
+            findPass.Parameters.Add(new SqlParameter("@Username", Username));
 
             SqlDataReader reader = findPass.ExecuteReader();
             try
@@ -118,32 +113,27 @@ namespace CIS484Solution1
                         string storedHash = reader["Password"].ToString();
                         if (PasswordHash.ValidatePassword(defaultFormPass.Text, storedHash))
                         {
-                            UserLoginEmail = email;
-                            UserLoginType = reader.GetString(2).Trim();
-
-                            if (UserLoginType.Equals("Teacher"))
-                            {
-                                string qry1 = "select * from Teacher where Email='" + email + "'";
-                                SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
-                                SqlDataReader sdr1 = cmd1.ExecuteReader();
-                                while (sdr1.Read())
-                                {
-                                    UserLoginID = sdr1.GetInt32(0);
-                                    UserLoginName = (sdr1.GetString(2).Substring(0, 1) + ". " + sdr1.GetString(3));
-                                }
-                            }
-                            else
-                            {
-                                string qry1 = "select * from EventPersonnel where Email='" + email + "'";
-                                SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
-                                SqlDataReader sdr1 = cmd1.ExecuteReader();
-                                while (sdr1.Read())
-                                {
-                                    UserLoginID = sdr1.GetInt32(0);
-                                    UserLoginName = (sdr1.GetString(1).Substring(0, 1) + ". " + sdr1.GetString(2));
-                                }
-                            }
-                            ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: " + UserLoginType, MessageType.Success);
+                            UserLoginEmail = Username;
+                            UserLoginName = Username;
+                                //string qry1 = "select * from CoordinatorAuth where Username='" + Username + "'";
+                                //SqlCommand cmd1 = new SqlCommand(qry1, CDMConnection);
+                                //SqlDataReader sdr1 = cmd1.ExecuteReader();
+                                //while (sdr1.Read())
+                                //{
+                                //    UserLoginName = (sdr1.GetString(2).Substring(0, 1) + ". " + sdr1.GetString(3));
+                                //}
+                                //else
+                                //{
+                                //    string qry1 = "select * from EventPersonnel where Email='" + email + "'";
+                                //    SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
+                                //    SqlDataReader sdr1 = cmd1.ExecuteReader();
+                                //    while (sdr1.Read())
+                                //    {
+                                //        UserLoginID = sdr1.GetInt32(0);
+                                //        UserLoginName = (sdr1.GetString(1).Substring(0, 1) + ". " + sdr1.GetString(2));
+                                //    }
+                                //}
+                            ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: Coordinator! " + UserLoginType, MessageType.Success);
                             if (UserLoginEmail != null)
                             {
                                 MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
@@ -169,10 +159,10 @@ namespace CIS484Solution1
             }
             finally
             {
-                dbConnection.Close();
-                authConnection.Close();
+                //dbConnection.Close();
+                CDMConnection.Close();
             }
-            ShowMessage("Heard! " + email + pass, MessageType.Info);
+            ShowMessage("Heard! " + Username, MessageType.Info);
         }
 
         protected void Instructor_MenuItemClick(object sender, MenuEventArgs e)
