@@ -35,14 +35,11 @@ namespace CIS484Solution1
             System.Web.UI.WebControls.Menu MasterMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
             //MessageBox.Show(UserLoginType + Int32.Parse(MasterMenu.SelectedValue));
-      
+
             multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
-   
 
-
-                //ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Not Authorized to Access this page!','Warning');", true);
-                //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modalLoginForm", "$('#modalLoginForm').modal();", true);
-            
+            //ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Not Authorized to Access this page!','Warning');", true);
+            //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modalLoginForm", "$('#modalLoginForm').modal();", true);
         }
 
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)

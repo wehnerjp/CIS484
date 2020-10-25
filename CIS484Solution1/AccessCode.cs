@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Configuration;
- 
+
 namespace CIS484Solution1
 {
     public class AccessCode
     {
-        const string lower = "abcdefghijklmnopqursuvwxyz";
-        const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const string num = "123456789";
-        const string other = @"!@£$%^&*()#€";
-        ArrayList codeList = new ArrayList();
+        private const string lower = "abcdefghijklmnopqursuvwxyz";
+        private const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        private const string num = "123456789";
+        private const string other = @"!@£$%^&*()#€";
+        private ArrayList codeList = new ArrayList();
 
         public string GenerateCode(bool lowercase, bool uppercase, bool numbers, bool otherChar,
             int codeSize)
@@ -43,10 +39,9 @@ namespace CIS484Solution1
             }
             else
             {
-                GenerateCode(lowercase,uppercase, numbers, otherChar, codeSize);
+                GenerateCode(lowercase, uppercase, numbers, otherChar, codeSize);
             }
             return String.Join(null, code);
         }
     }
-
 }

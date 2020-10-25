@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
-using System.Web;
 
 namespace CIS484Solution1
 {
@@ -30,9 +27,10 @@ namespace CIS484Solution1
             pbkdf2.IterationCount = iterations;
             return pbkdf2.GetBytes(outputBytes);
         }
+
         public static bool ValidatePassword(string password, string correctHash)
         {
-            char[] delimiter = { ':' }; 
+            char[] delimiter = { ':' };
             var split = correctHash.Split(delimiter);
             var iterations = Int32.Parse(split[IterationIndex]);
             var salt = Convert.FromBase64String(split[SaltIndex]);
@@ -40,6 +38,7 @@ namespace CIS484Solution1
             var testhash = GetPbkdf2Bytes(password, salt, iterations, hash.Length);
             return SlowEquals(hash, testhash);
         }
+
         private static bool SlowEquals(byte[] a, byte[] b)
         {
             var diff = (uint)a.Length ^ (uint)b.Length;

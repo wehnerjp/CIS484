@@ -348,7 +348,7 @@
                                 </div>
                             </asp:View>
 
-                              <asp:View runat="server">
+                            <asp:View runat="server">
                                 <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
                                     <asp:Menu
                                         ID="Instructor"
@@ -357,7 +357,7 @@
                                         Width="100%"
                                         Text-Align="center"
                                         runat="server"
-                                         OnMenuItemClick="Instructor_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                                        OnMenuItemClick="Instructor_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
                                     </asp:Menu>
                                     <!--Teacher Input Extra Functionality-->
                                     <asp:MultiView ID="MultiView1" runat="server" ActiveViewIndex="0">

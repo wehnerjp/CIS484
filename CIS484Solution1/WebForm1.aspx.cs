@@ -1,17 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Web.Configuration;
-using System.Configuration;
 using System.Globalization;
+using System.Web;
+using System.Web.Configuration;
+using System.Web.UI;
 using System.Windows.Forms;
-using System.Web.Services;
-using Button = System.Web.UI.WebControls.Button;
 
 namespace CIS484Solution1
 {
@@ -346,7 +341,8 @@ namespace CIS484Solution1
 
         protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 div1.Visible = false;
                 div2.Visible = false;
                 string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
@@ -396,7 +392,6 @@ namespace CIS484Solution1
                                 lblInstructorEvent.Text = (HttpUtility.HtmlEncode(EventReader[2].ToString()));
                                 lblInstructorDate.Text = (HttpUtility.HtmlEncode(EventReader[1].ToString()));
                             }
-
                         }
                         else if (type.Equals("Volunteer"))
                         {
@@ -435,7 +430,6 @@ namespace CIS484Solution1
                                 lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
                                 lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
                                 lblVolunteerName.Text = (HttpUtility.HtmlEncode(VolReader[1].ToString()));
-
                             }
                         }
                         else if (type.Equals("EventContact"))
@@ -450,7 +444,6 @@ namespace CIS484Solution1
                         {
                             lblAccessCode.Text = "Wrong";
                         }
-
                     }
                 }
             }
@@ -458,7 +451,6 @@ namespace CIS484Solution1
             {
                 lblAccessCodeStatus.Text = "Accesscode doesn't exist!.";
             }
-            
         }
 
         protected void AddRequest_Click(object sender, EventArgs e)
