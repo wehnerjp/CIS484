@@ -187,55 +187,62 @@ namespace CIS484Solution1
             ShowMessage("Heard! " + email + pass, MessageType.Info);
         }
 
-        protected void accessCodeLink_Click(object sender, EventArgs e)
+        protected void ContactMenu_MenuItemClick(object sender, MenuEventArgs e)
         {
-            studentAccesCode();
+            System.Web.UI.WebControls.Menu menuTabsCurrent = sender as System.Web.UI.WebControls.Menu;
+            MultiView multiTabs = this.FindControl("multiviewStudent") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(ContactMenu.SelectedValue);
         }
 
-        protected void studentAccesCode()
-        {
-            try
-            {
-                System.Data.SqlClient.SqlConnection sc = new System.Data.SqlClient.SqlConnection();
-                sc.ConnectionString = @"Server=LOCALHOST;Database=AUTH;Trusted_Connection=Yes;";
+        //protected void accessCodeLink_Click(object sender, EventArgs e)
+        //{
+        //    studentAccesCode();
+        //}
 
-                sc.Open();
-                System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
-                findPass.Connection = sc;
-                findPass.CommandText = "select ACCESSCODE from ACCESS where code = @Code";
-                findPass.Parameters.Add(new SqlParameter("@Code", txtAccessCodeEntry.Text));
+        //protected void studentAccesCode()
+        //{
+        //    try
+        //    {
+        //        System.Data.SqlClient.SqlConnection sc = new System.Data.SqlClient.SqlConnection();
+        //        sc.ConnectionString = @"Server=LOCALHOST;Database=AUTH;Trusted_Connection=Yes;";
 
-                SqlDataReader reader = findPass.ExecuteReader();
+        //        sc.Open();
+        //        System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
+        //        findPass.Connection = sc;
+        //        findPass.CommandText = "select ACCESSCODE from ACCESS where code = @Code";
+        //        findPass.Parameters.Add(new SqlParameter("@Code", txtAccessCodeEntry.Text));
 
-                if (reader.HasRows)
-                {
-                    while (reader.Read())
-                    {
-                        string tempAccessCode = reader["accessCode"].ToString();
-                        Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
-                        string accessCode = txtAccessCodeEntry.Text;
+        //        SqlDataReader reader = findPass.ExecuteReader();
 
-                        if (Session["ACCESSCODE"].ToString() == tempAccessCode)
-                        {
-                            Session.Add("ACCESSCODE", accessCode);
-                            lblAccessCodeStatus.Text = "Session variable saved";
-                        }
-                        else
-                            StudentExistingPlaceholder.Visible = true;
-                    }
-                }
-                else // if the accesscode doesn't exist, it will show failure
-                    sc.Close();
-            }
-            catch
-            {
-                lblAccessCode.Text = "Accesscode doesn't exist!.";
-            }
-        }
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                string tempAccessCode = reader["accessCode"].ToString();
+        //                Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
+        //                string accessCode = txtAccessCodeEntry.Text;
 
-        protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
-        {
-            studentAccesCode();
-        }
+        //                if (Session["ACCESSCODE"].ToString() == tempAccessCode)
+        //                {
+        //                    Session.Add("ACCESSCODE", accessCode);
+        //                    lblAccessCodeStatus.Text = "Session variable saved";
+        //                }
+        //                else
+        //                    StudentExistingPlaceholder.Visible = true;
+        //            }
+        //        }
+        //        else // if the accesscode doesn't exist, it will show failure
+        //            sc.Close();
+        //    }
+        //    catch
+        //    {
+        //        lblAccessCode.Text = "Accesscode doesn't exist!.";
+        //    }
+        //}
+
+        //protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
+        //{
+        //    studentAccesCode();
+        //}
     }
 }

@@ -166,7 +166,10 @@
                                     <asp:MenuItem Text="Home" Value="0" Selected="true" />
                                     <asp:MenuItem Text="Management Center" Value="1" />
                                     <asp:MenuItem Text="SignUp Center" Value="2" />
+                                    <asp:MenuItem Text="Assign Instructor" Value="3" />
+
                                     <asp:MenuItem Text="User: None" Enabled="False" />
+        
                                 </Items>
                             </asp:Menu>
                         </div>
@@ -335,6 +338,39 @@
                                         </asp:View>
                                         <asp:View runat="server">
                                             <asp:ContentPlaceHolder ID="CoordinatorExistingPlaceholder" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                    </asp:MultiView>
+                                </div>
+                            </asp:View>
+
+                            <asp:View runat="server">
+                                <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
+                                    <asp:Menu
+                                        ID="ContactMenu"
+                                        CssClass="navb"
+                                        Orientation="Horizontal"
+                                        Width="100%"
+                                        Text-Align="center"
+                                        runat="server"
+                                        OnMenuItemClick="ContactMenu_MenuItemClick" StaticMenuItemStyle-CssClass="menuItems" StaticMenuStyle-CssClass="navb" StaticSelectedStyle-CssClass="menuItems" ClientIDMode="Static">
+                                    <Items>
+                                        <asp:MenuItem Text="Submit Request" Value ="0" Selected="true" />
+                                        <asp:MenuItem Text="Sign Up Teacher" Value="1" />
+                                        <asp:MenuItem Text="Submit Student" Value = "2" />
+                                    </Items>
+                                    </asp:Menu>
+                                    <asp:MultiView ID="ContactView" runat="server" ActiveViewIndex="0">
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="Contact_SubmitRequest" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="Contact_AssignInstructor" runat="server">
+                                            </asp:ContentPlaceHolder>
+                                        </asp:View>
+                                        <asp:View runat="server">
+                                            <asp:ContentPlaceHolder ID="Contact_SubmitStudent" runat="server">
                                             </asp:ContentPlaceHolder>
                                         </asp:View>
                                     </asp:MultiView>
