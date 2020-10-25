@@ -108,13 +108,41 @@ namespace CIS484Solution1
 
             try
             {
+                cmd103.CommandType = CommandType.Text;
+                cmd103.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into Cluster";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }           
+
+            try
+            {
+                cmd102.CommandType = CommandType.Text;
+                cmd102.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into AccessCode";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            try
+            {
                 cmd101.CommandType = CommandType.Text;
                 cmd101.ExecuteNonQuery();
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-                string msg = "Insert Error into "
+                string msg = "Insert Error into Instructor";
+                msg += ex.Message;
+                throw new Exception(msg);
             }
+
+
         }
 
         protected void Instructor_ResetButton_Click(object sender, EventArgs e)
