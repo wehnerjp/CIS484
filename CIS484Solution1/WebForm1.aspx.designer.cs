@@ -213,6 +213,15 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.GridView ContactSubmissionGrid;
 
         /// <summary>
+        /// RequestListDDLUpdate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel RequestListDDLUpdate;
+
+        /// <summary>
         /// RequestListDataSource control.
         /// </summary>
         /// <remarks>
@@ -222,6 +231,15 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.SqlDataSource RequestListDataSource;
 
         /// <summary>
+        /// RequestListDDL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList RequestListDDL;
+
+        /// <summary>
         /// AddEvent control.
         /// </summary>
         /// <remarks>
@@ -229,6 +247,15 @@ namespace CIS484Solution1
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button AddEvent;
+
+        /// <summary>
+        /// DeleteEvent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button DeleteEvent;
 
         /// <summary>
         /// StudentNameData control.

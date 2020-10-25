@@ -114,22 +114,27 @@
                 </asp:GridView>
             </ContentTemplate>
         </asp:UpdatePanel>
-        <asp:SqlDataSource runat="server"
-            ID="RequestListDataSource"
-            DataSourceMode="DataReader"
-            ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-            SelectCommand="SELECT RequestID, ContactName FROM ContactRequest" />
 
-        <asp:DropDownList
-            DataSourceID="RequestListDataSource"
-            DataTextField="ContactName"
-            DataValueField="RequestID"
-            AutoPostBack="true"
-            runat="server"
-            Width="50%"
-            CssClass="js-example-basic-single">
-        </asp:DropDownList>
-        <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Add" CausesValidation="False" UseSubmitBehavior="False" />
+        <asp:UpdatePanel ID="RequestListDDLUpdate" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:SqlDataSource runat="server"
+                    ID="RequestListDataSource"
+                    DataSourceMode="DataReader"
+                    ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+                    SelectCommand="SELECT RequestID, ContactName FROM ContactRequest" />
+                <asp:DropDownList ID="RequestListDDL"
+                    DataSourceID="RequestListDataSource"
+                    DataTextField="ContactName"
+                    DataValueField="RequestID"
+                    AutoPostBack="true"
+                    runat="server"
+                    Width="50%"
+                    CssClass="js-example-basic-single">
+                </asp:DropDownList>
+                <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Approve" CausesValidation="False" UseSubmitBehavior="False" />
+                <asp:Button runat="server" ID="DeleteEvent" OnClick="DeleteEvent_OnClickEvent_Click" Text="Delete" CausesValidation="False" UseSubmitBehavior="False" />
+            </ContentTemplate>
+        </asp:UpdatePanel>
     </div>
 </asp:Content>
 

@@ -39,6 +39,12 @@ namespace CIS484Solution1
                 "$(document).ready(function() { $('.js-example-basic-single').select2();  $('.grid').masonry({ itemSelector: '.grid-item', columnWidth: 160,  gutter: 20   }); $(document).ready(function () {$('#manBt').click(function() {$('#manPan1').slideToggle('slow');});});});",
                 true);
             CreateGrid();
+            PopulateSequence();
+        }
+
+        protected void PopulateSequence()
+        {
+            submissionDataTable.Clear();
             AddRowsToGrid();
 
             // NOW BIND THE GRIDVIEW WITH THE DATATABLE.
@@ -66,8 +72,6 @@ namespace CIS484Solution1
             tColumn = new System.Data.DataColumn("Date Request", System.Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Event Name", System.Type.GetType("System.String"));
-            submissionDataTable.Columns.Add(tColumn);
-            tColumn = new System.Data.DataColumn("Contact Code", System.Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
         }
 
@@ -104,7 +108,6 @@ namespace CIS484Solution1
                         //btnCell2.Controls.Add(deleteEvent);
 
                         //count++;
-
                         submissionDataTable.Rows.Add(reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
                     }
                 }
@@ -132,6 +135,15 @@ namespace CIS484Solution1
 
         protected void addEvent_Click(object sender, EventArgs e)
         {
+            string OrgName = "";
+            string OrgType = "";
+            string EventName = "";
+            string ContactName = "";
+            string Phone = "";
+            string Email = "";
+            string RequestID = "";
+            string EventID = "";
+            DateTime Date1 = new DateTime();
             AccessCode contact = new AccessCode();
             string code = contact.GenerateCode(true, true, true, true, 8);
             MessageBox.Show(code);
@@ -143,49 +155,147 @@ namespace CIS484Solution1
             //Get connection string from web.config file
             //create new sqlconnection and connection to database by using connection string from web.config file
             SqlConnection con = new SqlConnection(strcon);
+            String sqlQuery4 = "Select * from ContactRequest where RequestID = '" + RequestListDDL.SelectedValue + "'";
+            SqlCommand cmd4 = new SqlCommand(sqlQuery4, con);
+
+            con.Open();
+            try
+            {
+                SqlDataReader reader = cmd4.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    RequestID = reader[0].ToString();
+                    ContactName = reader[1].ToString();
+                    Phone = reader[2].ToString();
+                    Email = reader[3].ToString();
+                    OrgName = reader[4].ToString();
+                    OrgType = reader[5].ToString();
+                    Date1 = Convert.ToDateTime(reader[6]);
+
+                    EventName = reader[7].ToString();
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Select Error in ContactRequest:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
             String sqlQuery = "Insert into AccessCode (Code, UserType, CoordinatorID) values (@Code, @UserType, @CoordinatorID)";
+            String sqlQuery6 = "Insert into EventContact (ContactCode) values (@Code)";
+
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
             cmd.Parameters.Add(new SqlParameter("@Code", code));
             cmd.Parameters.Add(new SqlParameter("@UserType", "Contact"));
             cmd.Parameters.Add(new SqlParameter("@CoordinatorID", CoordinatorID));
 
+            SqlCommand cmd6 = new SqlCommand(sqlQuery6, con);
+            cmd6.Parameters.Add(new SqlParameter("@Code", code));
+
+            try
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert/Update Error Insert into AccessCode:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            try
+            {
+                cmd6.CommandType = CommandType.Text;
+                cmd6.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert/Update Error Insert into EventContact 1:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
             String sqlQuery2 = "  Insert into Organization (Name, Type, ContactCode) values " +
                                "(@OrgName, @OrgType, @ContactCode);";
             SqlCommand cmd2 = new SqlCommand(sqlQuery2, con);
-            cmd2.Parameters.Add(new SqlParameter("@OrgName", CoordinatorID));
+            cmd2.Parameters.Add(new SqlParameter("@OrgName", OrgName));
             cmd2.Parameters.Add(new SqlParameter("@ContactCode", code));
-            cmd2.Parameters.Add(new SqlParameter("@OrgType", CoordinatorID));
+            cmd2.Parameters.Add(new SqlParameter("@OrgType", OrgType));
 
-            String sqlQuery3 = "  Insert into Event (Date, Name) values " +
-                               "(@EventName, @Date);";
-            SqlCommand cmd3 = new SqlCommand(sqlQuery3, con);
-            cmd3.Parameters.Add(new SqlParameter("@EventName", "Contact"));
-            cmd3.Parameters.Add(new SqlParameter("@Date", CoordinatorID));
-
-            String sqlQuery1 = "  Insert into EventContact (ContactCode, Name, OrganizationID, Phone, Email) values " +
-                               "(@ContactCode, @ContactName, (select OrganizationID from Organization where Name=@OrgName), @Phone, @Email);";
-            SqlCommand cmd1 = new SqlCommand(sqlQuery1, con);
-            cmd1.Parameters.Add(new SqlParameter("@Email", "Email"));
-            cmd1.Parameters.Add(new SqlParameter("@ContactCode", code));
-            cmd1.Parameters.Add(new SqlParameter("@ContactName", "Contact"));
-            cmd1.Parameters.Add(new SqlParameter("@OrgName", CoordinatorID));
-            cmd1.Parameters.Add(new SqlParameter("@Phone", code));
-
-            con.Open();
             try
             {
-                SqlDataReader reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                }
+                cmd2.CommandType = CommandType.Text;
+                cmd2.ExecuteNonQuery();
             }
-            catch (Exception)
+            catch (System.Data.SqlClient.SqlException ex)
             {
-                Response.Redirect("user.aspx", false);
+                string msg = "Insert/Update Error Insert into Org:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            String sqlQuery3 = "  Insert into Event (Date, Name) values " +
+                               "('" + Date1.ToString("yyyy-MM-dd") + "', @EventName);";
+            SqlCommand cmd3 = new SqlCommand(sqlQuery3, con);
+            cmd3.Parameters.Add(new SqlParameter("@EventName", EventName));
+            cmd3.Parameters.Add(new SqlParameter("@Date", Date1));
+
+            try
+            {
+                cmd3.CommandType = CommandType.Text;
+                cmd3.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert/Update Error Insert into Event:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            //UPDATE table_name
+            //SET column1 = value1, column2 = value2, ...
+            //WHERE condition;
+            String sqlQuery1 = "  Update  EventContact Set Name = @ContactName, OrganizationID =(select OrganizationID from Organization where Name=@OrgName), Phone = @Phone, Email = @Email, EventID=(select EventID from Event where Name=@EventName)" +
+                               " where ContactCode = @ContactCode;";
+            SqlCommand cmd1 = new SqlCommand(sqlQuery1, con);
+            cmd1.Parameters.Add(new SqlParameter("@Email", Email));
+            cmd1.Parameters.Add(new SqlParameter("@ContactCode", code));
+            cmd1.Parameters.Add(new SqlParameter("@ContactName", ContactName));
+            cmd1.Parameters.Add(new SqlParameter("@OrgName", OrgName));
+            cmd1.Parameters.Add(new SqlParameter("@Phone", Phone));
+            cmd1.Parameters.Add(new SqlParameter("@EventName", EventName));
+
+            try
+            {
+                cmd1.CommandType = CommandType.Text;
+                cmd1.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert/Update Error in EventContact:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            String sqlQuery5 = " Delete from ContactRequest where RequestID = '" + RequestID + "'";
+            SqlCommand cmd5 = new SqlCommand(sqlQuery5, con);
+
+            try
+            {
+                cmd5.CommandType = CommandType.Text;
+                cmd5.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Delete Error in ContactRequest:";
+                msg += ex.Message;
+                throw new Exception(msg);
             }
 
             con.Close();
+            PopulateSequence();
+            RequestListDDLUpdate.Update();
         }
 
         protected void studentAccesCode()
@@ -298,6 +408,9 @@ namespace CIS484Solution1
             {
                 MessageBox.Show("Oops", "All fields must be filled");
             }
+
+            PopulateSequence();
+            RequestListDDLUpdate.Update();
         }
 
         protected void ResetButton_Click(object sender, EventArgs eventArgs)
@@ -313,7 +426,35 @@ namespace CIS484Solution1
         protected void EventRequestDate_SelectionChanged(object sender, EventArgs e)
         {
             EventDateRequest = EventRequestDate.SelectedDate;
-            MessageBox.Show(EventDateRequest.Date.ToShortDateString());
+            //MessageBox.Show(EventDateRequest.Date.ToShortDateString());
+        }
+
+        protected void DeleteEvent_OnClickEvent_Click(object sender, EventArgs e)
+        {
+            string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
+            //Inserting teacher query
+
+            //Get connection string from web.config file
+            //create new sqlconnection and connection to database by using connection string from web.config file
+            SqlConnection con = new SqlConnection(strcon);
+
+            con.Open();
+            String sqlQuery = " Delete from ContactRequest where RequestID = '" + RequestListDDL.SelectedValue + "'";
+            SqlCommand cmd = new SqlCommand(sqlQuery, con);
+
+            try
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Delete Error in ContactRequest:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            PopulateSequence();
+            RequestListDDLUpdate.Update();
         }
     }
 }
