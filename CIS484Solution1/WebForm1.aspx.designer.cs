@@ -213,13 +213,22 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.GridView ContactSubmissionGrid;
 
         /// <summary>
-        /// CoordinatorFormView control.
+        /// RequestListDataSource control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView CoordinatorFormView;
+        protected global::System.Web.UI.WebControls.SqlDataSource RequestListDataSource;
+
+        /// <summary>
+        /// AddEvent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button AddEvent;
 
         /// <summary>
         /// StudentNameData control.

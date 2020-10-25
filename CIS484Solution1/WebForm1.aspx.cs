@@ -19,6 +19,10 @@ namespace CIS484Solution1
     {
         public static DateTime EventDateRequest;
         private System.Data.DataTable submissionDataTable = new System.Data.DataTable();
+        public static int count = 1;
+
+        public static int CoordinatorID = 1;
+        //public static Button addEvent = new Button();
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -63,10 +67,6 @@ namespace CIS484Solution1
             submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Event Name", System.Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
-            tColumn = new System.Data.DataColumn("Add", System.Type.GetType("System.String"));
-            submissionDataTable.Columns.Add(tColumn);
-            tColumn = new System.Data.DataColumn("Delete", System.Type.GetType("System.String"));
-            submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Contact Code", System.Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
         }
@@ -82,42 +82,110 @@ namespace CIS484Solution1
             SqlConnection con = new SqlConnection(strcon);
             con.Open();
             SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery, con);
-
+            int count = 1;
             using (SqlCommand command = new SqlCommand(sqlQuery, con))
             {
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        //Read info into List
+                        //TableCell btnCell = new TableCell();
+                        //TableCell btnCell2 = new TableCell();
+
+                        //Button addEvent = new Button();
+                        //addEvent.ID = "AddEvent" + count;
+                        //addEvent.Text = "Add";
+                        ////addEvent.OnClientClick();
+                        //btnCell.Controls.Add(addEvent);
+                        //Button deleteEvent = new Button();
+                        //deleteEvent.ID = "DeleteEvent" + count;
+                        //deleteEvent.Text = "Delete";
+                        ////deleteEvent.OnClientClick();
+                        //btnCell2.Controls.Add(deleteEvent);
+
+                        //count++;
+
                         submissionDataTable.Rows.Add(reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
                     }
                 }
             }
         }
 
-        protected void GridView_RowDataBound(object sender,
-            System.Web.UI.WebControls.GridViewRowEventArgs e)
-        {
-            int count = 1;
-            foreach (GridViewRow row in submissionDataTable.Rows)
-            {
-                if (row.RowType == DataControlRowType.DataRow)
-                {
-                    // ADD LINK BUTTON IF PRICE >= $80
+        //protected void GridView_RowDataBound(object sender,
+        //    System.Web.UI.WebControls.GridViewRowEventArgs e)
+        //{
+        //    Button addEvent = new Button();
+        //    addEvent.CssClass = "btn btn-primary";
+        //    addEvent.ID = "AddEvent" + count;
+        //    addEvent.Text = "Add";
+        //    addEvent.CausesValidation = false;
+        //    addEvent.UseSubmitBehavior = false;
+        //    addEvent.Click += new EventHandler(addEvent_Click);
+        //    e.Row.Cells[7].Controls.Add(addEvent);
+        //    Button deleteEvent = new Button();
+        //    deleteEvent.ID = "DeleteEvent" + count;
+        //    deleteEvent.Text = "Delete";
+        //    //deleteEvent.OnClientClick();
+        //    e.Row.Cells[8].Controls.Add(deleteEvent);
+        //    count++;
+        //}
 
-                    Button addEvent = new Button();
-                    addEvent.ID = "AddEvent" + count;
-                    addEvent.Text = "Add";
-                    //addEvent.OnClientClick();
-                    row.Cells[7].Controls.Add(addEvent);
-                    Button deleteEvent = new Button();
-                    deleteEvent.ID = "DeleteEvent" + count;
-                    deleteEvent.Text = "Add";
-                    //deleteEvent.OnClientClick();
-                    row.Cells[8].Controls.Add(deleteEvent);
+        protected void addEvent_Click(object sender, EventArgs e)
+        {
+            AccessCode contact = new AccessCode();
+            string code = contact.GenerateCode(true, true, true, true, 8);
+            MessageBox.Show(code);
+            //Inserting teacher query
+            //Get connection string from web.config file
+            string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
+            //Inserting teacher query
+
+            //Get connection string from web.config file
+            //create new sqlconnection and connection to database by using connection string from web.config file
+            SqlConnection con = new SqlConnection(strcon);
+            String sqlQuery = "Insert into AccessCode (Code, UserType, CoordinatorID) values (@Code, @UserType, @CoordinatorID)";
+            SqlCommand cmd = new SqlCommand(sqlQuery, con);
+            cmd.Parameters.Add(new SqlParameter("@Code", code));
+            cmd.Parameters.Add(new SqlParameter("@UserType", "Contact"));
+            cmd.Parameters.Add(new SqlParameter("@CoordinatorID", CoordinatorID));
+
+            String sqlQuery2 = "  Insert into Organization (Name, Type, ContactCode) values " +
+                               "(@OrgName, @OrgType, @ContactCode);";
+            SqlCommand cmd2 = new SqlCommand(sqlQuery2, con);
+            cmd2.Parameters.Add(new SqlParameter("@OrgName", CoordinatorID));
+            cmd2.Parameters.Add(new SqlParameter("@ContactCode", code));
+            cmd2.Parameters.Add(new SqlParameter("@OrgType", CoordinatorID));
+
+            String sqlQuery3 = "  Insert into Event (Date, Name) values " +
+                               "(@EventName, @Date);";
+            SqlCommand cmd3 = new SqlCommand(sqlQuery3, con);
+            cmd3.Parameters.Add(new SqlParameter("@EventName", "Contact"));
+            cmd3.Parameters.Add(new SqlParameter("@Date", CoordinatorID));
+
+            String sqlQuery1 = "  Insert into EventContact (ContactCode, Name, OrganizationID, Phone, Email) values " +
+                               "(@ContactCode, @ContactName, (select OrganizationID from Organization where Name=@OrgName), @Phone, @Email);";
+            SqlCommand cmd1 = new SqlCommand(sqlQuery1, con);
+            cmd1.Parameters.Add(new SqlParameter("@Email", "Email"));
+            cmd1.Parameters.Add(new SqlParameter("@ContactCode", code));
+            cmd1.Parameters.Add(new SqlParameter("@ContactName", "Contact"));
+            cmd1.Parameters.Add(new SqlParameter("@OrgName", CoordinatorID));
+            cmd1.Parameters.Add(new SqlParameter("@Phone", code));
+
+            con.Open();
+            try
+            {
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
                 }
             }
+            catch (Exception)
+            {
+                Response.Redirect("user.aspx", false);
+            }
+
+            con.Close();
         }
 
         protected void studentAccesCode()

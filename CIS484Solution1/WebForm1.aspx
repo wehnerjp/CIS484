@@ -104,38 +104,32 @@
 </asp:Content>
 <asp:Content ID="Content8" ContentPlaceHolderID="CoordinatorSubmissionViewPlaceholder" runat="server">
     <div class="form-group">
-        <asp:GridView ID="ContactSubmissionGrid"
-            Font-Names="Arial"
-            Font-Size="0.75em"
-            CellPadding="5" CellSpacing="0"
-            ForeColor="#333"
-            AutoGenerateColumns="true"
-            runat="server">
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <asp:GridView ID="ContactSubmissionGrid"
+                    AutoGenerateColumns="true"
+                    runat="server">
 
-            <HeaderStyle BackColor="#989898" ForeColor="white" />
-        </asp:GridView>
-        <asp:FormView ID="CoordinatorFormView" runat="server">
-            <ItemTemplate>
-                <table>
-                    <tr>
-                        <td>Coordinator Name:    </td>
-                        <td><%#Eval("CoordinatorName") %></td>
-                    </tr>
-                    <tr>
-                        <td>Notes: </td>
-                        <td><%#Eval("Notes") %></td>
-                    </tr>
-                    <tr>
-                        <td>Tshirt Color: </td>
-                        <td><%#Eval("Color") %></td>
-                    </tr>
-                    <tr>
-                        <td>Tshirt Size: </td>
-                        <td><%#Eval("Size") %></td>
-                    </tr>
-                </table>
-            </ItemTemplate>
-        </asp:FormView>
+                    <HeaderStyle BackColor="#989898" ForeColor="white" />
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
+        <asp:SqlDataSource runat="server"
+            ID="RequestListDataSource"
+            DataSourceMode="DataReader"
+            ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+            SelectCommand="SELECT RequestID, ContactName FROM ContactRequest" />
+
+        <asp:DropDownList
+            DataSourceID="RequestListDataSource"
+            DataTextField="ContactName"
+            DataValueField="RequestID"
+            AutoPostBack="true"
+            runat="server"
+            Width="50%"
+            CssClass="js-example-basic-single">
+        </asp:DropDownList>
+        <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Add" CausesValidation="False" UseSubmitBehavior="False" />
     </div>
 </asp:Content>
 
