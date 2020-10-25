@@ -429,6 +429,46 @@ namespace CIS484Solution1
             //MessageBox.Show(EventDateRequest.Date.ToShortDateString());
         }
 
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+                ResetCoordinator_Click(sender, e);
+                //cmd.Parameters.Add(new SqlParameter("@Username", UsernameTextBox.Text));
+                //cmd.Parameters.Add(new SqlParameter("@Password", PasswordHash.HashPassword(modalLRInput13.Text)));
+
+                Console.Write("insert 2 successful");
+                //MessageBox.Show("insert teacher success");
+
+                ResetCoordinator_Click(sender, e);
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Inter CoordinatorAuth";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            con.Close();
+
+                //con1.Close();
+            }
+
+            protected void PopulateCoordinator_Click(object sender, EventArgs e)
+            {
+                Random rnd = new Random();
+                EmailTextBox.Text = HttpUtility.HtmlEncode(UsernameTextBox.Text) + "@edu.com";
+                modalLRInput13.Text = "1111";
+            }
+
+            protected void ResetCoordinator_Click(object sender, EventArgs e)
+            {
+                //clear teacher input
+                CoordinatorNameText.Text = string.Empty;
+                EmailTextBox.Text = string.Empty;
+                PhoneTextBox.Text = string.Empty;
+                UsernameTextBox.Text = string.Empty;
+                modalLRInput13.Text = string.Empty;
+            }
+        }
+    }
         protected void DeleteEvent_OnClickEvent_Click(object sender, EventArgs e)
         {
             string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;

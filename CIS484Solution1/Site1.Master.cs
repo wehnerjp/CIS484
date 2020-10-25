@@ -186,5 +186,56 @@ namespace CIS484Solution1
             }
             ShowMessage("Heard! " + email + pass, MessageType.Info);
         }
+
+    //    protected void accessCodeLink_Click(object sender, EventArgs e)
+    //    {
+    //        studentAccesCode();
+    //    }
+
+    //    protected void studentAccesCode()
+    //    {
+    //        try
+    //        {
+    //            System.Data.SqlClient.SqlConnection sc = new System.Data.SqlClient.SqlConnection();
+    //            sc.ConnectionString = @"Server=LOCALHOST;Database=AUTH;Trusted_Connection=Yes;";
+
+    //            sc.Open();
+    //            System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
+    //            findPass.Connection = sc;
+    //            findPass.CommandText = "select ACCESSCODE from ACCESS where code = @Code";
+    //            findPass.Parameters.Add(new SqlParameter("@Code", txtAccessCodeEntry.Text));
+
+    //            SqlDataReader reader = findPass.ExecuteReader();
+
+    //            if (reader.HasRows)
+    //            {
+    //                while (reader.Read())
+    //                {
+    //                    string tempAccessCode = reader["accessCode"].ToString();
+    //                    Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
+    //                    string accessCode = txtAccessCodeEntry.Text;
+
+    //                    if (Session["ACCESSCODE"].ToString() == tempAccessCode)
+    //                    {
+    //                        Session.Add("ACCESSCODE", accessCode);
+    //                        lblAccessCodeStatus.Text = "Session variable saved";
+    //                    }
+    //                    else
+    //                        StudentExistingPlaceholder.Visible = true;
+    //                }
+    //            }
+    //            else // if the accesscode doesn't exist, it will show failure
+    //                sc.Close();
+    //        }
+    //        catch
+    //        {
+    //            lblAccessCode.Text = "Accesscode doesn't exist!.";
+    //        }
+    //    }
+
+    //    protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
+    //    {
+    //        studentAccesCode();
+    //    }
     }
 }
