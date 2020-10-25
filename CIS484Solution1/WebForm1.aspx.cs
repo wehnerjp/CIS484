@@ -434,6 +434,7 @@ namespace CIS484Solution1
                                 lblID.Text = (HttpUtility.HtmlEncode(VolReader[3].ToString()));
                                 lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
                                 lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
+                                lblVolunteerName.Text = (HttpUtility.HtmlEncode(VolReader[1].ToString()));
 
                             }
                         }

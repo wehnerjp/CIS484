@@ -269,7 +269,7 @@
             <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5">
                 <asp:TableRow>
                     <asp:TableCell>
-                            <h2 style="text-align: center">Welcome:<asp:Label ID="lblVolunteerName" runat="server" Text="VOLUNTEER NAME HERE"></asp:Label></h2>
+                            <h2 style="text-align: center">Welcome:<asp:Label ID="lblVolunteerName" runat="server" Text=""></asp:Label></h2>
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
@@ -281,7 +281,7 @@
                         <h6 style="text-align:left">The Event selected to participate:</h6>
                     </asp:TableCell>
                     <asp:TableCell>
-                        <asp:Label ID="lblName" runat="server" Text="EVENT NAME HERE"></asp:Label>
+                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label>
                     </asp:TableCell>
                     <asp:TableCell></asp:TableCell>
                 </asp:TableRow>
