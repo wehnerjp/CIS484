@@ -89,8 +89,9 @@ namespace CIS484Solution1
             protected void PopulateCoordinator_Click(object sender, EventArgs e)
             {
                 Random rnd = new Random();
+            UsernameTextBox.Text = HttpUtility.HtmlEncode(CoordinatorNameText.Text);
                 EmailTextBox.Text = HttpUtility.HtmlEncode(UsernameTextBox.Text) + "@edu.com";
-                modalLRInput13.Text = "1111";
+                modalLRInput13.Text = "";
             }
 
             protected void ResetCoordinator_Click(object sender, EventArgs e)
