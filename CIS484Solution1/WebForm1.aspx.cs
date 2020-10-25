@@ -367,13 +367,75 @@ namespace CIS484Solution1
                         if (type.Equals("Instructor"))
                         {
                             div2.Visible = true;
-
                             lblAccessCode.Text = "Yay Instructor";
+                            string qry1 = "Select * from Instructor where InstructorCode ='" + code + "'";
+                            string qry2 = "Select * from Cluster where InstructorCode ='" + code + "'";
+                            string qry3 = "Select * from Event inner join EventContact on EventContact.EventID = Event.EventID inner join Instructor on Instructor.ContactCode = EventContact.ContactCode where InstructorCode ='" + code + "'";
+                            SqlConnection aa = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            aa.Open();
+                            SqlCommand instCom = new SqlCommand(qry1, aa);
+                            SqlDataReader instReader = instCom.ExecuteReader();
+                            while (instReader.Read())
+                            {
+                                lblInstructorName.Text = (HttpUtility.HtmlEncode(instReader[1].ToString()));
+                            }
+                            SqlConnection bb = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            bb.Open();
+                            SqlCommand ClusterCom = new SqlCommand(qry2, bb);
+                            SqlDataReader ClusterReader = ClusterCom.ExecuteReader();
+                            while (ClusterReader.Read())
+                            {
+                                lblInstructorClusterAccessCode.Text = (HttpUtility.HtmlEncode(ClusterReader[0].ToString()));
+                            }
+                            SqlConnection cc = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            cc.Open();
+                            SqlCommand EventCom = new SqlCommand(qry3, cc);
+                            SqlDataReader EventReader = EventCom.ExecuteReader();
+                            while (EventReader.Read())
+                            {
+                                lblInstructorEvent.Text = (HttpUtility.HtmlEncode(EventReader[2].ToString()));
+                                lblInstructorDate.Text = (HttpUtility.HtmlEncode(EventReader[1].ToString()));
+                            }
+
                         }
                         else if (type.Equals("Volunteer"))
                         {
                             div1.Visible = true;
                             lblAccessCode.Text = "Yay Volunteer";
+                            string qry1 = "Select * from Event inner join EventVolunteers on EventVolunteers.EventID = Event.EventID where EventVolunteers.VolunteerCode ='" + code + "'";
+                            string qry2 = "Select * from Coordinator inner join AccessCode on AccessCode.CoordinatorID = Coordinator.CoordinatorID where AccessCode.Code ='" + code + "'";
+                            string qry3 = "Select * from Volunteer where Volunteer.VolunteerCode ='" + code + "'";
+                            SqlConnection dd = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            dd.Open();
+                            SqlCommand EvCom = new SqlCommand(qry1, dd);
+                            SqlDataReader EvReader = EvCom.ExecuteReader();
+                            while (EvReader.Read())
+                            {
+                                lblName.Text = (HttpUtility.HtmlEncode(EvReader[2].ToString()));
+                                lblDate.Text = (HttpUtility.HtmlEncode(EvReader[1].ToString()));
+                                lblEventDate2.Text = (HttpUtility.HtmlEncode(EvReader[1].ToString()));
+                            }
+                            SqlConnection ee = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            ee.Open();
+                            SqlCommand CoCom = new SqlCommand(qry2, ee);
+                            SqlDataReader CoReader = CoCom.ExecuteReader();
+                            while (CoReader.Read())
+                            {
+                                lblCoordinatorName.Text = (HttpUtility.HtmlEncode(CoReader[1].ToString()));
+                            }
+                            SqlConnection ff = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            ff.Open();
+                            SqlCommand VolCom = new SqlCommand(qry3, ff);
+                            SqlDataReader VolReader = VolCom.ExecuteReader();
+                            while (VolReader.Read())
+                            {
+                                lblName2.Text = (HttpUtility.HtmlEncode(VolReader[1].ToString()));
+                                lblRole.Text = (HttpUtility.HtmlEncode(VolReader[2].ToString()));
+                                lblID.Text = (HttpUtility.HtmlEncode(VolReader[3].ToString()));
+                                lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
+                                lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
+
+                            }
                         }
                         else if (type.Equals("EventContact"))
                         {
