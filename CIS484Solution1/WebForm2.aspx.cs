@@ -72,8 +72,8 @@ namespace CIS484Solution1
                             Session.Add("ACCESSCODE", accessCode);
                             lblAccessCodeStatus.Text = "Session variable saved";
                         }
-                        else
-                            StudentExistingPlaceholder.Visible = true;
+                        //else
+                        //    StudentExistingPlaceholder.Visible = true;
                     }
                 }
                 else // if the accesscode doesn't exist, it will show failure
@@ -506,7 +506,6 @@ namespace CIS484Solution1
             TeacherSchoolList.SelectedIndex = rnd.Next(0, TeacherSchoolList.Items.Count - 1);
             TeacherTshirtSize.SelectedIndex = rnd.Next(0, TeacherTshirtSize.Items.Count - 1);
             TeacherTshirtColor.SelectedIndex = rnd.Next(0, TshirtColorList.Items.Count - 1);
-            EmailTextBox.Text = HttpUtility.HtmlEncode(TeacherFirstNameText.Text + TeacherLastNameInput.Text.Substring(0, 1)) + "@edu.com";
             modalLRInput13.Text = "1111";
         }
 

@@ -247,7 +247,7 @@
                                                 <asp:View>
                                                     <!--Body-->
                                                     <div class="modal-body">
-                                                        <asp:ContentPlaceHolder ID="TeacherNewPlaceholder" runat="server">
+                                                        <asp:ContentPlaceHolder ID="CoordinatorNewPlaceholder" runat="server">
                                                         </asp:ContentPlaceHolder>
                                                     </div>
                                                     <!--Footer-->
