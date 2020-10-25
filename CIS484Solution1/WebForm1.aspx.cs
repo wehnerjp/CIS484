@@ -298,55 +298,166 @@ namespace CIS484Solution1
             RequestListDDLUpdate.Update();
         }
 
-        protected void studentAccesCode()
+        //protected void studentAccesCode()
+        //{
+        //    try
+        //    {
+        //        System.Data.SqlClient.SqlConnection sc = new System.Data.SqlClient.SqlConnection();
+        //        sc.ConnectionString = @"Server=LOCALHOST;Database=AUTH;Trusted_Connection=Yes;";
+
+        //        sc.Open();
+        //        System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
+        //        findPass.Connection = sc;
+        //        findPass.CommandText = "select ACCESSCODE from ACCESS where code = @Code";
+        //        findPass.Parameters.Add(new SqlParameter("@Code", txtAccessCodeEntry.Text));
+
+        //        SqlDataReader reader = findPass.ExecuteReader();
+
+        //        if (reader.HasRows)
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                string tempAccessCode = reader["accessCode"].ToString();
+        //                Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
+        //                string accessCode = txtAccessCodeEntry.Text;
+
+        //                if (Session["ACCESSCODE"].ToString() == tempAccessCode)
+        //                {
+        //                    Session.Add("ACCESSCODE", accessCode);
+        //                    lblAccessCodeStatus.Text = "Session variable saved";
+        //                }
+        //                // else
+        //                //StudentExistingPlaceholder.Visible = true;
+        //            }
+        //        }
+        //        else // if the accesscode doesn't exist, it will show failure
+        //            sc.Close();
+        //    }
+        //    catch
+        //    {
+        //        lblAccessCode.Text = "Accesscode doesn't exist!.";
+        //    }
+        //}
+
+        //protected void accessCodeLink_Click(object sender, EventArgs e)
+        //{
+        //    studentAccesCode();
+        //}
+
+        protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
         {
-            try
-            {
-                System.Data.SqlClient.SqlConnection sc = new System.Data.SqlClient.SqlConnection();
-                sc.ConnectionString = @"Server=LOCALHOST;Database=AUTH;Trusted_Connection=Yes;";
-
-                sc.Open();
-                System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
-                findPass.Connection = sc;
-                findPass.CommandText = "select ACCESSCODE from ACCESS where code = @Code";
-                findPass.Parameters.Add(new SqlParameter("@Code", txtAccessCodeEntry.Text));
-
-                SqlDataReader reader = findPass.ExecuteReader();
-
+            try {
+                div1.Visible = false;
+                div2.Visible = false;
+                string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
+                string type = "";
+                SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                dbConnection.Open();
+                SqlCommand loginCommand = new SqlCommand();
+                loginCommand.Connection = dbConnection;
+                loginCommand.CommandText = "Select * from AccessCode where Code = @Code";
+                loginCommand.Parameters.Add(new SqlParameter("@Code", code));
+                loginCommand.Parameters.Add(new SqlParameter("@UserType", type));
+                SqlDataReader reader = loginCommand.ExecuteReader();
                 if (reader.HasRows)
                 {
                     while (reader.Read())
                     {
-                        string tempAccessCode = reader["accessCode"].ToString();
-                        Session["ACCESSCODE"] = txtAccessCodeEntry.Text;
-                        string accessCode = txtAccessCodeEntry.Text;
-
-                        if (Session["ACCESSCODE"].ToString() == tempAccessCode)
+                        type = reader[1].ToString();
+                        if (type.Equals("Instructor"))
                         {
-                            Session.Add("ACCESSCODE", accessCode);
-                            lblAccessCodeStatus.Text = "Session variable saved";
+                            div2.Visible = true;
+                            lblAccessCode.Text = "Yay Instructor";
+                            string qry1 = "Select * from Instructor where InstructorCode ='" + code + "'";
+                            string qry2 = "Select * from Cluster where InstructorCode ='" + code + "'";
+                            string qry3 = "Select * from Event inner join EventContact on EventContact.EventID = Event.EventID inner join Instructor on Instructor.ContactCode = EventContact.ContactCode where InstructorCode ='" + code + "'";
+                            SqlConnection aa = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            aa.Open();
+                            SqlCommand instCom = new SqlCommand(qry1, aa);
+                            SqlDataReader instReader = instCom.ExecuteReader();
+                            while (instReader.Read())
+                            {
+                                lblInstructorName.Text = (HttpUtility.HtmlEncode(instReader[1].ToString()));
+                            }
+                            SqlConnection bb = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            bb.Open();
+                            SqlCommand ClusterCom = new SqlCommand(qry2, bb);
+                            SqlDataReader ClusterReader = ClusterCom.ExecuteReader();
+                            while (ClusterReader.Read())
+                            {
+                                lblInstructorClusterAccessCode.Text = (HttpUtility.HtmlEncode(ClusterReader[0].ToString()));
+                            }
+                            SqlConnection cc = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            cc.Open();
+                            SqlCommand EventCom = new SqlCommand(qry3, cc);
+                            SqlDataReader EventReader = EventCom.ExecuteReader();
+                            while (EventReader.Read())
+                            {
+                                lblInstructorEvent.Text = (HttpUtility.HtmlEncode(EventReader[2].ToString()));
+                                lblInstructorDate.Text = (HttpUtility.HtmlEncode(EventReader[1].ToString()));
+                            }
+
                         }
-                        // else
-                        //StudentExistingPlaceholder.Visible = true;
+                        else if (type.Equals("Volunteer"))
+                        {
+                            div1.Visible = true;
+                            lblAccessCode.Text = "Yay Volunteer";
+                            string qry1 = "Select * from Event inner join EventVolunteers on EventVolunteers.EventID = Event.EventID where EventVolunteers.VolunteerCode ='" + code + "'";
+                            string qry2 = "Select * from Coordinator inner join AccessCode on AccessCode.CoordinatorID = Coordinator.CoordinatorID where AccessCode.Code ='" + code + "'";
+                            string qry3 = "Select * from Volunteer where Volunteer.VolunteerCode ='" + code + "'";
+                            SqlConnection dd = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            dd.Open();
+                            SqlCommand EvCom = new SqlCommand(qry1, dd);
+                            SqlDataReader EvReader = EvCom.ExecuteReader();
+                            while (EvReader.Read())
+                            {
+                                lblName.Text = (HttpUtility.HtmlEncode(EvReader[2].ToString()));
+                                lblDate.Text = (HttpUtility.HtmlEncode(EvReader[1].ToString()));
+                                lblEventDate2.Text = (HttpUtility.HtmlEncode(EvReader[1].ToString()));
+                            }
+                            SqlConnection ee = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            ee.Open();
+                            SqlCommand CoCom = new SqlCommand(qry2, ee);
+                            SqlDataReader CoReader = CoCom.ExecuteReader();
+                            while (CoReader.Read())
+                            {
+                                lblCoordinatorName.Text = (HttpUtility.HtmlEncode(CoReader[1].ToString()));
+                            }
+                            SqlConnection ff = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            ff.Open();
+                            SqlCommand VolCom = new SqlCommand(qry3, ff);
+                            SqlDataReader VolReader = VolCom.ExecuteReader();
+                            while (VolReader.Read())
+                            {
+                                lblName2.Text = (HttpUtility.HtmlEncode(VolReader[1].ToString()));
+                                lblRole.Text = (HttpUtility.HtmlEncode(VolReader[2].ToString()));
+                                lblID.Text = (HttpUtility.HtmlEncode(VolReader[3].ToString()));
+                                lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
+                                lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
+
+                            }
+                        }
+                        else if (type.Equals("EventContact"))
+                        {
+                            lblAccessCodeStatus.Text = "Yay EventContact";
+                        }
+                        else if (type.Equals("Student"))
+                        {
+                            lblAccessCodeStatus.Text = "Yay Student";
+                        }
+                        else
+                        {
+                            lblAccessCode.Text = "Wrong";
+                        }
+
                     }
                 }
-                else // if the accesscode doesn't exist, it will show failure
-                    sc.Close();
             }
             catch
             {
-                lblAccessCode.Text = "Accesscode doesn't exist!.";
+                lblAccessCodeStatus.Text = "Accesscode doesn't exist!.";
             }
-        }
-
-        protected void accessCodeLink_Click(object sender, EventArgs e)
-        {
-            studentAccesCode();
-        }
-
-        protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
-        {
-            studentAccesCode();
+            
         }
 
         protected void AddRequest_Click(object sender, EventArgs e)

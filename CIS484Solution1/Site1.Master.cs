@@ -35,23 +35,14 @@ namespace CIS484Solution1
             System.Web.UI.WebControls.Menu MasterMenu = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
             //MessageBox.Show(UserLoginType + Int32.Parse(MasterMenu.SelectedValue));
-            if (UserLoginType == "Teacher" && (Int32.Parse(MasterMenu.SelectedValue) == 1 || Int32.Parse(MasterMenu.SelectedValue) == 2 || Int32.Parse(MasterMenu.SelectedValue) == 0))
-            {
-                multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
-            }
-            else if (UserLoginType == "Volunteer" && (Int32.Parse(MasterMenu.SelectedValue) == 1 || Int32.Parse(MasterMenu.SelectedValue) == 2 || Int32.Parse(MasterMenu.SelectedValue) == 0))
-            {
-                multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
-            }
-            else if (UserLoginType == "Coordinator")
-            {
-                multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
-            }
-            else
-            {
-                ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Not Authorized to Access this page!','Warning');", true);
+      
+            multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
+   
+
+
+                //ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Not Authorized to Access this page!','Warning');", true);
                 //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modalLoginForm", "$('#modalLoginForm').modal();", true);
-            }
+            
         }
 
         protected void menuTabsCurrent_MenuItemClick(object sender, MenuEventArgs e)
@@ -185,6 +176,20 @@ namespace CIS484Solution1
                 authConnection.Close();
             }
             ShowMessage("Heard! " + email + pass, MessageType.Info);
+        }
+
+        protected void Instructor_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            System.Web.UI.WebControls.Menu Intructor = sender as System.Web.UI.WebControls.Menu;
+            MultiView multiTabs = this.FindControl("InstructorView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
+        }
+
+        protected void Volunteer_MenuItemClick(object sender, MenuEventArgs e)
+        {
+            System.Web.UI.WebControls.Menu Volunteer = sender as System.Web.UI.WebControls.Menu;
+            MultiView multiTabs = this.FindControl("VolunteerView") as MultiView;
+            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
         }
     }
 }
