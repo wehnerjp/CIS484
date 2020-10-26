@@ -332,7 +332,7 @@ namespace CIS484Solution1
                             InstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             InstDiv.Visible = true;
 
-                            lblAccessCode.Text = "Yay Instructor";
+                            lblAccessCodeStatus.Text = "Logged In As Instructor";
                             InstructorAccessCodeDataSource.SelectCommand = " SELECT [Name], [Email], [Phone] FROM [Instructor] Where Instructor.InstructorCode ='" + code + "'";
                             InstructorAccessCodeDataSource.DataBind();
                             InstructorAccessCodeDetailView.DataBind();
@@ -372,7 +372,7 @@ namespace CIS484Solution1
                         {
                             VolDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             VolDiv.Visible = true;
-                            lblAccessCode.Text = "Yay Volunteer";
+                            lblAccessCodeStatus.Text = "Logged In As Volunteer";
                             string qry1 = "Select * from Event inner join EventVolunteers on EventVolunteers.EventID = Event.EventID where EventVolunteers.VolunteerCode ='" + code + "'";
                             string qry2 = "Select * from Coordinator inner join AccessCode on AccessCode.CoordinatorID = Coordinator.CoordinatorID where AccessCode.Code ='" + code + "'";
                             string qry3 = "Select * from Volunteer where Volunteer.VolunteerCode ='" + code + "'";
@@ -412,7 +412,7 @@ namespace CIS484Solution1
                         {
                             AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             AddInstDiv.Visible = true;
-                            lblAccessCodeStatus.Text = "Yay EventContact";
+                            lblAccessCodeStatus.Text = "Logged in as Event Contact";
 
 
                             sqlsrcInstructor.SelectCommand =
@@ -426,7 +426,7 @@ namespace CIS484Solution1
                         {
                             StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             StudentSignUpDiv.Visible = true;
-                            lblAccessCodeStatus.Text = "Yay Student";
+                            lblAccessCodeStatus.Text = "Logged in as Student. Please Create Your Student Profile!";
 
                         }
                         else if (type.Equals("Student"))
