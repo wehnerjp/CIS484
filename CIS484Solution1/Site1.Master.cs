@@ -13,13 +13,13 @@ namespace CIS484Solution1
         public static int UserLoginID;
         public static string UserLoginName = null;
         public static string UserLoginEmail = null;
-        public static string UserLoginType = null;
+        public static string UserLoginType = "Coordinator";
 
         public enum MessageType { Success, Error, Info, Warning };
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            accessCodeContentPlaceHolder.Visible = false;
+            //accessCodeContentPlaceHolder.Visible = false;
 
             if (LoginDiv.Style["display"] != "none")
             {
@@ -36,7 +36,7 @@ namespace CIS484Solution1
             MultiView multiTabs = this.FindControl("MasterMultiView") as MultiView;
             //MessageBox.Show(UserLoginType + Int32.Parse(MasterMenu.SelectedValue));
 
-            multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
+            MasterMultiView.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
 
             //ScriptManager.RegisterStartupScript(this, this.GetType(), System.Guid.NewGuid().ToString(), "ShowMessage('Not Authorized to Access this page!','Warning');", true);
             //ScriptManager.RegisterStartupScript(Page, Page.GetType(), "modalLoginForm", "$('#modalLoginForm').modal();", true);
@@ -49,26 +49,26 @@ namespace CIS484Solution1
             multiTabs.ActiveViewIndex = Int32.Parse(menuTabsCurrent.SelectedValue);
         }
 
-        protected void TeacherMenu_MenuItemClick(object sender, MenuEventArgs e)
-        {
-            System.Web.UI.WebControls.Menu TeacherMenu = sender as System.Web.UI.WebControls.Menu;
-            MultiView multiTabs = this.FindControl("TeacherView") as MultiView;
-            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
-        }
+        //protected void TeacherMenu_MenuItemClick(object sender, MenuEventArgs e)
+        //{
+        //    System.Web.UI.WebControls.Menu TeacherMenu = sender as System.Web.UI.WebControls.Menu;
+        //    MultiView multiTabs = this.FindControl("TeacherView") as MultiView;
+        //    multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
+        //}
 
-        protected void VolunteerMenu_MenuItemClick(object sender, MenuEventArgs e)
-        {
-            System.Web.UI.WebControls.Menu VolunteerMenu = sender as System.Web.UI.WebControls.Menu;
-            MultiView multiTabs = this.FindControl("VolunteerMultiView") as MultiView;
-            multiTabs.ActiveViewIndex = Int32.Parse(VolunteerMenu.SelectedValue);
-        }
+        //protected void VolunteerMenu_MenuItemClick(object sender, MenuEventArgs e)
+        //{
+        //    System.Web.UI.WebControls.Menu VolunteerMenu = sender as System.Web.UI.WebControls.Menu;
+        //    MultiView multiTabs = this.FindControl("VolunteerMultiView") as MultiView;
+        //    multiTabs.ActiveViewIndex = Int32.Parse(VolunteerMenu.SelectedValue);
+        //}
 
-        protected void CoordinatorMenu_MenuItemClick(object sender, MenuEventArgs e)
-        {
-            System.Web.UI.WebControls.Menu CoordinatorMenu = sender as System.Web.UI.WebControls.Menu;
-            MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
-            multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
-        }
+        //protected void CoordinatorMenu_MenuItemClick(object sender, MenuEventArgs e)
+        //{
+        //    System.Web.UI.WebControls.Menu CoordinatorMenu = sender as System.Web.UI.WebControls.Menu;
+        //    MultiView multiTabs = this.FindControl("CoordinatorMultiView") as MultiView;
+        //    multiTabs.ActiveViewIndex = Int32.Parse(CoordinatorMenu.SelectedValue);
+        //}
 
         protected void ShowMessage(string Message, MessageType type)
         {
@@ -84,7 +84,7 @@ namespace CIS484Solution1
                 UserLoginName = null;
                 UserLoginEmail = null;
                 //LoginForm.InnerHtml = "Launch Login Form";
-                MasterMenu.Items[5].Text = "User: None";
+                //MasterMenu.Items[5].Text = "User: None";
             }
         }
 
@@ -115,24 +115,7 @@ namespace CIS484Solution1
                         {
                             UserLoginEmail = Username;
                             UserLoginName = Username;
-                                //string qry1 = "select * from CoordinatorAuth where Username='" + Username + "'";
-                                //SqlCommand cmd1 = new SqlCommand(qry1, CDMConnection);
-                                //SqlDataReader sdr1 = cmd1.ExecuteReader();
-                                //while (sdr1.Read())
-                                //{
-                                //    UserLoginName = (sdr1.GetString(2).Substring(0, 1) + ". " + sdr1.GetString(3));
-                                //}
-                                //else
-                                //{
-                                //    string qry1 = "select * from EventPersonnel where Email='" + email + "'";
-                                //    SqlCommand cmd1 = new SqlCommand(qry1, dbConnection);
-                                //    SqlDataReader sdr1 = cmd1.ExecuteReader();
-                                //    while (sdr1.Read())
-                                //    {
-                                //        UserLoginID = sdr1.GetInt32(0);
-                                //        UserLoginName = (sdr1.GetString(1).Substring(0, 1) + ". " + sdr1.GetString(2));
-                                //    }
-                                //}
+
                             ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: Coordinator! " + UserLoginType, MessageType.Success);
                             if (UserLoginEmail != null)
                             {
@@ -169,14 +152,14 @@ namespace CIS484Solution1
         {
             System.Web.UI.WebControls.Menu Intructor = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("InstructorView") as MultiView;
-            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
+            multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
         }
 
         protected void Volunteer_MenuItemClick(object sender, MenuEventArgs e)
         {
             System.Web.UI.WebControls.Menu Volunteer = sender as System.Web.UI.WebControls.Menu;
             MultiView multiTabs = this.FindControl("VolunteerView") as MultiView;
-            multiTabs.ActiveViewIndex = Int32.Parse(TeacherMenu.SelectedValue);
+            multiTabs.ActiveViewIndex = Int32.Parse(MasterMenu.SelectedValue);
         }
     }
 }

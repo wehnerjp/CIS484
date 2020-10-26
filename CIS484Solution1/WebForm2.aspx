@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="CIS484Solution1.WebForm2" %>
+﻿<%--<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm2.aspx.cs" Inherits="CIS484Solution1.WebForm2" %>
 
 <asp:Content ID="Home" ContentPlaceHolderID="HomePlaceholder" runat="server">
     <!--Tanner Elphee John Wehner Max Vaughan -->
@@ -462,8 +462,8 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <div class="form-group">
-                            <asp:Label ID="Label24" CssClass="label" runat="server" Text="Email"></asp:Label>
+                        <div class="form-group">--%>
+<%-- <asp:Label ID="Label24" CssClass="label" runat="server" Text="Email"></asp:Label>
                             <asp:TextBox CssClass="input--style-4" ID="EmailTextBox" runat="server" CausesValidation="false" />
                             <asp:RequiredFieldValidator ID="RequiredFieldValidator4"
                                 ControlToValidate="EmailTextBox"
@@ -738,4 +738,4 @@
 <asp:Content ContentPlaceHolderID="accessCodeContentPlaceHolder" runat="server">
     <asp:Panel ID="accessCodeEntryPanel" runat="server">
     </asp:Panel>
-</asp:Content>
+</asp:Content>--%>

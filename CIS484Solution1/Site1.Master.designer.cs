@@ -60,15 +60,6 @@ namespace CIS484Solution1
         protected global::System.Web.UI.ScriptManager ScriptManager1;
 
         /// <summary>
-        /// MasterMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu MasterMenu;
-
-        /// <summary>
         /// accessCodeContentPlaceHolder control.
         /// </summary>
         /// <remarks>
@@ -132,6 +123,15 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.ContentPlaceHolder CoordinatorNewPlaceholder;
 
         /// <summary>
+        /// MasterMenu control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Menu MasterMenu;
+
+        /// <summary>
         /// MasterMultiView control.
         /// </summary>
         /// <remarks>
@@ -159,123 +159,6 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.ContentPlaceHolder CoordinatorSubmissionViewPlaceholder;
 
         /// <summary>
-        /// menuTabsCurrent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu menuTabsCurrent;
-
-        /// <summary>
-        /// multiviewStudent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView multiviewStudent;
-
-        /// <summary>
-        /// StudentNew control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View StudentNew;
-
-        /// <summary>
-        /// NewStudentPlaceHolder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder NewStudentPlaceHolder;
-
-        /// <summary>
-        /// StudentExisting control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.View StudentExisting;
-
-        /// <summary>
-        /// StudentExistingPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder StudentExistingPlaceholder;
-
-        /// <summary>
-        /// TeacherMenu control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu TeacherMenu;
-
-        /// <summary>
-        /// TeacherView control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView TeacherView;
-
-        /// <summary>
-        /// TeacherExistingPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder TeacherExistingPlaceholder;
-
-        /// <summary>
-        /// VolunteerExistingPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder VolunteerExistingPlaceholder;
-
-        /// <summary>
-        /// CoordinatorExistingPlaceholder control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder CoordinatorExistingPlaceholder;
-
-        /// <summary>
-        /// Instructor control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu Instructor;
-
-        /// <summary>
-        /// MultiView1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MultiView1;
-
-        /// <summary>
         /// InstructorView control.
         /// </summary>
         /// <remarks>
@@ -285,42 +168,6 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.ContentPlaceHolder InstructorView;
 
         /// <summary>
-        /// ContentPlaceHolder2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder2;
-
-        /// <summary>
-        /// ContentPlaceHolder3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder3;
-
-        /// <summary>
-        /// Volunteer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu Volunteer;
-
-        /// <summary>
-        /// MultiView2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.MultiView MultiView2;
-
-        /// <summary>
         /// VolunteerView control.
         /// </summary>
         /// <remarks>
@@ -328,23 +175,5 @@ namespace CIS484Solution1
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder VolunteerView;
-
-        /// <summary>
-        /// ContentPlaceHolder4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder4;
-
-        /// <summary>
-        /// ContentPlaceHolder5 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder ContentPlaceHolder5;
     }
 }
