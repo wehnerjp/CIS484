@@ -21,6 +21,7 @@ namespace CIS484Solution1
         public static int CoordinatorID = Site1.CoordinatorID;
         public static string contactCode = "";
         public static string instructorCode = "";
+        public static string clusterCode = "";
         //public static Button addEvent = new Button();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -300,34 +301,42 @@ namespace CIS484Solution1
 
         protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
         {
+            VolDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            VolDiv.Visible = false;
+            InstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            InstDiv.Visible = false;
+            StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            StudentSignUpDiv.Visible = false;
+            AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            AddInstDiv.Visible = false;
+
+            string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
+            string type = "";
+            contactCode = code;
+            instructorCode = code;
+            clusterCode = code;
+            SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            dbConnection.Open();
+            MessageBox.Show("Button Triggered");
             try
             {
-                VolDiv.Attributes.Add("style", "margin-top: 40px; display = none");
-                VolDiv.Visible = false;
-                InstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
-                InstDiv.Visible = false;
-                StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = none");
-                StudentSignUpDiv.Visible = false;
-                AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
-                AddInstDiv.Visible = false;
+                MessageBox.Show("hi9");
 
-                string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
-                string type = "";
-                contactCode = code;
-                instructorCode = code;
-                SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
-                dbConnection.Open();
                 SqlCommand loginCommand = new SqlCommand();
                 loginCommand.Connection = dbConnection;
                 loginCommand.CommandText = "Select * from AccessCode where Code = @Code";
                 loginCommand.Parameters.Add(new SqlParameter("@Code", code));
-                loginCommand.Parameters.Add(new SqlParameter("@UserType", type));
+                //loginCommand.Parameters.Add(new SqlParameter("@UserType", type));
                 SqlDataReader reader = loginCommand.ExecuteReader();
                 if (reader.HasRows)
                 {
+                    type = reader[1].ToString();
+                    MessageBox.Show(type, "hi1");
+
                     while (reader.Read())
                     {
                         type = reader[1].ToString();
+                        MessageBox.Show(type,"hi2");
                         if (type.Equals("Instructor"))
                         {
                             InstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
@@ -438,12 +447,19 @@ namespace CIS484Solution1
                     }
                 }
             }
-            catch
+            catch (System.Data.SqlClient.SqlException ex)
             {
-                lblAccessCodeStatus.Text = "Accesscode doesn't exist!.";
+                string msg = "Insert/Update Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
             }
-
+            finally
+            {
+                dbConnection.Close();
+            }
         }
+
+
 
 
 
@@ -658,7 +674,7 @@ namespace CIS484Solution1
             cmd101.Parameters.Add(new SqlParameter("@Name", Instructor_tbFirstName.Text + ' ' + Instructor_tbLastName.Text));
             cmd101.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
             cmd101.Parameters.Add(new SqlParameter("@Email", Instructor_tbEmail.Text));
-            cmd101.Parameters.Add(new SqlParameter("@Phone", Instructor_tbPhone.Text));
+            cmd101.Parameters.Add(new SqlParameter("@Phone", int.Parse(Instructor_tbPhone.Text)));
             cmd101.Parameters.Add(new SqlParameter("@ContactCode", contactCode));
             try
             {
@@ -721,7 +737,7 @@ namespace CIS484Solution1
             sqlconnect.Open();
 
             // Find necessary information
-            string sqlQuery101 = "SELECT InstructorCode, OrganizationID FROM Cluster WHERE ClusterCode = '" + instructorCode + "'";
+            string sqlQuery101 = "SELECT InstructorCode, OrganizationID FROM Cluster WHERE ClusterCode = '" + clusterCode + "'";
             SqlCommand cmd101 = new SqlCommand(sqlQuery101, sqlconnect);
             string Int_Code = "";
             string orgID = "";

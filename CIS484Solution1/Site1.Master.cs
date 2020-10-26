@@ -149,7 +149,7 @@ namespace CIS484Solution1
                 //dbConnection.Close();
                 CDMConnection.Close();
                 MasterMenu.Items.RemoveAt(1);
-                MenuItem myItem = new MenuItem("CoordinatorView", "2");
+                System.Web.UI.WebControls.MenuItem myItem = new System.Web.UI.WebControls.MenuItem("CoordinatorView", "2");
                 MasterMenu.Items.AddAt(1, myItem);
             }
             //ShowMessage("Heard! " + Username, MessageType.Info);
