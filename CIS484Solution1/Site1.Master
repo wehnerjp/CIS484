@@ -283,6 +283,13 @@
                                         <asp:ContentPlaceHolder ID="CoordinatorSubmissionViewPlaceholder" runat="server">
                                         </asp:ContentPlaceHolder>
                                     </div>
+
+                                    <div style="margin-top: 40px;">
+                                        <h2>Event View</h2>                                       
+                                        <asp:ContentPlaceHolder ID="EventdisplayPlaceholder" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+
                                 </asp:View>
                                 <asp:View runat="server">
                                     <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">

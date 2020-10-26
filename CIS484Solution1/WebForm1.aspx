@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="CIS484Solution1.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="CIS484Solution1.WebForm1" EnableEventValidation="false" %>
 
 <asp:Content ID="HomepageContent" ContentPlaceHolderID="HomePlaceHolder" runat="server">
     <div class="container" style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
@@ -445,5 +445,20 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
-<asp:Content ID="Content1" ContentPlaceHolderID="CoordinatorLoginPlaceholder" runat="server">
+
+<asp:Content ID="Eventdisplay" ContentPlaceHolderID="EventdisplayPlaceholder" runat="server">
+        <asp:UpdatePanel ID="Eventddlupdate" runat="server" UpdateMode="Conditional">
+            <ContentTemplate>
+                <asp:SqlDataSource ID="EventdisplayDb" runat="server" 
+                    DataSourceMode="DataReader" 
+                    ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>" 
+                    SelectCommand="SELECT E.EventID, E.Name as EventName, Date, O.Name as OrganizationName, Type, C.Name as ContactName, C.ContactCode from Event E inner join EventContact C on E.EventID=C.EventID inner join Organization O on C.OrganizationID = O.OrganizationID Order by E.EventID ASC"/>
+
+                <asp:GridView runat="server" ID="GvEventdisplay" DataSourceID="EventdisplayDb" OnRowDataBound="GvEventdisplay_RowDataBound" CssClass="table table-bordered table-striped" OnSelectedIndexChanged="GvEventdisplay_SelectedIndexChanged">
+
+                    </asp:GridView>
+
+
+            </ContentTemplate>
+        </asp:UpdatePanel>
 </asp:Content>

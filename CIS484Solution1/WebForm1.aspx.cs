@@ -7,6 +7,8 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Web.UI.WebControls;
 
 namespace CIS484Solution1
 {
@@ -21,6 +23,7 @@ namespace CIS484Solution1
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
             //ScriptManager.RegisterStartupScript(
             //    UpdatePanel1,
             //    this.GetType(),
@@ -592,6 +595,45 @@ namespace CIS484Solution1
             PhoneTextBox.Text = string.Empty;
             UsernameTextBox.Text = string.Empty;
             modalLRInput13.Text = string.Empty;
+        }
+
+        protected void GvEventdisplay_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(GvEventdisplay, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["style"] = "cursor:pointer";
+            }
+
+        }
+
+        protected void GvEventdisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = GvEventdisplay.SelectedRow.RowIndex;
+            string EventID = GvEventdisplay.SelectedRow.Cells[0].Text;
+            string EventName = GvEventdisplay.SelectedRow.Cells[1].Text;
+            string Date = GvEventdisplay.SelectedRow.Cells[2].Text;
+            string OrganizationName = GvEventdisplay.SelectedRow.Cells[3].Text;
+            string OrganizationType = GvEventdisplay.SelectedRow.Cells[4].Text;
+            string ContactName = GvEventdisplay.SelectedRow.Cells[5].Text;
+            string ContactCode = GvEventdisplay.SelectedRow.Cells[6].Text;
+            string mag = "Row Info: " + EventID + " " + EventName + " " + Date + " " + OrganizationName + " " + OrganizationType + " " + ContactName + " " + ContactCode;
+
+            foreach (GridViewRow row in GvEventdisplay.Rows)
+            {
+                if (row.RowIndex == GvEventdisplay.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    row.ToolTip = string.Empty;
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click to select this row.";
+                }
+                MessageBox.Show(mag);
+            }
+            
         }
     }
 }
