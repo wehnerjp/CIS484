@@ -186,7 +186,7 @@ namespace CIS484Solution1
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
             cmd.Parameters.Add(new SqlParameter("@Code", code));
             cmd.Parameters.Add(new SqlParameter("@UserType", "Contact"));
-            cmd.Parameters.Add(new SqlParameter("@CoordinatorID", CoordinatorID));
+            cmd.Parameters.Add(new SqlParameter("@CoordinatorID", Site1.CoordinatorID));
 
             SqlCommand cmd6 = new SqlCommand(sqlQuery6, con);
             cmd6.Parameters.Add(new SqlParameter("@Code", code));
