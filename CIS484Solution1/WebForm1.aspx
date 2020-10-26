@@ -594,7 +594,7 @@
                             ID="sqlsrcEvent"
                             DataSourceMode="DataReader"
                             ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-                            SelectCommand="Select * FROM EVENT Where " />
+                            SelectCommand=""/>
                     </div>
         </ContentTemplate>
     </asp:UpdatePanel>
