@@ -92,7 +92,7 @@ namespace CIS484Solution1
         {
             string Username = HttpUtility.HtmlEncode(defaultFormEmail.Text);
             string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
-            string type = "Select UserLoginType from Coordinator where Email = " + Username;
+            string type = "Select UserLoginType from Coordinator where Username = " + Username;
             SqlConnection CDMConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
             //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand loginCommand = new SqlCommand();
@@ -119,7 +119,7 @@ namespace CIS484Solution1
                             ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: Coordinator! " + UserLoginType, MessageType.Success);
                             if (UserLoginEmail != null)
                             {
-                                MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
+                                //MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
                             }
                             else
                             {
@@ -145,7 +145,7 @@ namespace CIS484Solution1
                 //dbConnection.Close();
                 CDMConnection.Close();
             }
-            ShowMessage("Heard! " + Username, MessageType.Info);
+            //ShowMessage("Heard! " + Username, MessageType.Info);
         }
 
         protected void Instructor_MenuItemClick(object sender, MenuEventArgs e)

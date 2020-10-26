@@ -29,30 +29,50 @@
                     <div style="margin-top: 40px;">
                         <div class="row">
                             <div class="col">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator6"
+                                    ControlToValidate="ContactRequestNameText"
+                                    ValidationGroup="ContactRequestInput"
+                                    ErrorMessage="Enter your Name."
+                                    runat="Server" />
                                 <div class="form-group">
                                     <asp:Label ID="ContactRequestNameLabel" CssClass="label" runat="server" Text="Name"></asp:Label>
-                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestNameText" runat="server" required="true" />
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestNameText" runat="server" required="false" />
                                 </div>
                             </div>
                             <div class="col">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator7"
+                                    ControlToValidate="ContactRequestPhoneText"
+                                    ValidationGroup="ContactRequestInput"
+                                    ErrorMessage="Enter your Phone."
+                                    runat="Server" />
                                 <div class="form-group">
                                     <asp:Label ID="ContactRequestPhoneLabel" CssClass="label" runat="server" Text="Phone"></asp:Label>
-                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestPhoneText" runat="server" required="true" />
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestPhoneText" runat="server" required="false" />
                                 </div>
                             </div>
                             <div class="col">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator8"
+                                    ControlToValidate="ContactRequestPhoneText"
+                                    ValidationGroup="ContactRequestInput"
+                                    ErrorMessage="Enter your Phone."
+                                    runat="Server" />
                                 <div class="form-group">
                                     <asp:Label ID="Label2" CssClass="label" runat="server" Text="Email"></asp:Label>
-                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestEmailText" runat="server" required="true" />
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestEmailText" runat="server" required="false" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
 
                             <div class="col">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator9"
+                                    ControlToValidate="ContactRequestOrganizationNameText"
+                                    ValidationGroup="ContactRequestInput"
+                                    ErrorMessage="Enter your Org Name."
+                                    runat="Server" />
                                 <div class="form-group">
                                     <asp:Label ID="Label3" CssClass="label" runat="server" Text="Org Name"></asp:Label>
-                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestOrganizationNameText" runat="server" required="true" />
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestOrganizationNameText" runat="server" required="false" />
                                 </div>
                             </div>
                             <div class="col">
@@ -70,9 +90,14 @@
                                 </div>
                             </div>
                             <div class="col">
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator10"
+                                    ControlToValidate="EventNameRequest"
+                                    ValidationGroup="ContactRequestInput"
+                                    ErrorMessage="Enter your Phone."
+                                    runat="Server" />
                                 <div class="form-group">
                                     <asp:Label ID="Label4" CssClass="label" runat="server" Text="Event Name"></asp:Label>
-                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="EventNameRequest" runat="server" required="true" />
+                                    <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="EventNameRequest" runat="server" required="false" />
                                 </div>
                             </div>
                         </div>
@@ -419,4 +444,6 @@
                 </div>
         </ContentTemplate>
     </asp:UpdatePanel>
+</asp:Content>
+<asp:Content ID="Content1" ContentPlaceHolderID="CoordinatorLoginPlaceholder" runat="server">
 </asp:Content>
