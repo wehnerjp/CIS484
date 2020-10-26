@@ -401,7 +401,7 @@ namespace CIS484Solution1
                                 lblInstructorEvent.Text = (HttpUtility.HtmlEncode(EventReader[2].ToString()));
                                 lblInstructorDate.Text = (HttpUtility.HtmlEncode(EventReader[1].ToString()));
                             }
-                            StudentDataSource.SelectCommand = "SELECT TOP (1000) [StudentCode], S.[Name], S.[InstructorCode], S.[Notes],S.[OrganizationID] FROM [Student] as S INNER JOIN Cluster on S.StudentCode = Cluster.ClusterCode inner join Instructor as I on Cluster.InstructorCode = I.InstructorCode where I.InstructorCode ='" + txtAccessCodeEntry.Text + "'";
+                            StudentDataSource.SelectCommand = "SELECT TOP (1000) [StudentCode], S.[Name], S.[InstructorCode], S.[Notes],S.[OrganizationID] FROM [Student] as S where S.InstructorCode ='" + txtAccessCodeEntry.Text + "'";
                             StudentDataSource.DataBind();
                             InstructorAccessCodeListView.DataBind(); 
                         }
@@ -646,7 +646,7 @@ namespace CIS484Solution1
             String sqlqryyy = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
             SqlCommand cmd_p11 = new SqlCommand(sqlqryyy, sqlconnect);
             cmd_p11.Parameters.Add(new SqlParameter("@Code", clusterCode));
-            cmd_p11.Parameters.Add(new SqlParameter("@UserType", "Student"));
+            cmd_p11.Parameters.Add(new SqlParameter("@UserType", "Cluster"));
             try
             {
                 cmd_p11.CommandType = CommandType.Text;

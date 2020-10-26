@@ -265,16 +265,16 @@
 </asp:Content>
 <asp:Content ID="VolunteerView" ContentPlaceHolderID="VolunteerView" runat="server">
     <div runat="server" id="VolDiv" style="margin-top: 40px; display: none">
-         <div class="form-group">
+        <div class="form-group">
             <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5">
                 <asp:TableRow>
                     <asp:TableCell>
-                            <h2 style="text-align: center">Welcome:<asp:Label ID="lblVolunteerName" runat="server" Text="VOLUNTEER NAME HERE"></asp:Label></h2>
+                        <h2 style="text-align: center">Welcome:<asp:Label ID="lblVolunteerName" runat="server" Text="VOLUNTEER NAME HERE"></asp:Label></h2>
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
-            </div>
-             <div class="form-group">
+        </div>
+        <div class="form-group">
             <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5" Border="1">
                 <asp:TableRow>
                     <asp:TableCell>
@@ -303,96 +303,96 @@
                 </asp:TableRow>
             </asp:Table>
         </div>
-            <div class="form-group">
+        <div class="form-group">
             <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5">
-                    <asp:TableRow>
-                        <asp:TableCell RowSpan="2">
-                            <h4>Volunteer Information</h4>
-                        </asp:TableCell>
-                    </asp:TableRow>
-                <asp:TableRow>
-
-                </asp:TableRow>
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Label ID="lblVolunteerName2" runat="server" Text="Name: "></asp:Label>
-                            <asp:Label ID="lblName2" runat="server" Text=""></asp:Label>
-                        </asp:TableCell>
-                        <asp:TableCell>
-
-                        </asp:TableCell>
-                    </asp:TableRow>
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Label ID="lblVolunteerRole" runat="server" Text="Role:"></asp:Label>
-                            <asp:Label ID="lblRole" runat="server" Text=""></asp:Label>
-                        </asp:TableCell>
-                        <asp:TableCell>
-
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <asp:Label ID="lblOrganizationID" runat="server" Text="Organization ID:"></asp:Label>
-                                                        <asp:Label ID="lblID" runat="server" Text=""></asp:Label>
-                        </asp:TableCell>
-                        <asp:TableCell>
-
-                        </asp:TableCell>
-                    </asp:TableRow>
-                    <asp:TableRow>
-                        <asp:TableCell>
-                            <asp:Label ID="lblVolunteerPhone" runat="server" Text="Phone:"></asp:Label>
-                                                        <asp:Label ID="lblVolunteerP" runat="server" Text=""></asp:Label>
-                        </asp:TableCell>
-                        <asp:TableCell>
-
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            <asp:Label ID="lblVolunteerEmail" runat="server" Text="Email:"></asp:Label>
-                            <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
-                        </asp:TableCell>
-                        <asp:TableCell>
-                            
-                        </asp:TableCell>
-                    </asp:TableRow>
-                </asp:Table>
-            </div>
-            <asp:Table runat="server">
                 <asp:TableRow>
                     <asp:TableCell RowSpan="2">
-                         <h2 style="text-align: center">Save The Date: <asp:Label ID="lblEventDate2" runat="server" Text=""></asp:Label></h2>
+                            <h4>Volunteer Information</h4>
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Label ID="lblVolunteerName2" runat="server" Text="Name: "></asp:Label>
+                        <asp:Label ID="lblName2" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Label ID="lblVolunteerRole" runat="server" Text="Role:"></asp:Label>
+                        <asp:Label ID="lblRole" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:Label ID="lblOrganizationID" runat="server" Text="Organization ID:"></asp:Label>
+                        <asp:Label ID="lblID" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+
+                    </asp:TableCell>
+                </asp:TableRow>
+                <asp:TableRow>
+                    <asp:TableCell>
+                        <asp:Label ID="lblVolunteerPhone" runat="server" Text="Phone:"></asp:Label>
+                        <asp:Label ID="lblVolunteerP" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+
+                    </asp:TableCell>
+                    <asp:TableCell>
+                        <asp:Label ID="lblVolunteerEmail" runat="server" Text="Email:"></asp:Label>
+                        <asp:Label ID="lblEmail" runat="server" Text=""></asp:Label>
+                    </asp:TableCell>
+                    <asp:TableCell>
+                            
                     </asp:TableCell>
                 </asp:TableRow>
             </asp:Table>
+        </div>
+        <asp:Table runat="server">
+            <asp:TableRow>
+                <asp:TableCell RowSpan="2">
+                    <h2 style="text-align: center">Save The Date:
+                        <asp:Label ID="lblEventDate2" runat="server" Text=""></asp:Label></h2>
+                </asp:TableCell>
+            </asp:TableRow>
+        </asp:Table>
     </div>
 </asp:Content>
 <asp:Content ID="InstructorView" ContentPlaceHolderID="InstructorView" runat="server">
-    <div runat="server" id="InstDiv"  style="margin-top: 40px; display: none">
+    <div runat="server" id="InstDiv" style="margin-top: 40px; display: none">
         <asp:Table runat="server">
-        <asp:TableRow>
-            <asp:TableCell RowSpan="2">
-                <asp:Label ID="lblWelcomeInstructor" runat="server" Text="Welcome!"></asp:Label>
-            </asp:TableCell>
-        </asp:TableRow>
-        <asp:TableRow>
-            <asp:TableCell>
-                <asp:Label ID="lblInstructorName" runat="server" Text=""></asp:Label>
-            </asp:TableCell>
-        </asp:TableRow>
-    </asp:Table>
-       <asp:DetailsView ID="InstructorAccessCodeDetailView"
+            <asp:TableRow>
+                <asp:TableCell RowSpan="2">
+                    <asp:Label ID="lblWelcomeInstructor" runat="server" Text="Welcome!"></asp:Label>
+                </asp:TableCell>
+            </asp:TableRow>
+            <asp:TableRow>
+                <asp:TableCell>
+                    <asp:Label ID="lblInstructorName" runat="server" Text=""></asp:Label>
+                </asp:TableCell>
+            </asp:TableRow>
+        </asp:Table>
+        <asp:DetailsView ID="InstructorAccessCodeDetailView"
             DataSourceID="InstructorAccessCodeDataSource" AutoGenerateRows="true"
             Height="50px" Width="125px"
             EmptyDataText="Invalid Instructor"
             GridLines="Both"
             runat="server">
-           
+
             <HeaderStyle BackColor="Navy" ForeColor="White" />
             <RowStyle BackColor="White" />
             <AlternatingRowStyle BackColor="LightGray" />
             <EditRowStyle BackColor="LightCyan" />
-          </asp:DetailsView>
+        </asp:DetailsView>
 
-       <%-- <fieldset>
+        <%-- <fieldset>
             <legend>View Students:</legend>
             <asp:GridView
                 runat="server"
@@ -400,13 +400,12 @@
                 DataSourceID="InstructorAccessCodeDataSource">
             </asp:GridView>
         </fieldset>--%>
-          <asp:SqlDataSource ID="InstructorAccessCodeDataSource" runat="server"
-                     ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-                    SelectCommand="">
-        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="InstructorAccessCodeDataSource" runat="server"
+            ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+            SelectCommand=""></asp:SqlDataSource>
 
         <asp:Table runat="server">
-                <asp:TableRow>
+            <asp:TableRow>
                 <asp:TableCell RowSpan="2">
                     <asp:Label ID="lblIinstructorClusterAccessCode_Label" runat="server" Text="Cluster Access code:"></asp:Label>
                 </asp:TableCell>
@@ -434,7 +433,7 @@
             </asp:TableRow>
         </asp:Table>
 
-     <%-- <asp:ListView runat="server" ID="InstructorAccessCodeListView"
+        <%-- <asp:ListView runat="server" ID="InstructorAccessCodeListView"
         DataSourceID="StudentDataSource"
         DataKeyNames="STUDENTCODE">
         <LayoutTemplate>
@@ -460,7 +459,7 @@
 
         </ItemTemplate>
       </asp:ListView>--%>
-         <fieldset>
+        <fieldset>
             <legend>View Students:</legend>
             <asp:GridView
                 runat="server"
@@ -468,13 +467,13 @@
                 DataSourceID="StudentDataSource">
             </asp:GridView>
         </fieldset>
-         
-      <asp:SqlDataSource ID="StudentDataSource" runat="server"
-        ConnectionString="<%$ ConnectionStrings:CyberDayMaster %>"                    
-        SelectCommand="">
-        <SelectParameters>
-        </SelectParameters>
-      </asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="StudentDataSource" runat="server"
+            ConnectionString="<%$ ConnectionStrings:CyberDayMaster %>"
+            SelectCommand="">
+            <SelectParameters>
+            </SelectParameters>
+        </asp:SqlDataSource>
     </div>
 </asp:Content>
 <asp:Content ID="Content9" ContentPlaceHolderID="VolunteerExistingPlaceholder" runat="server">
@@ -531,13 +530,13 @@
             <div class="col" />
             <fieldset>
                 <legend>View Instructors</legend>
-                <asp:GridView 
+                <asp:GridView
                     runat="server"
-                    ID="Instructor_GridView" 
+                    ID="Instructor_GridView"
                     DataSourceID="sqlsrcInstructor">
                 </asp:GridView>
             </fieldset>
-            <asp:SqlDataSource 
+            <asp:SqlDataSource
                 runat="server"
                 ID="sqlsrcInstructor"
                 DataSourceMode="DataReader"
@@ -550,9 +549,58 @@
 <asp:Content ID="Content4" ContentPlaceHolderID="StudentExistingPlaceholder" runat="server">
 </asp:Content>
 <asp:Content ID="Content5" ContentPlaceHolderID="TeacherExistingPlaceholder" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel4" runat="server">
+        <ContentTemplate>
+            <div style="margin-top: 40px;">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <br />
+                            <asp:Label ID="lbl_StudentName" runat="server" Text="Student: "></asp:Label>
+                            <asp:DetailsView
+                                ID="DetailView_Student"
+                                DataSourceID="sqlsrcStudent"
+                                AutoGenerateRows="true"
+                                Height="50px"
+                                Width="200px"
+                                EmptyDataText="Invalid Student"
+                                GridLines="Both"
+                                runat="server">
+
+                                <HeaderStyle BackColor="Navy" ForeColor="White" />
+                                <RowStyle BackColor="White" />
+                                <AlternatingRowStyle BackColor="LightGray" />
+                                <EditRowStyle BackColor="LightCyan" />
+                            </asp:DetailsView>
+
+                            <asp:SqlDataSource
+                                ID="sqlsrcStudent"
+                                runat="server"
+                                ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+                                SelectCommand="Select * FROM STUDENT Where StudentCode = '1111'"></asp:SqlDataSource>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <fieldset>
+                            <legend>View your Events:</legend>
+                            <asp:GridView
+                                runat="server"
+                                ID="GridView_Student"
+                                DataSourceID="">
+                            </asp:GridView>
+                        </fieldset>
+                        <asp:SqlDataSource
+                            runat="server"
+                            ID="sqlsrcEvent"
+                            DataSourceMode="DataReader"
+                            ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+                            SelectCommand="Select * FROM EVENT Where " />
+                    </div>
+        </ContentTemplate>
+    </asp:UpdatePanel>
 </asp:Content>
 <asp:Content ID="Content7" ContentPlaceHolderID="CoordinatorExistingPlaceholder" runat="server">
-<asp:UpdatePanel ID="UpdatePanel3" runat="server">
+    <asp:UpdatePanel ID="UpdatePanel3" runat="server">
         <ContentTemplate>
             <div style="margin-top: 40px;">
                 <div class="row">
@@ -583,28 +631,28 @@
                         <div class="form-group">
                             <asp:Label ID="Label10" CssClass="label" runat="server" Text="T-Shirt Size"></asp:Label>
                             <asp:DropDownList
-                                    ID="ddlStudentSize"
-                                    runat="server"
-                                    CssClass="js-example-basic-single"
-                                    Width="50%">
-                                    <asp:ListItem Value="Small" />
-                                    <asp:ListItem Value="Medium" />
-                                    <asp:ListItem Value="Large" />
-                                </asp:DropDownList>
+                                ID="ddlStudentSize"
+                                runat="server"
+                                CssClass="js-example-basic-single"
+                                Width="50%">
+                                <asp:ListItem Value="Small" />
+                                <asp:ListItem Value="Medium" />
+                                <asp:ListItem Value="Large" />
+                            </asp:DropDownList>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-group">
                             <asp:Label ID="Label11" CssClass="label" runat="server" Text="T-Shirt Color"></asp:Label>
-                           <asp:DropDownList
-                                    ID="ddlStudentColor"
-                                    runat="server"
-                                    CssClass="js-example-basic-single"
-                                    Width="50%">
-                                    <asp:ListItem Value="Red" />
-                                    <asp:ListItem Value="Blue" />
-                                    <asp:ListItem Value="Green" />
-                                </asp:DropDownList>
+                            <asp:DropDownList
+                                ID="ddlStudentColor"
+                                runat="server"
+                                CssClass="js-example-basic-single"
+                                Width="50%">
+                                <asp:ListItem Value="Red" />
+                                <asp:ListItem Value="Blue" />
+                                <asp:ListItem Value="Green" />
+                            </asp:DropDownList>
                         </div>
                     </div>
                     <div class="w-100"></div>
@@ -643,7 +691,6 @@
                 DataSourceMode="DataReader"
                 ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
                 SelectCommand="" />--%>
-
         </ContentTemplate>
     </asp:UpdatePanel>
 </asp:Content>
