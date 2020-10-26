@@ -175,49 +175,46 @@
                                             <div class="tab-content">
                                                 <!--Panel 7-->
                                                 <div class="tab-pane fade in show active" id="panel7" role="tabpanel">
-                                                    <asp:View>
-                                                        <!--Body-->
-                                                        <div class="modal-body mb-1">
+                                                    <!--Body-->
+                                                    <div class="modal-body mb-1">
 
-                                                            <div class="md-form form-sm mb-5">
-                                                                <i class="fas fa-envelope prefix"></i>
-                                                                <asp:TextBox CssClass="form-control form-control-sm validate" ID="defaultFormEmail" runat="server" CausesValidation="false" />
-                                                                <label data-error="wrong" data-success="right" for="defaultFormEmail">Your Username</label>
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
-                                                                    ControlToValidate="defaultFormEmail"
-                                                                    ValidationGroup="LoginGroup"
-                                                                    ErrorMessage="Enter your Username."
-                                                                    runat="Server">
-                                                                </asp:RequiredFieldValidator>
-                                                            </div>
-
-                                                            <div class="md-form form-sm mb-4">
-                                                                <i class="fas fa-lock prefix"></i>
-                                                                <asp:TextBox CssClass="form-control form-control-sm validate" type="password" ID="defaultFormPass" runat="server" CausesValidation="false" />
-                                                                <label data-error="wrong" data-success="right" for="defaultFormPass">Your password</label>
-                                                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2"
-                                                                    ControlToValidate="defaultFormPass"
-                                                                    ValidationGroup="LoginGroup"
-                                                                    ErrorMessage="Enter your password."
-                                                                    runat="Server">
+                                                        <div class="md-form form-sm mb-5">
+                                                            <i class="fas fa-envelope prefix"></i>
+                                                            <asp:TextBox CssClass="form-control form-control-sm validate" ID="defaultFormEmail" runat="server" CausesValidation="false" />
+                                                            <label data-error="wrong" data-success="right" for="defaultFormEmail">Your Username</label>
+                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                                                                ControlToValidate="defaultFormEmail"
+                                                                ValidationGroup="LoginGroup"
+                                                                ErrorMessage="Enter your Username."
                                                                 runat="Server">
-                                                                </asp:RequiredFieldValidator>
-                                                            </div>
-                                                            <div class="text-center mt-2">
-                                                                <i class="fas fa-sign-in ml-1">
-                                                                    <asp:Button ID="LoginButton" runat="server" CssClass="btn btn-info" Text="Login" ValidationGroup="LoginGroup" CausesValidation="False" OnClick="LoginButton_Click" />
-                                                                </i>
-                                                            </div>
+                                                            </asp:RequiredFieldValidator>
                                                         </div>
-                                                        <!--Footer-->
-                                                        <div class="modal-footer">
-                                                            <div class="options text-center text-md-right mt-1">
-                                                                <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
-                                                                <p>Forgot <a href="#" class="blue-text">Password?</a></p>
-                                                            </div>
-                                                            <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+
+                                                        <div class="md-form form-sm mb-4">
+                                                            <i class="fas fa-lock prefix"></i>
+                                                            <asp:TextBox CssClass="form-control form-control-sm validate" type="password" ID="defaultFormPass" runat="server" CausesValidation="false" />
+                                                            <label data-error="wrong" data-success="right" for="defaultFormPass">Your password</label>
+                                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2"
+                                                                ControlToValidate="defaultFormPass"
+                                                                ValidationGroup="LoginGroup"
+                                                                ErrorMessage="Enter your password."
+                                                                runat="Server">
+                                                            </asp:RequiredFieldValidator>
                                                         </div>
-                                                    </asp:View>
+                                                        <div class="text-center mt-2">
+                                                            <i class="fas fa-sign-in ml-1">
+                                                                <asp:Button ID="LoginButton" runat="server" UseSubmitBehavior="False" CssClass="btn btn-info" Text="Login" ValidationGroup="LoginGroup" CausesValidation="False" OnClick="LoginButton_Click" />
+                                                            </i>
+                                                        </div>
+                                                    </div>
+                                                    <!--Footer-->
+                                                    <div class="modal-footer">
+                                                        <div class="options text-center text-md-right mt-1">
+                                                            <p>Not a member? <a href="#" class="blue-text">Sign Up</a></p>
+                                                            <p>Forgot <a href="#" class="blue-text">Password?</a></p>
+                                                        </div>
+                                                        <button type="button" class="btn btn-outline-info waves-effect ml-auto" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                                 <!--/.Panel 7-->
 
@@ -262,7 +259,6 @@
                                 <Items>
                                     <asp:MenuItem Text="Home" Value="0" Selected="true" />
                                     <asp:MenuItem Text="User" Value="1" />
-                                    <asp:MenuItem Text="Coordinator Page" Value="2" />
                                     <%--<asp:MenuItem Text="User: None" Enabled="False"  />--%>
                                 </Items>
                             </asp:Menu>
@@ -278,11 +274,6 @@
                                         <asp:ContentPlaceHolder ID="HomePlaceHolder" runat="server">
                                         </asp:ContentPlaceHolder>
                                     </div>
-                                    <div style="margin-top: 40px;">
-                                        <h2>Coordinator Datelist View</h2>
-                                        <asp:ContentPlaceHolder ID="CoordinatorSubmissionViewPlaceholder" runat="server">
-                                        </asp:ContentPlaceHolder>
-                                    </div>
                                 </asp:View>
                                 <asp:View runat="server">
                                     <div style="width: 100%; margin-left: 20px; margin-top: 20px; margin-right: 20px;">
@@ -290,6 +281,15 @@
                                         <asp:ContentPlaceHolder ID="InstructorView" runat="server">
                                         </asp:ContentPlaceHolder>
                                         <asp:ContentPlaceHolder ID="VolunteerView" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                    </div>
+                                </asp:View>
+                                <asp:View runat="server">
+                                    <div style="margin-top: 40px;">
+                                        <h2>Event Request List</h2>
+                                        <asp:ContentPlaceHolder ID="CoordinatorSubmissionViewPlaceholder" runat="server">
+                                        </asp:ContentPlaceHolder>
+                                        <asp:ContentPlaceHolder ID="EventInfoPlaceHolder" runat="server">
                                         </asp:ContentPlaceHolder>
                                     </div>
                                 </asp:View>

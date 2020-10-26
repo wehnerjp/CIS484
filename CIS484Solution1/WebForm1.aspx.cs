@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -16,7 +17,7 @@ namespace CIS484Solution1
         private System.Data.DataTable submissionDataTable = new System.Data.DataTable();
         public static int count = 1;
 
-        public static int CoordinatorID = 1;
+        public static int CoordinatorID = Site1.CoordinatorID;
         //public static Button addEvent = new Button();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -592,6 +593,117 @@ namespace CIS484Solution1
             PhoneTextBox.Text = string.Empty;
             UsernameTextBox.Text = string.Empty;
             modalLRInput13.Text = string.Empty;
+        }
+
+        protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Queries Relevant to home page, fetching event info student info and more
+
+            string OrgName = "";
+            string OrgType = "";
+            string EventName = "";
+            string ContactName = "";
+            string Phone = "";
+            string Email = "";
+            string ContactCode = "";
+            string EventID = "";
+            DateTime Date1 = new DateTime();
+            //Inserting teacher query
+            //Get connection string from web.config file
+            string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
+            //Inserting teacher query
+
+            //Get connection string from web.config file
+            //create new sqlconnection and connection to database by using connection string from web.config file
+            SqlConnection con = new SqlConnection(strcon);
+            String sqlQuery4 = "select C.ContactCode as ContactCode, C.Name as ContactName, format(E.Date, 'MM/dd/yyyy') as Date, O.Name as OrgName, O.Type as OrgType, E.Name as EventName" +
+            " from EventContact C" +
+            " inner join Organization O on O.OrganizationID = C.OrganizationID" +
+            " inner join Event E on C.EventID = E.EventID" +
+            " where C.EventID = '" + EventList.SelectedValue + "'";
+            SqlCommand cmd4 = new SqlCommand(sqlQuery4, con);
+
+            con.Open();
+            try
+            {
+                SqlDataReader reader = cmd4.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    ContactCode = reader[0].ToString();
+                    ContactName = reader[1].ToString();
+                    Date1 = Convert.ToDateTime(reader[2]);
+                    OrgName = reader[3].ToString();
+                    OrgType = reader[4].ToString();
+                    EventName = reader[5].ToString();
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Select Error in EventContact:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery4, con);
+            DataSet ds = new DataSet();
+
+            sqlAdapter.Fill(ds);
+
+            EventInfoTable.DataSource = ds;
+            EventInfoTable.DataBind();
+
+            String sqlQuery1 = "select S.Name from Student S inner join Instructor I on S.InstructorCode = I.InstructorCode" +
+            " where I.ContactCode = '" + ContactCode + "';";
+            SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+
+            //Fill table with data
+            DataTable dt = new DataTable();
+            sqlAdapter1.Fill(dt);
+            if (dt.Rows.Count > 0)
+            {
+                StudentListBox.DataSource = dt;
+                StudentListBox.DataTextField = "Name";
+                StudentListBox.DataBind();
+            }
+
+            string sqlQuery2 = "select Name from Instructor where ContactCode = '" + ContactCode + "'";
+            SqlDataAdapter sqlAdapter2 = new SqlDataAdapter(sqlQuery2, con);
+
+            var items = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(sqlQuery2, con))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //Read info into List
+                        items.Add(reader.GetString(0));
+                    }
+                }
+            }
+            InstructorRepeater.DataSource = items;
+            InstructorRepeater.DataBind();
+
+            string sqlQuery3 = "select V.VolunteerCode, V.Name from Volunteer V inner join EventVolunteers E on V.VolunteerCode = E.VolunteerCode where E.EventID = '" + EventList.SelectedValue + "'";
+            var items1 = new List<string>();
+
+            using (SqlCommand command = new SqlCommand(sqlQuery3, con))
+            {
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        //Read info into List
+                        items1.Add(reader.GetString(1));
+                    }
+                }
+            }
+            VolunteerRepeater.DataSource = items1;
+            VolunteerRepeater.DataBind();
+
+            con.Close();
         }
     }
 }

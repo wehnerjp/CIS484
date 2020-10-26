@@ -14,6 +14,7 @@ namespace CIS484Solution1
         public static string UserLoginName = null;
         public static string UserLoginEmail = null;
         public static string UserLoginType = "Coordinator";
+        public static int CoordinatorID = -1;
 
         public enum MessageType { Success, Error, Info, Warning };
 
@@ -94,13 +95,12 @@ namespace CIS484Solution1
             string pass = HttpUtility.HtmlEncode(defaultFormPass.Text);
             string type = "Select UserLoginType from Coordinator where Username = " + Username;
             SqlConnection CDMConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
-            //SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["dbconnection"].ConnectionString);
             SqlCommand loginCommand = new SqlCommand();
             loginCommand.Connection = CDMConnection;
             CDMConnection.Open();
             System.Data.SqlClient.SqlCommand findPass = new System.Data.SqlClient.SqlCommand();
             findPass.Connection = CDMConnection;
-            findPass.CommandText = "Select Password from CoordinatorAuth where Username = @Username";
+            findPass.CommandText = "Select CoordinatorID,Password from CoordinatorAuth where Username = @Username";
             findPass.Parameters.Add(new SqlParameter("@Username", Username));
 
             SqlDataReader reader = findPass.ExecuteReader();
@@ -111,6 +111,8 @@ namespace CIS484Solution1
                     while (reader.Read())
                     {
                         string storedHash = reader["Password"].ToString();
+                        CoordinatorID = int.Parse(reader["CoordinatorID"].ToString());
+
                         if (PasswordHash.ValidatePassword(defaultFormPass.Text, storedHash))
                         {
                             UserLoginEmail = Username;
@@ -144,6 +146,9 @@ namespace CIS484Solution1
             {
                 //dbConnection.Close();
                 CDMConnection.Close();
+                MasterMenu.Items.RemoveAt(1);
+                MenuItem myItem = new MenuItem("CoordinatorView", "2");
+                MasterMenu.Items.AddAt(1, myItem);
             }
             //ShowMessage("Heard! " + Username, MessageType.Info);
         }
