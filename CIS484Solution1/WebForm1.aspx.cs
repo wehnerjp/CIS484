@@ -17,11 +17,13 @@ namespace CIS484Solution1
         private System.Data.DataTable submissionDataTable = new System.Data.DataTable();
         public static int count = 1;
         public static AccessCode MasterAccessCode = new AccessCode();
-
+        public static AccessCode MasterAccessCodeCluster = new AccessCode();
         public static int CoordinatorID = Site1.CoordinatorID;
         public static string contactCode = "";
         public static string instructorCode = "";
         public static string clusterCode = "";
+        public static string clusterCode5 = "";
+
         //public static Button addEvent = new Button();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -192,7 +194,6 @@ namespace CIS484Solution1
             cmd.Parameters.Add(new SqlParameter("@UserType", "EventContact"));
             cmd.Parameters.Add(new SqlParameter("@CoordinatorID", Site1.CoordinatorID));
 
-
             SqlCommand cmd6 = new SqlCommand(sqlQuery6, con);
             cmd6.Parameters.Add(new SqlParameter("@Code", code));
 
@@ -319,7 +320,6 @@ namespace CIS484Solution1
             dbConnection.Open();
             try
             {
-
                 SqlCommand loginCommand = new SqlCommand();
                 loginCommand.Connection = dbConnection;
                 loginCommand.CommandText = "Select * from AccessCode where Code = @Code";
@@ -328,7 +328,6 @@ namespace CIS484Solution1
                 SqlDataReader reader = loginCommand.ExecuteReader();
                 if (reader.HasRows)
                 {
-
                     while (reader.Read())
                     {
                         type = reader[1].ToString();
@@ -410,7 +409,6 @@ namespace CIS484Solution1
                                 lblID.Text = (HttpUtility.HtmlEncode(VolReader[3].ToString()));
                                 lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
                                 lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
-
                             }
                         }
                         else if (type.Equals("EventContact"))
@@ -450,13 +448,11 @@ namespace CIS484Solution1
                             {
                                 Label10.Text = (HttpUtility.HtmlEncode(OrgReader[1].ToString()));
                             }
-
                         }
                         else if (type.Equals("Student"))
                         {
                             lblAccessCodeStatus.Text = "Yay Student View";
                         }
-
                     }
                 }
             }
@@ -471,10 +467,6 @@ namespace CIS484Solution1
                 dbConnection.Close();
             }
         }
-
-
-
-
 
         protected void AddRequest_Click(object sender, EventArgs e)
         {
@@ -587,11 +579,7 @@ namespace CIS484Solution1
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             // Generate Cluster and Instructor Codes
-            string instructorCode = "";
-            instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
-
-            string clusterCode = "";
-            clusterCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            string instructorCode5x = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
 
             //string instructorCode = "";
             //instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
@@ -627,11 +615,11 @@ namespace CIS484Solution1
             }
 
             // INSERT SQL Statements
-
+            InsertClusterCode();
             // Insert - Access Part 1
             String sqlQuery_p1 = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
             SqlCommand cmd_p1 = new SqlCommand(sqlQuery_p1, sqlconnect);
-            cmd_p1.Parameters.Add(new SqlParameter("@Code", instructorCode));
+            cmd_p1.Parameters.Add(new SqlParameter("@Code", instructorCode5x));
             cmd_p1.Parameters.Add(new SqlParameter("@UserType", "Instructor"));
             try
             {
@@ -644,26 +632,11 @@ namespace CIS484Solution1
                 msg += ex.Message;
                 throw new Exception(msg);
             }
-            String sqlqryyy = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
-            SqlCommand cmd_p11 = new SqlCommand(sqlqryyy, sqlconnect);
-            cmd_p11.Parameters.Add(new SqlParameter("@Code", clusterCode));
-            cmd_p11.Parameters.Add(new SqlParameter("@UserType", "Cluster"));
-            try
-            {
-                cmd_p11.CommandType = CommandType.Text;
-                cmd_p11.ExecuteNonQuery();
-            }
-            catch (System.Data.SqlClient.SqlException ex)
-            {
-                string msg = "Insert Error into AccessCode";
-                msg += ex.Message;
-                throw new Exception(msg);
-            }
 
             // Insert - Cluster Part 1
             String sqlQuery_p2 = "INSERT INTO CLUSTER(ClusterCode) VALUES (@ClusterCode)";
             SqlCommand cmd_p2 = new SqlCommand(sqlQuery_p2, sqlconnect);
-            cmd_p2.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode));
+            cmd_p2.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode5));
 
             try
             {
@@ -681,7 +654,7 @@ namespace CIS484Solution1
             String sqlQuery4 = "INSERT INTO INSTRUCTOR(InstructorCode, Name, OrganizationID, Email, Phone, ContactCode)" +
                 "VALUES (@InstructorCode, @Name, @OrganizationID, @Email, @Phone, @ContactCode)";
             SqlCommand cmd101 = new SqlCommand(sqlQuery4, sqlconnect);
-            cmd101.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode));
+            cmd101.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode5x));
             cmd101.Parameters.Add(new SqlParameter("@Name", Instructor_tbFirstName.Text + ' ' + Instructor_tbLastName.Text));
             cmd101.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
             cmd101.Parameters.Add(new SqlParameter("@Email", Instructor_tbEmail.Text));
@@ -697,15 +670,14 @@ namespace CIS484Solution1
                 string msg = "Insert Error into Instructor";
                 msg += ex.Message;
                 throw new Exception(msg);
-
             }
 
             // Update - Cluster Part 2
             String sqlQuery3 = "UPDATE Cluster SET InstructorCode = @InstructorCode, OrganizationID = @OrganizationID WHERE ClusterCode = @ClusterCode";
             SqlCommand cmd103 = new SqlCommand(sqlQuery3, sqlconnect);
-            cmd103.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode));
+            cmd103.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode5x));
             cmd103.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
-            cmd103.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode));
+            cmd103.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode5));
             try
             {
                 cmd103.CommandType = CommandType.Text;
@@ -713,7 +685,6 @@ namespace CIS484Solution1
             }
             catch (System.Data.SqlClient.SqlException ex)
             {
-
                 string msg = "Insert Error into Cluster Part 2";
                 msg += ex.Message;
                 throw new Exception(msg);
@@ -725,8 +696,30 @@ namespace CIS484Solution1
 
             sqlsrcInstructor.DataBind();
             Instructor_GridView.DataBind();
+            sqlconnect.Close();
+        }
 
-
+        protected void InsertClusterCode()
+        {
+            SqlConnection sqlconnect = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            sqlconnect.Open();
+            clusterCode5 = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            String sqlqryyy = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
+            SqlCommand cmd_p11 = new SqlCommand(sqlqryyy, sqlconnect);
+            cmd_p11.Parameters.Add(new SqlParameter("@Code", clusterCode5));
+            cmd_p11.Parameters.Add(new SqlParameter("@UserType", "Cluster"));
+            try
+            {
+                cmd_p11.CommandType = CommandType.Text;
+                cmd_p11.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into AccessCode";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            sqlconnect.Close();
         }
 
         protected void Instructor_ResetButton_Click(object sender, EventArgs e)
@@ -825,7 +818,6 @@ namespace CIS484Solution1
                 string msg = "Insert Error into Student Part 3";
                 msg += ex.Message;
                 throw new Exception(msg);
-
             }
 
             //// Insert - Student Part 1
@@ -858,7 +850,6 @@ namespace CIS484Solution1
             cmd2_p2.Parameters.Add(new SqlParameter("@StudentCode", studentCode));
             cmd2_p2.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
 
-
             try
             {
                 cmd2_p2.CommandType = CommandType.Text;
@@ -869,9 +860,7 @@ namespace CIS484Solution1
                 string msg = "Insert Error into Student";
                 msg += ex.Message;
                 throw new Exception(msg);
-
             }
-
         }
 
         protected void btnStudentSignUpReset_Click(object sender, EventArgs e)
@@ -880,6 +869,7 @@ namespace CIS484Solution1
             Student_tbLastName.Text = "";
             Student_tbNotes.Text = "";
         }
+
         protected void SubmitCoordinator_Click(object sender, EventArgs e)
         {
             //Inserting teacher query
