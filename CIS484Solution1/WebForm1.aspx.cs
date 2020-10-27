@@ -313,6 +313,8 @@ namespace CIS484Solution1
             StudentSignUpDiv.Visible = false;
             AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
             AddInstDiv.Visible = false;
+            StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            StudentSignUpDiv.Visible = false;
 
             string code = txtAccessCodeEntry.Text;
             string type = "";
@@ -454,7 +456,49 @@ namespace CIS484Solution1
                         }
                         else if (type.Equals("Student"))
                         {
-                            lblAccessCodeStatus.Text = "Yay Student View";
+
+                            StudentPageDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
+                            StudentPageDiv.Visible = true;
+                            lblAccessCodeStatus.Text = "Logged into Student";
+                            string sqlQuery_StudentInfo = "SELECT * FROM STUDENT WHERE StudentCode = '" + code + "'";
+                            SqlConnection sqlconnect = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            sqlconnect.Open();
+                            SqlCommand StudentStuff = new SqlCommand(sqlQuery_StudentInfo, sqlconnect);
+                            SqlDataReader studentReader = StudentStuff.ExecuteReader();
+                            while (studentReader.Read())
+                            {
+                                Student_lblStudentCode.Text = (HttpUtility.HtmlEncode(studentReader[0].ToString()));
+                                Student_tbStudentName.Text = (HttpUtility.HtmlEncode(studentReader[1].ToString()));
+                                Student_tbStudentNotes.Text = (HttpUtility.HtmlEncode(studentReader[3].ToString()));
+
+                            }
+
+
+                            string qury2 = "SELECT Instructor.Name FROM Instructor inner join Student on Student.OrganizationID = Instructor.OrganizationID where Student.StudentCode = '" + code + "'";
+                            SqlConnection sqlconnect2 = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            sqlconnect2.Open();
+                            SqlCommand SInstStuff = new SqlCommand(qury2, sqlconnect2);
+                            SqlDataReader SInstReader = SInstStuff.ExecuteReader();
+                            while (SInstReader.Read())
+                            {
+                                Student_lblInstructorName.Text = (HttpUtility.HtmlEncode(SInstReader[0].ToString()));
+                            }
+
+                            string sqlQueryFindOrganizationName = "SELECT Organization.Name FROM Organization inner join Student on Student.OrganizationID = Organization.OrganizationID where Student.StudentCode = '" + code + "'";
+                            SqlConnection sqlconnect3 = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            sqlconnect3.Open();
+                            SqlCommand OrgName = new SqlCommand(sqlQueryFindOrganizationName, sqlconnect3);
+                            SqlDataReader OrgNameReader = OrgName.ExecuteReader();
+                            while (OrgNameReader.Read())
+                            {
+                                Student_lblOrganizationName.Text = (HttpUtility.HtmlEncode(OrgNameReader[0].ToString()));
+                            }
+
+                            string studentEventQuery = "Select Event.EventID, Event.Name, Event.Date, Event.Room from Event inner join EventContact on EventContact.EventID = Event.EventID inner join Instructor on Instructor.ContactCode = EventContact.ContactCode inner join Student on Student.InstructorCode = Instructor.InstructorCode where Student.StudentCode ='" + code + "'";
+                            sqlsrcStudentEvent.SelectCommand = studentEventQuery;
+                            sqlsrcStudentEvent.DataBind();
+                            StudentEvent_GridView.DataBind();
+
                         }
                     }
                 }

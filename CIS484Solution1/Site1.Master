@@ -286,6 +286,8 @@
                                             </asp:ContentPlaceHolder>
                                         <asp:ContentPlaceHolder ID="StudentSignUp" runat="server">
                                             </asp:ContentPlaceHolder>
+                                        <asp:ContentPlaceHolder ID="StudentPage" runat="server">
+                                            </asp:ContentPlaceHolder>
                                     </div>
                                 </asp:View>
                                 <asp:View runat="server">
