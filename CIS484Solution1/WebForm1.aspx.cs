@@ -627,7 +627,8 @@ namespace CIS484Solution1
             // Generate Cluster and Instructor Codes
             instructorCode5x = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
             AccessCode newAccessxx = new AccessCode();
-            instructorCode5x = newAccessxx.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            instructorCode5x = "349843";
+            instructorCode5x += "v";
             //string instructorCode = "";
             //instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
             //MessageBox.Show(instructorCode.ToString(), "Code 2 for instructor: ");

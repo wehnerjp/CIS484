@@ -432,16 +432,16 @@
 </asp:Content>
 <asp:Content ID="Content8" ContentPlaceHolderID="CoordinatorSubmissionViewPlaceholder" runat="server">
     <div class="form-group">
-        <%--   <asp:UpdatePanel runat="server">
-            <ContentTemplate>--%>
-        <asp:GridView ID="ContactSubmissionGrid"
-            AutoGenerateColumns="true" OnRowDataBound="ContactSubmissionGrid_RowDataBound" OnSelectedIndexChanged="ContactSubmissionGrid_SelectedIndexChanged"
-            runat="server">
+        <asp:UpdatePanel runat="server">
+            <ContentTemplate>
+                <asp:GridView ID="ContactSubmissionGrid"
+                    AutoGenerateColumns="true" OnRowDataBound="ContactSubmissionGrid_RowDataBound" OnSelectedIndexChanged="ContactSubmissionGrid_SelectedIndexChanged"
+                    runat="server">
 
-            <HeaderStyle BackColor="#989898" ForeColor="white" />
-        </asp:GridView>
-        <%--        </ContentTemplate>
-        </asp:UpdatePanel>--%>
+                    <HeaderStyle BackColor="#989898" ForeColor="white" />
+                </asp:GridView>
+            </ContentTemplate>
+        </asp:UpdatePanel>
 
         <asp:UpdatePanel ID="RequestListDDLUpdate" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -462,7 +462,7 @@
         <div class="container-fluid">
             <div class="grid">
 
-                <div class="grid-item grid-item--width3 grid-item--height3">
+                <div class="grid-item grid-item--width3 grid-item--height3" style="height: 100%">
                     <div class="form-group">
                         <%--                      <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
                             <ContentTemplate>--%>
@@ -1115,87 +1115,82 @@
 </asp:Content>
 <asp:Content ID="StudentPage" ContentPlaceHolderID="StudentPage" runat="server">
     <div runat="server" id="StudentPageDiv" style="margin-top: 40px; display: none" visible="false">
-    <script type="text/javascript">
+        <script type="text/javascript">
         $(document).ready(function () {
             $(".js-example-basic-single").select2();
         });
-    </script>
-    <div style="margin-top: 40px;">
-        <div class="container-fluid">
-            <div class="grid">
-                <div class="grid-item grid-item--width2 grid-item--height3">
-                    <!-- Info Display -->
-                    <table class="table table-bordered table-striped" style="margin-left: 5px">
-                        <tr>
-                            <td>Student Code:    </td>
-                            <td>
-                                <asp:Label ID="Student_lblStudentCode" runat="server"></asp:Label>
-                        </tr>
-                        <tr>
-                            <td>Name:   </td>
-                            <td>
-                                <asp:TextBox ID="Student_tbStudentName" runat="server"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                        <tr>
-                            <td>Notes:   </td>
-                            <td>
-                                <asp:TextBox ID="Student_tbStudentNotes" runat="server"></asp:TextBox>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Instructor Name: </td>
-                            <td>
-                                <asp:Label ID="Student_lblInstructorName" runat="server"></asp:Label></td>
-                        </tr>
-                        <tr>
-                            <td>Organization Name: </td>
-                            <td>
-                                <asp:Label ID="Student_lblOrganizationName" runat="server"></asp:Label></td>
-                        </tr>
-                    </table>
+        </script>
+        <div style="margin-top: 40px;">
+            <div class="container-fluid">
+                <div class="grid">
                     <div class="grid-item grid-item--width2 grid-item--height3">
                         <!-- Info Display -->
                         <table class="table table-bordered table-striped" style="margin-left: 5px">
+                            <tr>
+                                <td>Student Code:    </td>
+                                <td>
+                                    <asp:Label ID="Student_lblStudentCode" runat="server"></asp:Label>
+                            </tr>
+                            <tr>
+                                <td>Name:   </td>
+                                <td>
+                                    <asp:TextBox ID="Student_tbStudentName" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                            <tr>
+                                <td>Notes:   </td>
+                                <td>
+                                    <asp:TextBox ID="Student_tbStudentNotes" runat="server"></asp:TextBox>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Instructor Name: </td>
+                                <td>
+                                    <asp:Label ID="Student_lblInstructorName" runat="server"></asp:Label></td>
+                            </tr>
+                            <tr>
+                                <td>Organization Name: </td>
+                                <td>
+                                    <asp:Label ID="Student_lblOrganizationName" runat="server"></asp:Label></td>
+                            </tr>
                         </table>
+                        <div class="grid-item grid-item--width2 grid-item--height3">
+                            <!-- Info Display -->
+                            <table class="table table-bordered table-striped" style="margin-left: 5px">
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <div class="grid-item grid-item--width2 grid-item--height3">
-                    <asp:UpdatePanel ID="UpdatePanel5" runat="server">
-                        <ContentTemplate>
-                            <div style="margin-top: 40px;">
-                                <div class="row">
-                                    <div class="col">
-                                     <div class="form-group">
-                                            <fieldset>
-                                                <legend>View your Events:</legend>
-                                                <asp:GridView
+                    <div class="grid-item grid-item--width2 grid-item--height3">
+                        <asp:UpdatePanel ID="UpdatePanel5" runat="server">
+                            <ContentTemplate>
+                                <div style="margin-top: 40px;">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <fieldset>
+                                                    <legend>View your Events:</legend>
+                                                    <asp:GridView
+                                                        runat="server"
+                                                        ID="StudentEvent_GridView"
+                                                        DataSourceID="sqlsrcStudentEvent">
+                                                    </asp:GridView>
+                                                </fieldset>
+                                                <asp:SqlDataSource
                                                     runat="server"
-                                                    ID="StudentEvent_GridView"
-                                                    DataSourceID="sqlsrcStudentEvent" >
-                                                </asp:GridView>
-                                            </fieldset>
-                                            <asp:SqlDataSource
-                                                runat="server"
-                                                ID="sqlsrcStudentEvent"
-                                                DataSourceMode="DataReader"
-                                                ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-                                                SelectCommand="" />
-
+                                                    ID="sqlsrcStudentEvent"
+                                                    DataSourceMode="DataReader"
+                                                    ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
+                                                    SelectCommand="" />
+                                            </div>
                                         </div>
-                                        
                                     </div>
                                 </div>
-                            </div>
-                        </ContentTemplate>
-
-                    </asp:UpdatePanel>
-
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+                    </div>
                 </div>
-
             </div>
         </div>
     </div>
-        </div>
 </asp:Content>
