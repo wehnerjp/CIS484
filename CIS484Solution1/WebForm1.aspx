@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="CIS484Solution1.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="WebForm1.aspx.cs" Inherits="CIS484Solution1.WebForm1" EnableEventValidation="false" %>
 
 <asp:Content ID="HomepageContent" ContentPlaceHolderID="HomePlaceHolder" runat="server">
     <script>
@@ -435,7 +435,7 @@
         <asp:UpdatePanel runat="server">
             <ContentTemplate>
                 <asp:GridView ID="ContactSubmissionGrid"
-                    AutoGenerateColumns="true"
+                    AutoGenerateColumns="true" OnRowDataBound="ContactSubmissionGrid_RowDataBound" OnSelectedIndexChanged="ContactSubmissionGrid_SelectedIndexChanged"
                     runat="server">
 
                     <HeaderStyle BackColor="#989898" ForeColor="white" />
@@ -450,16 +450,16 @@
                     DataSourceMode="DataReader"
                     ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
                     SelectCommand="SELECT RequestID, ContactName FROM ContactRequest" />
-                <asp:DropDownList ID="RequestListDDL"
+<%--                <asp:DropDownList ID="RequestListDDL"
                     DataSourceID="RequestListDataSource"
                     DataTextField="ContactName"
                     DataValueField="RequestID"
                     AutoPostBack="true"
                     runat="server"
                     Width="50%"
-                    CssClass="js-example-basic-single">
-                </asp:DropDownList>
-                <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Approve" CausesValidation="False" UseSubmitBehavior="False" />
+                    CssClass="js-example-basic-single">--%>
+                <%--</asp:DropDownList>--%>
+                <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Approve" CausesValidation="False"  UseSubmitBehavior="true"/>
                 <asp:Button runat="server" ID="DeleteEvent" OnClick="DeleteEvent_OnClickEvent_Click" Text="Delete" CausesValidation="False" UseSubmitBehavior="False" />
             </ContentTemplate>
         </asp:UpdatePanel>
@@ -469,16 +469,18 @@
     <div style="margin-top: 40px;">
         <div class="container-fluid">
             <div class="grid">
-
-                <div class="grid-item">
+                
+                <div class="grid-item grid-item--width3 grid-item--height3"">
                     <div class="form-group">
+                        <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
+                            <ContentTemplate>
                         <asp:Label ID="Label6" CssClass="label" runat="server" Text="Event"></asp:Label>
-                        <asp:SqlDataSource runat="server"
+                        <%--<asp:SqlDataSource runat="server"
                             ID="dtasrcEventList"
                             DataSourceMode="DataReader"
                             ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-                            SelectCommand="SELECT EventID, Name FROM Event" />
-                        <asp:DropDownList
+                            SelectCommand="SELECT EventID, Name FROM Event" />--%>
+                        <%--<asp:DropDownList
                             ID="EventList"
                             DataSourceID="dtasrcEventList"
                             DataTextField="Name"
@@ -487,10 +489,25 @@
                             OnSelectedIndexChanged="EventList_SelectedIndexChanged"
                             runat="server"
                             OnClientClick="javascript: needToConfirm = false;"
-                            CssClass="js-example-basic-single" />
+                            CssClass="js-example-basic-single" />--%>
+                    <asp:SqlDataSource ID="EventdisplayDb" runat="server" 
+                    DataSourceMode="DataReader" 
+                    ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>" 
+                    SelectCommand="SELECT E.EventID, E.Name as 'Event Name', Date, O.Name as 'Organization Name', Type, C.Name as 'Contact Name', C.ContactCode from Event E inner join EventContact C on E.EventID=C.EventID inner join Organization O on C.OrganizationID = O.OrganizationID Order by E.EventID ASC"/>
+
+                <asp:GridView runat="server" ID="GvEventdisplay" DataSourceID="EventdisplayDb" OnRowDataBound="GvEventdisplay_RowDataBound" OnSelectedIndexChanged="GvEventdisplay_SelectedIndexChanged" >
+                                        <HeaderStyle BackColor="#989898" ForeColor="white" />
+
+                    </asp:GridView>
+                                </ContentTemplate>
+                    </asp:UpdatePanel>
+
+
+
+
                     </div>
                 </div>
-                <div class="grid-item grid-item--width2 grid-item--height3">
+<%--                <div class="grid-item grid-item--width2 grid-item--height3">
                     <!-- Info Display -->
                     <div class="form-group">
                         <asp:Label ID="Label8" CssClass="label" runat="server" Text="Event Details"></asp:Label>
@@ -526,7 +543,7 @@
                             </ItemTemplate>
                         </asp:FormView>
                     </div>
-                </div>
+                </div>--%>
                 <div class="grid-item grid-item--height2">
                     <h4>Volunteers: </h4>
                     <asp:Repeater ID="VolunteerRepeater" runat="server">

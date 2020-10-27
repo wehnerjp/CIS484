@@ -291,6 +291,11 @@
                                         </asp:ContentPlaceHolder>
                                         <asp:ContentPlaceHolder ID="EventInfoPlaceHolder" runat="server">
                                         </asp:ContentPlaceHolder>
+
+<%--                                        <h2>Event View</h2>                                       
+                                        <asp:ContentPlaceHolder ID="EventdisplayPlaceholder" runat="server">
+                                        </asp:ContentPlaceHolder>--%>
+
                                     </div>
                                 </asp:View>
                             </asp:MultiView>

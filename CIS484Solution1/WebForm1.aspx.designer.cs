@@ -276,15 +276,6 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.SqlDataSource RequestListDataSource;
 
         /// <summary>
-        /// RequestListDDL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList RequestListDDL;
-
-        /// <summary>
         /// AddEvent control.
         /// </summary>
         /// <remarks>
@@ -303,6 +294,15 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.Button DeleteEvent;
 
         /// <summary>
+        /// EventRefreshPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel EventRefreshPanel;
+
+        /// <summary>
         /// Label6 control.
         /// </summary>
         /// <remarks>
@@ -312,40 +312,22 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.Label Label6;
 
         /// <summary>
-        /// dtasrcEventList control.
+        /// EventdisplayDb control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.SqlDataSource dtasrcEventList;
+        protected global::System.Web.UI.WebControls.SqlDataSource EventdisplayDb;
 
         /// <summary>
-        /// EventList control.
+        /// GvEventdisplay control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList EventList;
-
-        /// <summary>
-        /// Label8 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label8;
-
-        /// <summary>
-        /// EventInfoTable control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.FormView EventInfoTable;
+        protected global::System.Web.UI.WebControls.GridView GvEventdisplay;
 
         /// <summary>
         /// VolunteerRepeater control.

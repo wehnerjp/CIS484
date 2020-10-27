@@ -8,6 +8,8 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Windows.Forms;
+using System.Drawing;
+using System.Web.UI.WebControls;
 
 namespace CIS484Solution1
 {
@@ -55,6 +57,8 @@ namespace CIS484Solution1
             System.Data.DataColumn tColumn = null;
             // TABLE COLUMNS.
 
+            tColumn = new System.Data.DataColumn("RequestID", Type.GetType("System.String"));
+            submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Name", Type.GetType("System.String"));
             submissionDataTable.Columns.Add(tColumn);
             tColumn = new System.Data.DataColumn("Phone", System.Type.GetType("System.String"));
@@ -104,7 +108,7 @@ namespace CIS484Solution1
                         //btnCell2.Controls.Add(deleteEvent);
 
                         //count++;
-                        submissionDataTable.Rows.Add(reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
+                        submissionDataTable.Rows.Add(reader[0],reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
                     }
                 }
             }
@@ -131,14 +135,13 @@ namespace CIS484Solution1
 
         protected void addEvent_Click(object sender, EventArgs e)
         {
+            string RequestID = ContactSubmissionGrid.SelectedRow.Cells[0].Text;
             string OrgName = "";
             string OrgType = "";
             string EventName = "";
             string ContactName = "";
             string Phone = "";
             string Email = "";
-            string RequestID = "";
-            string EventID = "";
             DateTime Date1 = new DateTime();
             AccessCode contact = new AccessCode();
             string code = contact.GenerateCode(true, true, true, true, 8);
@@ -151,7 +154,7 @@ namespace CIS484Solution1
             //Get connection string from web.config file
             //create new sqlconnection and connection to database by using connection string from web.config file
             SqlConnection con = new SqlConnection(strcon);
-            String sqlQuery4 = "Select * from ContactRequest where RequestID = '" + RequestListDDL.SelectedValue + "'";
+            String sqlQuery4 = "Select * from ContactRequest where RequestID = '" + RequestID + "'";
             SqlCommand cmd4 = new SqlCommand(sqlQuery4, con);
 
             con.Open();
@@ -186,7 +189,7 @@ namespace CIS484Solution1
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
             cmd.Parameters.Add(new SqlParameter("@Code", code));
             cmd.Parameters.Add(new SqlParameter("@UserType", "Contact"));
-            cmd.Parameters.Add(new SqlParameter("@CoordinatorID", CoordinatorID));
+            cmd.Parameters.Add(new SqlParameter("@CoordinatorID", Site1.CoordinatorID));
 
             SqlCommand cmd6 = new SqlCommand(sqlQuery6, con);
             cmd6.Parameters.Add(new SqlParameter("@Code", code));
@@ -490,6 +493,9 @@ namespace CIS484Solution1
 
         protected void DeleteEvent_OnClickEvent_Click(object sender, EventArgs e)
         {
+            string RequestID = ContactSubmissionGrid.SelectedRow.Cells[0].Text;
+
+
             string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
             //Inserting teacher query
 
@@ -498,7 +504,7 @@ namespace CIS484Solution1
             SqlConnection con = new SqlConnection(strcon);
 
             con.Open();
-            String sqlQuery = " Delete from ContactRequest where RequestID = '" + RequestListDDL.SelectedValue + "'";
+            String sqlQuery = " Delete from ContactRequest where RequestID = '" + RequestID + "'";
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
 
             try
@@ -597,8 +603,129 @@ namespace CIS484Solution1
 
         protected void EventList_SelectedIndexChanged(object sender, EventArgs e)
         {
+            ////Queries Relevant to home page, fetching event info student info and more
+
+            //string OrgName = "";
+            //string OrgType = "";
+            //string EventName = "";
+            //string ContactName = "";
+            //string Phone = "";
+            //string Email = "";
+            //string ContactCode = "";
+            //string EventID = "";
+            //DateTime Date1 = new DateTime();
+            ////Inserting teacher query
+            ////Get connection string from web.config file
+            //string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
+            ////Inserting teacher query
+
+            ////Get connection string from web.config file
+            ////create new sqlconnection and connection to database by using connection string from web.config file
+            //SqlConnection con = new SqlConnection(strcon);
+            //String sqlQuery4 = "select C.ContactCode as ContactCode, C.Name as ContactName, format(E.Date, 'MM/dd/yyyy') as Date, O.Name as OrgName, O.Type as OrgType, E.Name as EventName" +
+            //" from EventContact C" +
+            //" inner join Organization O on O.OrganizationID = C.OrganizationID" +
+            //" inner join Event E on C.EventID = E.EventID" +
+            //" where C.EventID = '" + EventList.SelectedValue + "'";
+            //SqlCommand cmd4 = new SqlCommand(sqlQuery4, con);
+
+            //con.Open();
+            //try
+            //{
+            //    SqlDataReader reader = cmd4.ExecuteReader();
+
+            //    while (reader.Read())
+            //    {
+            //        ContactCode = reader[0].ToString();
+            //        ContactName = reader[1].ToString();
+            //        Date1 = Convert.ToDateTime(reader[2]);
+            //        OrgName = reader[3].ToString();
+            //        OrgType = reader[4].ToString();
+            //        EventName = reader[5].ToString();
+            //    }
+            //    reader.Close();
+            //}
+            //catch (System.Data.SqlClient.SqlException ex)
+            //{
+            //    string msg = "Select Error in EventContact:";
+            //    msg += ex.Message;
+            //    throw new Exception(msg);
+            //}
+            //SqlDataAdapter sqlAdapter = new SqlDataAdapter(sqlQuery4, con);
+            //DataSet ds = new DataSet();
+
+            //sqlAdapter.Fill(ds);
+
+            //EventInfoTable.DataSource = ds;
+            //EventInfoTable.DataBind();
+
+            //String sqlQuery1 = "select S.Name from Student S inner join Instructor I on S.InstructorCode = I.InstructorCode" +
+            //" where I.ContactCode = '" + ContactCode + "';";
+            //SqlDataAdapter sqlAdapter1 = new SqlDataAdapter(sqlQuery1, con);
+
+            ////Fill table with data
+            //DataTable dt = new DataTable();
+            //sqlAdapter1.Fill(dt);
+            //if (dt.Rows.Count > 0)
+            //{
+            //    StudentListBox.DataSource = dt;
+            //    StudentListBox.DataTextField = "Name";
+            //    StudentListBox.DataBind();
+            //}
+
+            //string sqlQuery2 = "select Name from Instructor where ContactCode = '" + ContactCode + "'";
+            //SqlDataAdapter sqlAdapter2 = new SqlDataAdapter(sqlQuery2, con);
+
+            //var items = new List<string>();
+
+            //using (SqlCommand command = new SqlCommand(sqlQuery2, con))
+            //{
+            //    using (SqlDataReader reader = command.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            //Read info into List
+            //            items.Add(reader.GetString(0));
+            //        }
+            //    }
+            //}
+            //InstructorRepeater.DataSource = items;
+            //InstructorRepeater.DataBind();
+
+            //string sqlQuery3 = "select V.VolunteerCode, V.Name from Volunteer V inner join EventVolunteers E on V.VolunteerCode = E.VolunteerCode where E.EventID = '" + EventList.SelectedValue + "'";
+            //var items1 = new List<string>();
+
+            //using (SqlCommand command = new SqlCommand(sqlQuery3, con))
+            //{
+            //    using (SqlDataReader reader = command.ExecuteReader())
+            //    {
+            //        while (reader.Read())
+            //        {
+            //            //Read info into List
+            //            items1.Add(reader.GetString(1));
+            //        }
+            //    }
+            //}
+            //VolunteerRepeater.DataSource = items1;
+            //VolunteerRepeater.DataBind();
+
+            //con.Close();
+        }
+
+        protected void GvEventdisplay_RowDataBound(object sender, System.Web.UI.WebControls.GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(GvEventdisplay, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["style"] = "cursor:pointer";
+            }
+        }
+
+        protected void GvEventdisplay_SelectedIndexChanged(object sender, EventArgs e)
+        {
             //Queries Relevant to home page, fetching event info student info and more
 
+            string EventID = GvEventdisplay.SelectedRow.Cells[0].Text;
             string OrgName = "";
             string OrgType = "";
             string EventName = "";
@@ -606,7 +733,6 @@ namespace CIS484Solution1
             string Phone = "";
             string Email = "";
             string ContactCode = "";
-            string EventID = "";
             DateTime Date1 = new DateTime();
             //Inserting teacher query
             //Get connection string from web.config file
@@ -620,7 +746,7 @@ namespace CIS484Solution1
             " from EventContact C" +
             " inner join Organization O on O.OrganizationID = C.OrganizationID" +
             " inner join Event E on C.EventID = E.EventID" +
-            " where C.EventID = '" + EventList.SelectedValue + "'";
+            " where C.EventID = '" + EventID + "'";
             SqlCommand cmd4 = new SqlCommand(sqlQuery4, con);
 
             con.Open();
@@ -650,8 +776,8 @@ namespace CIS484Solution1
 
             sqlAdapter.Fill(ds);
 
-            EventInfoTable.DataSource = ds;
-            EventInfoTable.DataBind();
+            //EventInfoTable.DataSource = ds;
+            //EventInfoTable.DataBind();
 
             String sqlQuery1 = "select S.Name from Student S inner join Instructor I on S.InstructorCode = I.InstructorCode" +
             " where I.ContactCode = '" + ContactCode + "';";
@@ -686,7 +812,7 @@ namespace CIS484Solution1
             InstructorRepeater.DataSource = items;
             InstructorRepeater.DataBind();
 
-            string sqlQuery3 = "select V.VolunteerCode, V.Name from Volunteer V inner join EventVolunteers E on V.VolunteerCode = E.VolunteerCode where E.EventID = '" + EventList.SelectedValue + "'";
+            string sqlQuery3 = "select V.VolunteerCode, V.Name from Volunteer V inner join EventVolunteers E on V.VolunteerCode = E.VolunteerCode where E.EventID = '" + EventID + "'";
             var items1 = new List<string>();
 
             using (SqlCommand command = new SqlCommand(sqlQuery3, con))
@@ -704,6 +830,58 @@ namespace CIS484Solution1
             VolunteerRepeater.DataBind();
 
             con.Close();
+
+           
+            string mag = "Row Info: " + EventID + " " + EventName + " " + Date1 + " " + OrgName + " " + OrgName + " " + ContactName + " " + ContactCode;
+
+            foreach (GridViewRow row in GvEventdisplay.Rows)
+            {
+                if (row.RowIndex == GvEventdisplay.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    row.ToolTip = string.Empty;
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click to select this row.";
+                }
+            }
+
+        }
+
+
+
+        protected void ContactSubmissionGrid_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string RequestID = ContactSubmissionGrid.SelectedRow.Cells[0].Text;
+
+            foreach (GridViewRow row in ContactSubmissionGrid.Rows)
+            {
+                if (row.RowIndex == ContactSubmissionGrid.SelectedIndex)
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#A1DCF2");
+                    row.ToolTip = string.Empty;
+                }
+                else
+                {
+                    row.BackColor = ColorTranslator.FromHtml("#FFFFFF");
+                    row.ToolTip = "Click to select this row.";
+                }
+            }
+
+            MessageBox.Show(RequestID);
+
+
+        }
+
+        protected void ContactSubmissionGrid_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            if (e.Row.RowType == DataControlRowType.DataRow)
+            {
+                e.Row.Attributes["onclick"] = Page.ClientScript.GetPostBackClientHyperlink(ContactSubmissionGrid, "Select$" + e.Row.RowIndex);
+                e.Row.Attributes["style"] = "cursor:pointer";
+            }
         }
     }
 }
