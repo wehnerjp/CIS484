@@ -25,6 +25,7 @@ namespace CIS484Solution1
         public static string instructorCode = "";
         public static string clusterCode = "";
         public static string clusterCode5 = "";
+        public static string instructorCode5x = "";
 
         //public static Button addEvent = new Button();
 
@@ -456,7 +457,6 @@ namespace CIS484Solution1
                         }
                         else if (type.Equals("Student"))
                         {
-
                             StudentPageDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             StudentPageDiv.Visible = true;
                             lblAccessCodeStatus.Text = "Logged into Student";
@@ -470,9 +470,7 @@ namespace CIS484Solution1
                                 Student_lblStudentCode.Text = (HttpUtility.HtmlEncode(studentReader[0].ToString()));
                                 Student_tbStudentName.Text = (HttpUtility.HtmlEncode(studentReader[1].ToString()));
                                 Student_tbStudentNotes.Text = (HttpUtility.HtmlEncode(studentReader[3].ToString()));
-
                             }
-
 
                             string qury2 = "SELECT Instructor.Name FROM Instructor inner join Student on Student.OrganizationID = Instructor.OrganizationID where Student.StudentCode = '" + code + "'";
                             SqlConnection sqlconnect2 = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
@@ -498,7 +496,6 @@ namespace CIS484Solution1
                             sqlsrcStudentEvent.SelectCommand = studentEventQuery;
                             sqlsrcStudentEvent.DataBind();
                             StudentEvent_GridView.DataBind();
-
                         }
                     }
                 }
@@ -628,8 +625,9 @@ namespace CIS484Solution1
         protected void SubmitButton_Click(object sender, EventArgs e)
         {
             // Generate Cluster and Instructor Codes
-            string instructorCode5x = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
-
+            instructorCode5x = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            AccessCode newAccessxx = new AccessCode();
+            instructorCode5x = newAccessxx.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
             //string instructorCode = "";
             //instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
             //MessageBox.Show(instructorCode.ToString(), "Code 2 for instructor: ");
