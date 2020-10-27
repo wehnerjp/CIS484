@@ -294,15 +294,6 @@ namespace CIS484Solution1
         protected global::System.Web.UI.WebControls.Button DeleteEvent;
 
         /// <summary>
-        /// EventRefreshPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel EventRefreshPanel;
-
-        /// <summary>
         /// Label6 control.
         /// </summary>
         /// <remarks>

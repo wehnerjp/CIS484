@@ -114,7 +114,7 @@ namespace CIS484Solution1
                         //btnCell2.Controls.Add(deleteEvent);
 
                         //count++;
-                        submissionDataTable.Rows.Add(reader[0],reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
+                        submissionDataTable.Rows.Add(reader[0], reader[1], reader[2], reader[3], reader[4], reader[5], reader[6], reader[7]);
                     }
                 }
             }
@@ -151,7 +151,7 @@ namespace CIS484Solution1
             DateTime Date1 = new DateTime();
             AccessCode contact = new AccessCode();
             string code = contact.GenerateCode(true, true, true, true, 8);
-            MessageBox.Show(code);
+            //MessageBox.Show(code);
             //Inserting teacher query
             //Get connection string from web.config file
             string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
@@ -554,7 +554,6 @@ namespace CIS484Solution1
         protected void DeleteEvent_OnClickEvent_Click(object sender, EventArgs e)
         {
             string RequestID = ContactSubmissionGrid.SelectedRow.Cells[0].Text;
-
 
             string strcon = ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString;
             //Inserting teacher query
@@ -1107,7 +1106,7 @@ namespace CIS484Solution1
             try
             {
                 SqlDataReader reader = cmd4.ExecuteReader();
-
+                //MessageBox.Show(EventID, "helloo");
                 while (reader.Read())
                 {
                     ContactCode = reader[0].ToString();
@@ -1165,6 +1164,7 @@ namespace CIS484Solution1
             }
             InstructorRepeater.DataSource = items;
             InstructorRepeater.DataBind();
+            //MessageBox.Show(items[0]);
 
             string sqlQuery3 = "select V.VolunteerCode, V.Name from Volunteer V inner join EventVolunteers E on V.VolunteerCode = E.VolunteerCode where E.EventID = '" + EventID + "'";
             var items1 = new List<string>();
@@ -1185,9 +1185,7 @@ namespace CIS484Solution1
 
             con.Close();
 
-           
             string mag = "Row Info: " + EventID + " " + EventName + " " + Date1 + " " + OrgName + " " + OrgName + " " + ContactName + " " + ContactCode;
-
             foreach (GridViewRow row in GvEventdisplay.Rows)
             {
                 if (row.RowIndex == GvEventdisplay.SelectedIndex)
@@ -1201,10 +1199,7 @@ namespace CIS484Solution1
                     row.ToolTip = "Click to select this row.";
                 }
             }
-
         }
-
-
 
         protected void ContactSubmissionGrid_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1225,8 +1220,6 @@ namespace CIS484Solution1
             }
 
             MessageBox.Show(RequestID);
-
-
         }
 
         protected void ContactSubmissionGrid_RowDataBound(object sender, GridViewRowEventArgs e)

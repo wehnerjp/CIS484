@@ -432,16 +432,16 @@
 </asp:Content>
 <asp:Content ID="Content8" ContentPlaceHolderID="CoordinatorSubmissionViewPlaceholder" runat="server">
     <div class="form-group">
-        <asp:UpdatePanel runat="server">
-            <ContentTemplate>
-                <asp:GridView ID="ContactSubmissionGrid"
-                    AutoGenerateColumns="true" OnRowDataBound="ContactSubmissionGrid_RowDataBound" OnSelectedIndexChanged="ContactSubmissionGrid_SelectedIndexChanged"
-                    runat="server">
+        <%--   <asp:UpdatePanel runat="server">
+            <ContentTemplate>--%>
+        <asp:GridView ID="ContactSubmissionGrid"
+            AutoGenerateColumns="true" OnRowDataBound="ContactSubmissionGrid_RowDataBound" OnSelectedIndexChanged="ContactSubmissionGrid_SelectedIndexChanged"
+            runat="server">
 
-                    <HeaderStyle BackColor="#989898" ForeColor="white" />
-                </asp:GridView>
-            </ContentTemplate>
-        </asp:UpdatePanel>
+            <HeaderStyle BackColor="#989898" ForeColor="white" />
+        </asp:GridView>
+        <%--        </ContentTemplate>
+        </asp:UpdatePanel>--%>
 
         <asp:UpdatePanel ID="RequestListDDLUpdate" runat="server" UpdateMode="Conditional">
             <ContentTemplate>
@@ -450,16 +450,8 @@
                     DataSourceMode="DataReader"
                     ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
                     SelectCommand="SELECT RequestID, ContactName FROM ContactRequest" />
-<%--                <asp:DropDownList ID="RequestListDDL"
-                    DataSourceID="RequestListDataSource"
-                    DataTextField="ContactName"
-                    DataValueField="RequestID"
-                    AutoPostBack="true"
-                    runat="server"
-                    Width="50%"
-                    CssClass="js-example-basic-single">--%>
-                <%--</asp:DropDownList>--%>
-                <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Approve" CausesValidation="False"  UseSubmitBehavior="true"/>
+
+                <asp:Button runat="server" ID="AddEvent" OnClick="addEvent_Click" Text="Approve" CausesValidation="False" UseSubmitBehavior="true" />
                 <asp:Button runat="server" ID="DeleteEvent" OnClick="DeleteEvent_OnClickEvent_Click" Text="Delete" CausesValidation="False" UseSubmitBehavior="False" />
             </ContentTemplate>
         </asp:UpdatePanel>
@@ -469,82 +461,27 @@
     <div style="margin-top: 40px;">
         <div class="container-fluid">
             <div class="grid">
-                
-                <div class="grid-item grid-item--width3 grid-item--height3"">
+
+                <div class="grid-item grid-item--width3 grid-item--height3">
                     <div class="form-group">
-                        <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
-                            <ContentTemplate>
+                        <%--                      <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
+                            <ContentTemplate>--%>
                         <asp:Label ID="Label6" CssClass="label" runat="server" Text="Event"></asp:Label>
-                        <%--<asp:SqlDataSource runat="server"
-                            ID="dtasrcEventList"
+
+                        <asp:SqlDataSource ID="EventdisplayDb" runat="server"
                             DataSourceMode="DataReader"
                             ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>"
-                            SelectCommand="SELECT EventID, Name FROM Event" />--%>
-                        <%--<asp:DropDownList
-                            ID="EventList"
-                            DataSourceID="dtasrcEventList"
-                            DataTextField="Name"
-                            DataValueField="EventID"
-                            AutoPostBack="true"
-                            OnSelectedIndexChanged="EventList_SelectedIndexChanged"
-                            runat="server"
-                            OnClientClick="javascript: needToConfirm = false;"
-                            CssClass="js-example-basic-single" />--%>
-                    <asp:SqlDataSource ID="EventdisplayDb" runat="server" 
-                    DataSourceMode="DataReader" 
-                    ConnectionString="<%$ ConnectionStrings:CyberDayMaster%>" 
-                    SelectCommand="SELECT E.EventID, E.Name as 'Event Name', Date, O.Name as 'Organization Name', Type, C.Name as 'Contact Name', C.ContactCode from Event E inner join EventContact C on E.EventID=C.EventID inner join Organization O on C.OrganizationID = O.OrganizationID Order by E.EventID ASC"/>
+                            SelectCommand="SELECT E.EventID, E.Name as 'Event Name', Date, O.Name as 'Organization Name', Type, C.Name as 'Contact Name', C.ContactCode from Event E inner join EventContact C on E.EventID=C.EventID inner join Organization O on C.OrganizationID = O.OrganizationID Order by E.EventID ASC" />
 
-                <asp:GridView runat="server" ID="GvEventdisplay" DataSourceID="EventdisplayDb" OnRowDataBound="GvEventdisplay_RowDataBound" OnSelectedIndexChanged="GvEventdisplay_SelectedIndexChanged" >
-                                        <HeaderStyle BackColor="#989898" ForeColor="white" />
-
-                    </asp:GridView>
-                                </ContentTemplate>
-                    </asp:UpdatePanel>
-
-
-
-
+                        <asp:GridView runat="server" ID="GvEventdisplay" DataSourceID="EventdisplayDb" OnRowDataBound="GvEventdisplay_RowDataBound" OnSelectedIndexChanged="GvEventdisplay_SelectedIndexChanged">
+                            <HeaderStyle BackColor="#989898" ForeColor="white" />
+                        </asp:GridView>
+                        <%--                       </ContentTemplate>
+                        </asp:UpdatePanel>--%>
                     </div>
                 </div>
-<%--                <div class="grid-item grid-item--width2 grid-item--height3">
-                    <!-- Info Display -->
-                    <div class="form-group">
-                        <asp:Label ID="Label8" CssClass="label" runat="server" Text="Event Details"></asp:Label>
-                        <asp:FormView CssClass="container" ID="EventInfoTable" EmptyDataText=" " runat="server">
 
-                            <ItemTemplate>
-                                <table class="table table-bordered table-striped" style="margin-bottom: 40px;">
-                                    <tr>
-                                        <td>Event Name: </td>
-                                        <td><%#Eval("EventName") %></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Date: </td>
-                                        <td><%#Eval("Date") %></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Contact: </td>
-                                        <td><%#Eval("ContactName") %></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Org: </td>
-                                        <td><%#Eval("OrgName") %></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Org Type: </td>
-                                        <td><%#Eval("OrgType") %></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Access Code: </td>
-                                        <td><%#Eval("ContactCode") %></td>
-                                    </tr>
-                                </table>
-                            </ItemTemplate>
-                        </asp:FormView>
-                    </div>
-                </div>--%>
-                <div class="grid-item grid-item--height2">
+                <div class="grid-item grid-item--width2 grid-item--height2">
                     <h4>Volunteers: </h4>
                     <asp:Repeater ID="VolunteerRepeater" runat="server">
                         <ItemTemplate>
@@ -719,7 +656,7 @@
             <asp:Table runat="server" CellPadding="2" CssClass="m-5 p-5" Border="1">
                 <asp:TableRow>
                     <asp:TableCell>
-                        <h6 style="text-align:left">The Event selected to participate:</h6>
+                        <h6 style="        text-align: left">The Event selected to participate:</h6>
                     </asp:TableCell>
                     <asp:TableCell>
                         <asp:Label ID="lblName" runat="server" Text="EVENT NAME HERE"></asp:Label>
