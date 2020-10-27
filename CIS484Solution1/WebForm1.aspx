@@ -472,8 +472,8 @@
                 
                 <div class="grid-item grid-item--width3 grid-item--height3"">
                     <div class="form-group">
-                        <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
-                            <ContentTemplate>
+<%--                        <asp:UpdatePanel ID="EventRefreshPanel" runat="server">
+                            <ContentTemplate>--%>
                         <asp:Label ID="Label6" CssClass="label" runat="server" Text="Event"></asp:Label>
                         <%--<asp:SqlDataSource runat="server"
                             ID="dtasrcEventList"
@@ -499,8 +499,8 @@
                                         <HeaderStyle BackColor="#989898" ForeColor="white" />
 
                     </asp:GridView>
-                                </ContentTemplate>
-                    </asp:UpdatePanel>
+<%--                                </ContentTemplate>
+                    </asp:UpdatePanel>--%>
 
 
 
