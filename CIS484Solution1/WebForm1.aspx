@@ -1073,7 +1073,7 @@
                     <div class="col">
                         <div class="form-group">
                             <asp:Label ID="Label7" CssClass="label" runat="server" Text="School/Organization: " Font-Bold="true"></asp:Label>
-                            <asp:Label ID="Label10" CssClass="label" runat="server" Text="PLACE SCHOOL/ORGANIZATION HERE"></asp:Label>
+                            <asp:Label ID="Label10" CssClass="label" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <div class="w-100"></div>
@@ -1141,6 +1141,12 @@
                     </div>
                 </div>
             </div>
+            <div class="col">
+                        <div class="form-group">
+                            <asp:Label ID="lblStudentAccessCode" CssClass="label" runat="server" Text="Student Access Code: "></asp:Label>
+                            <asp:Label ID="lblStudentAccessCodeinput" CssClass="label" runat="server" Text=""></asp:Label>
+                        </div>
+                    </div>
 
             <%--<div class="col" />
             <fieldset>

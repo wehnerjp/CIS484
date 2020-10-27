@@ -310,17 +310,15 @@ namespace CIS484Solution1
             AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
             AddInstDiv.Visible = false;
 
-            string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
+            string code = txtAccessCodeEntry.Text;
             string type = "";
             contactCode = code;
             instructorCode = code;
             clusterCode = code;
             SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
             dbConnection.Open();
-            MessageBox.Show("Button Triggered");
             try
             {
-                MessageBox.Show("hi9");
 
                 SqlCommand loginCommand = new SqlCommand();
                 loginCommand.Connection = dbConnection;
@@ -330,13 +328,10 @@ namespace CIS484Solution1
                 SqlDataReader reader = loginCommand.ExecuteReader();
                 if (reader.HasRows)
                 {
-                    type = reader[1].ToString();
-                    MessageBox.Show(type, "hi1");
 
                     while (reader.Read())
                     {
                         type = reader[1].ToString();
-                        MessageBox.Show(type,"hi2");
                         if (type.Equals("Instructor"))
                         {
                             InstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
@@ -423,7 +418,15 @@ namespace CIS484Solution1
                             AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             AddInstDiv.Visible = true;
                             lblAccessCodeStatus.Text = "Logged in as Event Contact";
-
+                            string EventinfoQry = "Select * from Organization inner join EventContact on EventContact.OrganizationID = Organization.OrganizationID where EventContact.ContactCode ='" + code + "'";
+                            SqlConnection otherCon = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            otherCon.Open();
+                            SqlCommand bigCommand = new SqlCommand(EventinfoQry, otherCon);
+                            SqlDataReader OrgReader = bigCommand.ExecuteReader();
+                            while (OrgReader.Read())
+                            {
+                                DisplaySchool.Text = (HttpUtility.HtmlEncode(OrgReader[1].ToString()));
+                            }
 
                             sqlsrcInstructor.SelectCommand =
                             "SELECT TOP (1000) INSTRUCTOR.NAME, INSTRUCTOR.EMAIL, INSTRUCTOR.PHONE, INSTRUCTOR.INSTRUCTORCODE, CLUSTER.CLUSTERCODE FROM INSTRUCTOR " +
@@ -437,6 +440,16 @@ namespace CIS484Solution1
                             StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
                             StudentSignUpDiv.Visible = true;
                             lblAccessCodeStatus.Text = "Logged in as Student. Please Create Your Student Profile!";
+                            string EventinfoQry = "Select * from Organization inner join Cluster on Cluster.OrganizationID = Organization.OrganizationID where Cluster.ClusterCode ='" + clusterCode + "'";
+
+                            SqlConnection newcon = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            newcon.Open();
+                            SqlCommand nameCommand = new SqlCommand(EventinfoQry, newcon);
+                            SqlDataReader OrgReader = nameCommand.ExecuteReader();
+                            while (OrgReader.Read())
+                            {
+                                Label10.Text = (HttpUtility.HtmlEncode(OrgReader[1].ToString()));
+                            }
 
                         }
                         else if (type.Equals("Student"))
@@ -576,11 +589,9 @@ namespace CIS484Solution1
             // Generate Cluster and Instructor Codes
             string instructorCode = "";
             instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
-            MessageBox.Show(instructorCode.ToString(), "Access Code for instructor: ");
 
             string clusterCode = "";
             clusterCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
-            MessageBox.Show(clusterCode.ToString(), "Cluster Code for instructor: ");
 
             //string instructorCode = "";
             //instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
@@ -731,7 +742,7 @@ namespace CIS484Solution1
             // Generate Cluster and Instructor Codes
             string studentCode = "";
             studentCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
-            MessageBox.Show(studentCode.ToString(), "Access Code for student: ");
+            lblStudentAccessCodeinput.Text = studentCode;
 
             SqlConnection sqlconnect = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
             sqlconnect.Open();
