@@ -119,7 +119,6 @@ namespace CIS484Solution1
                             CoordinatorID = int.Parse(reader["CoordinatorID"].ToString());
 
                             ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: Coordinator! " + UserLoginType, MessageType.Success);
-                            MessageBox.Show(CoordinatorID.ToString(), "hi");
 
                             if (UserLoginEmail != null)
                             {
