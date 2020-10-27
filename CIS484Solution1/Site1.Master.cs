@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Configuration;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Windows.Forms;
 
 namespace CIS484Solution1
 {
@@ -111,14 +112,15 @@ namespace CIS484Solution1
                     while (reader.Read())
                     {
                         string storedHash = reader["Password"].ToString();
-                        CoordinatorID = int.Parse(reader["CoordinatorID"].ToString());
-
                         if (PasswordHash.ValidatePassword(defaultFormPass.Text, storedHash))
                         {
                             UserLoginEmail = Username;
                             UserLoginName = Username;
+                            CoordinatorID = int.Parse(reader["CoordinatorID"].ToString());
 
                             ShowMessage("Logged in successfully as " + UserLoginName.Trim() + " Role: Coordinator! " + UserLoginType, MessageType.Success);
+                            MessageBox.Show(CoordinatorID.ToString(), "hi");
+
                             if (UserLoginEmail != null)
                             {
                                 //MasterMenu.Items[3].Text = HttpUtility.HtmlEncode((UserLoginName.Trim()).Trim());
@@ -147,7 +149,7 @@ namespace CIS484Solution1
                 //dbConnection.Close();
                 CDMConnection.Close();
                 MasterMenu.Items.RemoveAt(1);
-                MenuItem myItem = new MenuItem("CoordinatorView", "2");
+                System.Web.UI.WebControls.MenuItem myItem = new System.Web.UI.WebControls.MenuItem("CoordinatorView", "2");
                 MasterMenu.Items.AddAt(1, myItem);
             }
             //ShowMessage("Heard! " + Username, MessageType.Info);

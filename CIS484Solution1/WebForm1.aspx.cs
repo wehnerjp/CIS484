@@ -18,8 +18,12 @@ namespace CIS484Solution1
         public static DateTime EventDateRequest;
         private System.Data.DataTable submissionDataTable = new System.Data.DataTable();
         public static int count = 1;
+        public static AccessCode MasterAccessCode = new AccessCode();
 
         public static int CoordinatorID = Site1.CoordinatorID;
+        public static string contactCode = "";
+        public static string instructorCode = "";
+        public static string clusterCode = "";
         //public static Button addEvent = new Button();
 
         protected void Page_Load(object sender, EventArgs e)
@@ -188,8 +192,9 @@ namespace CIS484Solution1
 
             SqlCommand cmd = new SqlCommand(sqlQuery, con);
             cmd.Parameters.Add(new SqlParameter("@Code", code));
-            cmd.Parameters.Add(new SqlParameter("@UserType", "Contact"));
+            cmd.Parameters.Add(new SqlParameter("@UserType", "EventContact"));
             cmd.Parameters.Add(new SqlParameter("@CoordinatorID", Site1.CoordinatorID));
+
 
             SqlCommand cmd6 = new SqlCommand(sqlQuery6, con);
             cmd6.Parameters.Add(new SqlParameter("@Code", code));
@@ -299,29 +304,46 @@ namespace CIS484Solution1
 
         protected void btnAccessCodeEntry_Click(object sender, EventArgs e)
         {
+            VolDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            VolDiv.Visible = false;
+            InstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            InstDiv.Visible = false;
+            StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            StudentSignUpDiv.Visible = false;
+            AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = none");
+            AddInstDiv.Visible = false;
+
+            string code = txtAccessCodeEntry.Text;
+            string type = "";
+            contactCode = code;
+            instructorCode = code;
+            clusterCode = code;
+            SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            dbConnection.Open();
             try
             {
-                //div1.Visible = false;
-                //div2.Visible = false;
-                string code = HttpUtility.HtmlEncode(txtAccessCodeEntry.Text);
-                string type = "";
-                SqlConnection dbConnection = new SqlConnection(WebConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
-                dbConnection.Open();
+
                 SqlCommand loginCommand = new SqlCommand();
                 loginCommand.Connection = dbConnection;
                 loginCommand.CommandText = "Select * from AccessCode where Code = @Code";
                 loginCommand.Parameters.Add(new SqlParameter("@Code", code));
-                loginCommand.Parameters.Add(new SqlParameter("@UserType", type));
+                //loginCommand.Parameters.Add(new SqlParameter("@UserType", type));
                 SqlDataReader reader = loginCommand.ExecuteReader();
                 if (reader.HasRows)
                 {
+
                     while (reader.Read())
                     {
                         type = reader[1].ToString();
                         if (type.Equals("Instructor"))
                         {
-                            div2.Visible = true;
-                            lblAccessCode.Text = "Yay Instructor";
+                            InstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
+                            InstDiv.Visible = true;
+
+                            lblAccessCodeStatus.Text = "Logged In As Instructor";
+                            InstructorAccessCodeDataSource.SelectCommand = " SELECT [Name], [Email], [Phone] FROM [Instructor] Where Instructor.InstructorCode ='" + code + "'";
+                            InstructorAccessCodeDataSource.DataBind();
+                            InstructorAccessCodeDetailView.DataBind();
                             string qry1 = "Select * from Instructor where InstructorCode ='" + code + "'";
                             string qry2 = "Select * from Cluster where InstructorCode ='" + code + "'";
                             string qry3 = "Select * from Event inner join EventContact on EventContact.EventID = Event.EventID inner join Instructor on Instructor.ContactCode = EventContact.ContactCode where InstructorCode ='" + code + "'";
@@ -350,11 +372,15 @@ namespace CIS484Solution1
                                 lblInstructorEvent.Text = (HttpUtility.HtmlEncode(EventReader[2].ToString()));
                                 lblInstructorDate.Text = (HttpUtility.HtmlEncode(EventReader[1].ToString()));
                             }
+                            StudentDataSource.SelectCommand = "SELECT TOP (1000) [StudentCode], S.[Name], S.[InstructorCode], S.[Notes],S.[OrganizationID] FROM [Student] as S where S.InstructorCode ='" + txtAccessCodeEntry.Text + "'";
+                            StudentDataSource.DataBind();
+                            InstructorAccessCodeListView.DataBind();
                         }
                         else if (type.Equals("Volunteer"))
                         {
-                            div1.Visible = true;
-                            lblAccessCode.Text = "Yay Volunteer";
+                            VolDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
+                            VolDiv.Visible = true;
+                            lblAccessCodeStatus.Text = "Logged In As Volunteer";
                             string qry1 = "Select * from Event inner join EventVolunteers on EventVolunteers.EventID = Event.EventID where EventVolunteers.VolunteerCode ='" + code + "'";
                             string qry2 = "Select * from Coordinator inner join AccessCode on AccessCode.CoordinatorID = Coordinator.CoordinatorID where AccessCode.Code ='" + code + "'";
                             string qry3 = "Select * from Volunteer where Volunteer.VolunteerCode ='" + code + "'";
@@ -387,29 +413,71 @@ namespace CIS484Solution1
                                 lblID.Text = (HttpUtility.HtmlEncode(VolReader[3].ToString()));
                                 lblVolunteerP.Text = (HttpUtility.HtmlEncode(VolReader[4].ToString()));
                                 lblVolunteerEmail.Text = (HttpUtility.HtmlEncode(VolReader[5].ToString()));
-                                lblVolunteerName.Text = (HttpUtility.HtmlEncode(VolReader[1].ToString()));
+
                             }
                         }
                         else if (type.Equals("EventContact"))
                         {
-                            lblAccessCodeStatus.Text = "Yay EventContact";
+                            AddInstDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
+                            AddInstDiv.Visible = true;
+                            lblAccessCodeStatus.Text = "Logged in as Event Contact";
+                            string EventinfoQry = "Select * from Organization inner join EventContact on EventContact.OrganizationID = Organization.OrganizationID where EventContact.ContactCode ='" + code + "'";
+                            SqlConnection otherCon = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            otherCon.Open();
+                            SqlCommand bigCommand = new SqlCommand(EventinfoQry, otherCon);
+                            SqlDataReader OrgReader = bigCommand.ExecuteReader();
+                            while (OrgReader.Read())
+                            {
+                                DisplaySchool.Text = (HttpUtility.HtmlEncode(OrgReader[1].ToString()));
+                            }
+
+                            sqlsrcInstructor.SelectCommand =
+                            "SELECT TOP (1000) INSTRUCTOR.NAME, INSTRUCTOR.EMAIL, INSTRUCTOR.PHONE, INSTRUCTOR.INSTRUCTORCODE, CLUSTER.CLUSTERCODE FROM INSTRUCTOR " +
+                            "INNER JOIN CLUSTER ON INSTRUCTOR.INSTRUCTORCODE = CLUSTER.INSTRUCTORCODE " +
+                            "WHERE  INSTRUCTOR.CONTACTCODE ='" + code + "'";
+                            sqlsrcInstructor.DataBind();
+                            Instructor_GridView.DataBind();
+                        }
+                        else if (type.Equals("Cluster"))
+                        {
+                            StudentSignUpDiv.Attributes.Add("style", "margin-top: 40px; display = normal");
+                            StudentSignUpDiv.Visible = true;
+                            lblAccessCodeStatus.Text = "Logged in as Student. Please Create Your Student Profile!";
+                            string EventinfoQry = "Select * from Organization inner join Cluster on Cluster.OrganizationID = Organization.OrganizationID where Cluster.ClusterCode ='" + clusterCode + "'";
+
+                            SqlConnection newcon = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+                            newcon.Open();
+                            SqlCommand nameCommand = new SqlCommand(EventinfoQry, newcon);
+                            SqlDataReader OrgReader = nameCommand.ExecuteReader();
+                            while (OrgReader.Read())
+                            {
+                                Label10.Text = (HttpUtility.HtmlEncode(OrgReader[1].ToString()));
+                            }
+
                         }
                         else if (type.Equals("Student"))
                         {
-                            lblAccessCodeStatus.Text = "Yay Student";
+                            lblAccessCodeStatus.Text = "Yay Student View";
                         }
-                        else
-                        {
-                            lblAccessCode.Text = "Wrong";
-                        }
+
                     }
                 }
             }
-            catch
+            catch (System.Data.SqlClient.SqlException ex)
             {
-                lblAccessCodeStatus.Text = "Accesscode doesn't exist!.";
+                string msg = "Insert/Update Error:";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            finally
+            {
+                dbConnection.Close();
             }
         }
+
+
+
+
 
         protected void AddRequest_Click(object sender, EventArgs e)
         {
@@ -522,6 +590,302 @@ namespace CIS484Solution1
             RequestListDDLUpdate.Update();
         }
 
+        protected void SubmitButton_Click(object sender, EventArgs e)
+        {
+            // Generate Cluster and Instructor Codes
+            string instructorCode = "";
+            instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+
+            string clusterCode = "";
+            clusterCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+
+            //string instructorCode = "";
+            //instructorCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            //MessageBox.Show(instructorCode.ToString(), "Code 2 for instructor: ");
+
+            SqlConnection sqlconnect = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            sqlconnect.Open();
+
+            // Necessary information for insert statements
+            string eventID = "";
+            string orgID = "";
+
+            // Find necessary information
+            string sqlQuery2 = "SELECT EventID, ContactCode, OrganizationID FROM EVENTCONTACT WHERE CONTACTCODE = '" + contactCode + "'";
+            SqlCommand cmd100 = new SqlCommand(sqlQuery2, sqlconnect);
+
+            try
+            {
+                SqlDataReader reader = cmd100.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    eventID = reader[0].ToString();
+                    orgID = reader[2].ToString();
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Select Error in EventContact";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            // INSERT SQL Statements
+
+            // Insert - Access Part 1
+            String sqlQuery_p1 = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
+            SqlCommand cmd_p1 = new SqlCommand(sqlQuery_p1, sqlconnect);
+            cmd_p1.Parameters.Add(new SqlParameter("@Code", instructorCode));
+            cmd_p1.Parameters.Add(new SqlParameter("@UserType", "Instructor"));
+            try
+            {
+                cmd_p1.CommandType = CommandType.Text;
+                cmd_p1.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into AccessCode";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            String sqlqryyy = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
+            SqlCommand cmd_p11 = new SqlCommand(sqlqryyy, sqlconnect);
+            cmd_p11.Parameters.Add(new SqlParameter("@Code", clusterCode));
+            cmd_p11.Parameters.Add(new SqlParameter("@UserType", "Cluster"));
+            try
+            {
+                cmd_p11.CommandType = CommandType.Text;
+                cmd_p11.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into AccessCode";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            // Insert - Cluster Part 1
+            String sqlQuery_p2 = "INSERT INTO CLUSTER(ClusterCode) VALUES (@ClusterCode)";
+            SqlCommand cmd_p2 = new SqlCommand(sqlQuery_p2, sqlconnect);
+            cmd_p2.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode));
+
+            try
+            {
+                cmd_p2.CommandType = CommandType.Text;
+                cmd_p2.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into Cluster Part 1";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            // Insert - Instructor
+            String sqlQuery4 = "INSERT INTO INSTRUCTOR(InstructorCode, Name, OrganizationID, Email, Phone, ContactCode)" +
+                "VALUES (@InstructorCode, @Name, @OrganizationID, @Email, @Phone, @ContactCode)";
+            SqlCommand cmd101 = new SqlCommand(sqlQuery4, sqlconnect);
+            cmd101.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode));
+            cmd101.Parameters.Add(new SqlParameter("@Name", Instructor_tbFirstName.Text + ' ' + Instructor_tbLastName.Text));
+            cmd101.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
+            cmd101.Parameters.Add(new SqlParameter("@Email", Instructor_tbEmail.Text));
+            cmd101.Parameters.Add(new SqlParameter("@Phone", int.Parse(Instructor_tbPhone.Text)));
+            cmd101.Parameters.Add(new SqlParameter("@ContactCode", contactCode));
+            try
+            {
+                cmd101.CommandType = CommandType.Text;
+                cmd101.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into Instructor";
+                msg += ex.Message;
+                throw new Exception(msg);
+
+            }
+
+            // Update - Cluster Part 2
+            String sqlQuery3 = "UPDATE Cluster SET InstructorCode = @InstructorCode, OrganizationID = @OrganizationID WHERE ClusterCode = @ClusterCode";
+            SqlCommand cmd103 = new SqlCommand(sqlQuery3, sqlconnect);
+            cmd103.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode));
+            cmd103.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
+            cmd103.Parameters.Add(new SqlParameter("@ClusterCode", clusterCode));
+            try
+            {
+                cmd103.CommandType = CommandType.Text;
+                cmd103.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                string msg = "Insert Error into Cluster Part 2";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+            sqlsrcInstructor.SelectCommand =
+               "SELECT TOP (1000) INSTRUCTOR.NAME, INSTRUCTOR.EMAIL, INSTRUCTOR.PHONE, INSTRUCTOR.INSTRUCTORCODE, CLUSTER.CLUSTERCODE FROM INSTRUCTOR " +
+               "INNER JOIN CLUSTER ON INSTRUCTOR.INSTRUCTORCODE = CLUSTER.INSTRUCTORCODE " +
+               "WHERE  INSTRUCTOR.CONTACTCODE ='" + contactCode + "'";
+
+            sqlsrcInstructor.DataBind();
+            Instructor_GridView.DataBind();
+
+
+        }
+
+        protected void Instructor_ResetButton_Click(object sender, EventArgs e)
+        {
+            Instructor_tbEmail.Text = string.Empty;
+            Instructor_tbFirstName.Text = string.Empty;
+            Instructor_tbLastName.Text = string.Empty;
+            Instructor_tbPhone.Text = string.Empty;
+        }
+
+        protected void btnStudentSignUp_Click(object sender, EventArgs e)
+        {
+            // Generate Cluster and Instructor Codes
+            string studentCode = "";
+            studentCode = MasterAccessCode.GenerateCode(lowercase: true, uppercase: true, numbers: true, otherChar: true, codeSize: 8);
+            lblStudentAccessCodeinput.Text = studentCode;
+
+            SqlConnection sqlconnect = new SqlConnection(ConfigurationManager.ConnectionStrings["CyberDayMaster"].ConnectionString);
+            sqlconnect.Open();
+
+            // Find necessary information
+            string sqlQuery101 = "SELECT InstructorCode, OrganizationID FROM Cluster WHERE ClusterCode = '" + clusterCode + "'";
+            SqlCommand cmd101 = new SqlCommand(sqlQuery101, sqlconnect);
+            string Int_Code = "";
+            string orgID = "";
+
+            try
+            {
+                SqlDataReader reader = cmd101.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    Int_Code = reader[0].ToString();
+                    orgID = reader[1].ToString();
+                }
+                reader.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Select Error in EventContact";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            // Insert Student Access Code into AccessCode Table
+            String sqlQuery = "INSERT INTO ACCESSCODE(Code, UserType) VALUES (@Code, @UserType)";
+            SqlCommand cmd = new SqlCommand(sqlQuery, sqlconnect);
+            cmd.Parameters.Add(new SqlParameter("@Code", studentCode));
+            cmd.Parameters.Add(new SqlParameter("@UserType", "Student"));
+            try
+            {
+                cmd.CommandType = CommandType.Text;
+                cmd.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into AccessCode";
+                msg += ex.Message;
+                throw new Exception(msg);
+            }
+
+            //// Insert - Student
+            //String sqlQuery2 = "INSERT INTO STUDENT(StudentCode, Name, InstructorCode, Notes)" +
+            //    "VALUES (@StudentCode, @Name, @InstructorCode, @Notes)";
+            //SqlCommand cmd2 = new SqlCommand(sqlQuery2, sqlconnect);
+            //cmd2.Parameters.Add(new SqlParameter("@StudentCode", studentCode));
+            //cmd2.Parameters.Add(new SqlParameter("@Name", Student_tbFirstName.Text + ' ' + Student_tbLastName.Text));
+            //cmd2.Parameters.Add(new SqlParameter("@InstructorCode", instructorCode));
+            //cmd2.Parameters.Add(new SqlParameter("@Notes", Student_tbNotes.Text));
+            //try
+            //{
+            //    cmd2.CommandType = CommandType.Text;
+            //    cmd2.ExecuteNonQuery();
+            //}
+            //catch (System.Data.SqlClient.SqlException ex)
+            //{
+            //    string msg = "Insert Error into Student";
+            //    msg += ex.Message;
+            //    throw new Exception(msg);
+
+            //}
+
+            // Insert - Student Part 3
+            String sqlQuery2_p3 = "INSERT INTO STUDENT(StudentCode, InstructorCode)" +
+                "VALUES (@StudentCode, @InstructorCode)";
+            SqlCommand cmd2_p3 = new SqlCommand(sqlQuery2_p3, sqlconnect);
+            cmd2_p3.Parameters.Add(new SqlParameter("@StudentCode", studentCode));
+            cmd2_p3.Parameters.Add(new SqlParameter("@InstructorCode", Int_Code));
+            try
+            {
+                cmd2_p3.CommandType = CommandType.Text;
+                cmd2_p3.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into Student Part 3";
+                msg += ex.Message;
+                throw new Exception(msg);
+
+            }
+
+            //// Insert - Student Part 1
+            //String sqlQuery2_p1 = "UPDATE Student SET StudentCode = @StudentCode WHERE StudentCode = @StudentCode AND InstructorCode = @InstructorCode";
+            //SqlCommand cmd2_p1 = new SqlCommand(sqlQuery2_p1, sqlconnect);
+            //cmd2_p1.Parameters.Add(new SqlParameter("@InstructorCode", Int_Code));
+            //cmd2_p1.Parameters.Add(new SqlParameter("@StudentCode", studentCode));
+
+            //try
+            //{
+            //    cmd2_p1.CommandType = CommandType.Text;
+            //    cmd2_p1.ExecuteNonQuery();
+            //}
+            //catch (System.Data.SqlClient.SqlException ex)
+            //{
+            //    string msg = "Insert Error into Student Part 1";
+            //    msg += ex.Message;
+            //    throw new Exception(msg);
+
+            //}
+
+            // Insert - Student Part 2
+
+            String sqlQuery2_p2 = "UPDATE Student SET Name = @Name, Notes = @Notes, OrganizationID = @OrganizationID WHERE InstructorCode = @InstructorCode AND StudentCode = @StudentCode";
+
+            SqlCommand cmd2_p2 = new SqlCommand(sqlQuery2_p2, sqlconnect);
+            cmd2_p2.Parameters.Add(new SqlParameter("@Name", Student_tbFirstName.Text + ' ' + Student_tbLastName.Text));
+            cmd2_p2.Parameters.Add(new SqlParameter("@Notes", Student_tbNotes.Text));
+            cmd2_p2.Parameters.Add(new SqlParameter("@InstructorCode", Int_Code));
+            cmd2_p2.Parameters.Add(new SqlParameter("@StudentCode", studentCode));
+            cmd2_p2.Parameters.Add(new SqlParameter("@OrganizationID", orgID));
+
+
+            try
+            {
+                cmd2_p2.CommandType = CommandType.Text;
+                cmd2_p2.ExecuteNonQuery();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+                string msg = "Insert Error into Student";
+                msg += ex.Message;
+                throw new Exception(msg);
+
+            }
+
+        }
+
+        protected void btnStudentSignUpReset_Click(object sender, EventArgs e)
+        {
+            Student_tbFirstName.Text = "";
+            Student_tbLastName.Text = "";
+            Student_tbNotes.Text = "";
+        }
         protected void SubmitCoordinator_Click(object sender, EventArgs e)
         {
             //Inserting teacher query
