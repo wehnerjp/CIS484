@@ -54,25 +54,25 @@
             <div class="slideshow-container">
                 <div class="mySlides fade">
                     <div class="numbertext">1 / 4</div>
-                    <img src="./images/Picture1.jpg" style="width: 100%">
+                    <img src="https://elasticbeanstalk-us-east-1-592248321429.s3.amazonaws.com/images/Picture2.jpg" style="width: 100%">
                     <div class="text">Share your excitement in the field of computer information systems and cultivate the interests of young people in future business/technology related careers</div>
                 </div>
 
                 <div class="mySlides fade">
                     <div class="numbertext">2 / 4</div>
-                    <img src="./images/Picture2.jpg" style="width: 100%">
+                     <img src="https://elasticbeanstalk-us-east-1-592248321429.s3.amazonaws.com/images/Picture1.jpg" style="width: 100%">
                     <div class="text">You will learn to develop advanced competencies and diagnostic skills to correct software problems</div>
                 </div>
 
                 <div class="mySlides fade">
                     <div class="numbertext">3 / 4</div>
-                    <img src="./images/Picture3.jpg" style="width: 100%">
+                    <img src="https://elasticbeanstalk-us-east-1-592248321429.s3.amazonaws.com/images/Picture3.jpg" style="width: 100%">
                     <div class="text">Learning, fun and interative</div>
                 </div>
 
                 <div class="mySlides fade">
                     <div class="numbertext">4 / 4</div>
-                    <img src="./images/Picture4.jpg" style="width: 100%">
+                    <img src="https://elasticbeanstalk-us-east-1-592248321429.s3.amazonaws.com/images/Picture4.jpg" style="width: 100%">
                     <div class="text">Get hands on experience</div>
                 </div>
 
@@ -457,6 +457,108 @@
         </asp:UpdatePanel>
     </div>
 </asp:Content>
+
+<asp:Content ID="Content9" ContentPlaceHolderID="EventaddformCoordinator" runat="server">
+    <asp:UpdatePanel runat="server">
+        <ContentTemplate>
+                                <div style="margin-top: 40px;">
+                                    <div class="row">
+                                        <div class="col">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator11"
+                                                ControlToValidate="ContactRequestNameText1"
+                                                ValidationGroup="ContactRequestInput"
+                                                ErrorMessage="Enter your Name."
+                                                runat="Server" />
+                                            <div class="form-group">
+                                                <asp:Label ID="Label8" CssClass="label" runat="server" Text="Name"></asp:Label>
+                                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestNameText1" runat="server" required="false" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator12"
+                                                ControlToValidate="ContactRequestPhoneText1"
+                                                ValidationGroup="ContactRequestInput"
+                                                ErrorMessage="Enter your Phone."
+                                                runat="Server" />
+                                            <div class="form-group">
+                                                <asp:Label ID="Label16" CssClass="label" runat="server" Text="Phone"></asp:Label>
+                                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestPhoneText1" runat="server" required="false" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator13"
+                                                ControlToValidate="ContactRequestEmailText1"
+                                                ValidationGroup="ContactRequestInput"
+                                                ErrorMessage="Enter your Phone."
+                                                runat="Server" />
+                                            <div class="form-group">
+                                                <asp:Label ID="Label17" CssClass="label" runat="server" Text="Email"></asp:Label>
+                                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestEmailText1" runat="server" required="false" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator14"
+                                                ControlToValidate="ContactRequestOrganizationNameText1"
+                                                ValidationGroup="ContactRequestInput"
+                                                ErrorMessage="Enter your Org Name."
+                                                runat="Server" />
+                                            <div class="form-group">
+                                                <asp:Label ID="Label18" CssClass="label" runat="server" Text="Org Name"></asp:Label>
+                                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="ContactRequestOrganizationNameText1" runat="server" required="false" />
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="form-group">
+                                                <asp:Label ID="Label19" CssClass="label" runat="server" Text="Organization Type"></asp:Label>
+                                                <asp:DropDownList
+                                                    ID="OrganizationTypeList1"
+                                                    runat="server"
+                                                    CssClass="js-example-basic-single">
+                                                    <asp:ListItem Value="School" Selected="True" Text="School" />
+                                                    <asp:ListItem Value="HomeSchool" Text="Home School Co-Op" />
+                                                    <asp:ListItem Value="AfterSchoolOrg" Text="After School Program" />
+                                                    <asp:ListItem Value="Other" Text="Other" />
+                                                </asp:DropDownList>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <asp:RequiredFieldValidator ID="RequiredFieldValidator15"
+                                                ControlToValidate="EventNameRequest1"
+                                                ValidationGroup="ContactRequestInput"
+                                                ErrorMessage="Enter your Phone."
+                                                runat="Server" />
+                                            <div class="form-group">
+                                                <asp:Label ID="Label20" CssClass="label" runat="server" Text="Event Name"></asp:Label>
+                                                <asp:TextBox CssClass="input--style-4" ValidationGroup="ContactRequestInput" ID="EventNameRequest1" runat="server" required="false" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="w-100"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <asp:Label ID="Label21" CssClass="label" runat="server" Text="What Date Do You Want Your Event On?"></asp:Label>
+                                        <asp:Calendar ID="EventRequestDate1" OnSelectionChanged="Calendar1_SelectionChanged" runat="server"></asp:Calendar>
+                                    </div>
+                                    <!--Button options for Submit, Commit Populate and Reset Distinguishable-->
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm text-left">
+                                                <asp:Button ID="SubmitButton2" runat="server" ValidationGroup="ContactRequestInput" OnClick="SubmitButton2_Click" Text="Submit" Style="margin-left: 0%;" CssClass="btn btn-primary" />
+                                            </div>
+                                            <div class="col-sm text-right">
+                                                <asp:Button ID="ResetButton2" runat="server" ValidationGroup="ContactRequestInput" CausesValidation="False" Text="Reset" UseSubmitBehavior="False" CssClass="btn btn-danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+        </ContentTemplate>
+    </asp:UpdatePanel>
+</asp:Content>
+
 <asp:Content ID="EventInfo" ContentPlaceHolderID="EventInfoPlaceHolder" runat="server">
     <div style="margin-top: 40px;">
         <div class="container-fluid">

@@ -295,6 +295,8 @@
                                         <h2>Event Request List</h2>
                                         <asp:ContentPlaceHolder ID="CoordinatorSubmissionViewPlaceholder" runat="server">
                                         </asp:ContentPlaceHolder>
+                                        <asp:ContentPlaceHolder ID="EventaddformCoordinator" runat="server">
+                                        </asp:ContentPlaceHolder>
                                         <asp:ContentPlaceHolder ID="EventInfoPlaceHolder" runat="server">
                                         </asp:ContentPlaceHolder>
 
